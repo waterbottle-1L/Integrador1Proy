@@ -85,7 +85,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/proyect/proyectintegrador/img/b1527a930c8e4522beb05de422aa5647-removebg-preview.png"/>
+                  <Image iconType="2" name="C:\Users\snow-\OneDrive\Documentos\GitHub\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\img\b1527a930c8e4522beb05de422aa5647-removebg-preview.png"/>
                 </Property>
               </Properties>
             </Component>

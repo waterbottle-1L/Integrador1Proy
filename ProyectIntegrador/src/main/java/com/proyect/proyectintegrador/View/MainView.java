@@ -49,7 +49,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         });
         loginDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/proyect/proyectintegrador/img/b1527a930c8e4522beb05de422aa5647-removebg-preview.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\snow-\\OneDrive\\Documentos\\GitHub\\Integrador1Proy\\ProyectIntegrador\\src\\main\\java\\com\\proyect\\proyectintegrador\\img\\b1527a930c8e4522beb05de422aa5647-removebg-preview.png")); // NOI18N
 
         UsarioTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
