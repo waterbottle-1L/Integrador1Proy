@@ -27,7 +27,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
         BotonEliminar.setEnabled(false);
         BotonModificar.setEnabled(false);
         txtModCod.setEnabled(false);
-        verificaciondedatos.setVisible(false);
         Habilitar();
         cargarProveedor();
 
@@ -58,10 +57,9 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                         model.addRow(datos);
                     }
                 }
-                verificaciondedatos.setVisible(false);
                 tbproveedor.setModel(model);
             } else {
-                 verificaciondedatos.setVisible(true);
+                // Manejar el caso en el que no se encontraron proveedores
                 System.out.println("No se encontraron proveedores.");
             }
         } catch (SQLException e) {
@@ -228,8 +226,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
         BotonModificar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbproveedor = new javax.swing.JTable();
-        verificaciondedatos = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         NuevoProveedor.setAlwaysOnTop(true);
         NuevoProveedor.setModal(true);
@@ -518,13 +514,13 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
 
         tbproveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         tbproveedor.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -534,33 +530,20 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
         });
         jScrollPane1.setViewportView(tbproveedor);
 
-        verificaciondedatos.setText("Sin Datos");
-
-        jButton1.setText("Recargar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(BotonGuardar)
                         .addGap(18, 18, 18)
                         .addComponent(BotonEliminar)
                         .addGap(18, 18, 18)
-                        .addComponent(BotonModificar)
-                        .addGap(121, 121, 121)
-                        .addComponent(verificaciondedatos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(BotonModificar)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -570,9 +553,7 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotonGuardar)
                     .addComponent(BotonEliminar)
-                    .addComponent(BotonModificar)
-                    .addComponent(verificaciondedatos)
-                    .addComponent(jButton1))
+                    .addComponent(BotonModificar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(97, Short.MAX_VALUE))
@@ -744,11 +725,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
         }
     }//GEN-LAST:event_botonguardarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Limpiar();
-        cargarProveedor();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonEliminar;
@@ -758,7 +734,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
     private javax.swing.JDialog NuevoProveedor;
     private javax.swing.JButton botonguardar;
     private javax.swing.JButton insertarproveedor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -792,6 +767,5 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtruc;
     private javax.swing.JTextField txttelefono;
-    private javax.swing.JLabel verificaciondedatos;
     // End of variables declaration//GEN-END:variables
 }
