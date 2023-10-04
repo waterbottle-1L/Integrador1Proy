@@ -1,7 +1,10 @@
 package com.proyect.proyectintegrador.View;
 
+import com.proyect.proyectintegrador.Controller.CtrlUsuario;
 import com.proyect.proyectintegrador.View.Producto.ProductoView;
+import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
@@ -23,7 +26,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         loginDialog = new javax.swing.JDialog(this,false);
         jPanel1 = new javax.swing.JPanel();
         UContraseñaPasswordField = new javax.swing.JPasswordField();
-        UsarioTextField = new javax.swing.JTextField();
+        UsuarioTextField = new javax.swing.JTextField();
         UsarioLabel = new javax.swing.JLabel();
         ContraseñaLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -51,9 +54,9 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         });
         loginDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        UsarioTextField.addActionListener(new java.awt.event.ActionListener() {
+        UsuarioTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsarioTextFieldActionPerformed(evt);
+                UsuarioTextFieldActionPerformed(evt);
             }
         });
 
@@ -92,7 +95,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(UsarioLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(UsarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(UsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(ContraseñaLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
@@ -110,7 +113,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 .addGap(118, 118, 118)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(UsarioLabel)
-                    .addComponent(UsarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(UsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ContraseñaLabel)
@@ -199,8 +202,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     }//GEN-LAST:event_loginDialogWindowClosing
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        loginDialog.setVisible(false);
-        setVisible(true);
+        this.Login();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ProveedorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProveedorButtonActionPerformed
@@ -241,17 +243,34 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         ProveedorButton.setEnabled(false);
     }//GEN-LAST:event_ProveedorButtonActionPerformed
 
-    private void UsarioTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsarioTextFieldActionPerformed
+    private void UsuarioTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UsarioTextFieldActionPerformed
-
+    }//GEN-LAST:event_UsuarioTextFieldActionPerformed
+        private void Login() {
+        
+        if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
+            CtrlUsuario ctrlUser=new CtrlUsuario();
+            usuario user=new usuario();
+            user.setNombre(UsuarioTextField.getText().trim());
+            user.setPassword(UContraseñaPasswordField.getText().trim());
+            if (ctrlUser.inicioSesionUser(user)) {
+                JOptionPane.showMessageDialog(null, "Login Correcto...");
+                loginDialog.setVisible(false);
+                setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
+        }
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ContraseñaLabel;
     private javax.swing.JButton ProveedorButton;
     private javax.swing.JPasswordField UContraseñaPasswordField;
     private javax.swing.JLabel UsarioLabel;
-    private javax.swing.JTextField UsarioTextField;
+    private javax.swing.JTextField UsuarioTextField;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButton1;

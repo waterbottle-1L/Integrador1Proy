@@ -37,7 +37,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="UsarioLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="UsarioTextField" min="-2" pref="84" max="-2" attributes="0"/>
+                              <Component id="UsuarioTextField" min="-2" pref="84" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="ContraseñaLabel" min="-2" max="-2" attributes="0"/>
@@ -61,7 +61,7 @@
                       <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="UsarioLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="UsarioTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="UsuarioTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -78,9 +78,9 @@
           <SubComponents>
             <Component class="javax.swing.JPasswordField" name="UContrase&#xf1;aPasswordField">
             </Component>
-            <Component class="javax.swing.JTextField" name="UsarioTextField">
+            <Component class="javax.swing.JTextField" name="UsuarioTextField">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UsarioTextFieldActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UsuarioTextFieldActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="UsarioLabel">

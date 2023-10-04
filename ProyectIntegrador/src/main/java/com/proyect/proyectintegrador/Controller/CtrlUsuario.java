@@ -13,13 +13,14 @@ public class CtrlUsuario {
     public boolean inicioSesionUser(usuario objeto) {
         boolean respuesta = false;
         Connection cn = Connect.getConnection();
-        String sql = "select  usuario, password from tb_usuario where usuario = '" + objeto.getNombre() + "' and password = '" + objeto.getPassword() + "'";
+        String sql = "select  nombre, password from tb_empleado where nombre = '" + objeto.getNombre() + "' and password = '" + objeto.getPassword() + "'";
         Statement st;
         try {
             st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 respuesta = true;
+
             }
         } catch (SQLException e) {
             System.out.println("Error al Iniciar Sesion");

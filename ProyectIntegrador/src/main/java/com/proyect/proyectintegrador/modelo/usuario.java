@@ -4,7 +4,7 @@ package com.proyect.proyectintegrador.modelo;
 public class usuario {
     int codEmpleado;
     String nombre;
-    char[] password;
+    String password;
 
     public usuario() {
     }
@@ -25,11 +25,11 @@ public class usuario {
         this.nombre = nombre;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
     
