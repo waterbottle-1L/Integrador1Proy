@@ -9,6 +9,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
         this.setSize(800, 600);
         jTabbedPane1.add("Marca", MarcaTabInstance());
         jTabbedPane1.add("Proveedor", ProveedorTabInstance());
+        jTabbedPane1.add("Tipo",TipotabInstace());
     }
 
     private MarcaV MarcaTabInstance() {
@@ -17,6 +18,10 @@ public class ProductoView extends javax.swing.JInternalFrame {
 
     private ProveedorV ProveedorTabInstance() {
         return new ProveedorV();
+    }
+    
+    private TipoV TipotabInstace(){
+        return new TipoV();
     }
 
     @SuppressWarnings("unchecked")
