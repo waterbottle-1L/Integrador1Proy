@@ -254,9 +254,10 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             user.setNombre(UsuarioTextField.getText().trim());
             user.setPassword(UContraseñaPasswordField.getText().trim());
             if (ctrlUser.inicioSesionUser(user)) {
-                JOptionPane.showMessageDialog(null, "Login Correcto...");
+                
                 loginDialog.setVisible(false);
                 setVisible(true);
+                JOptionPane.showMessageDialog(null, "Login Correcto...");
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos");
             }
