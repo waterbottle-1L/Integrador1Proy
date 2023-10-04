@@ -65,7 +65,7 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 System.out.println("No se encontraron proveedores.");
             }
         } catch (SQLException e) {
-            // Manejar la excepción de manera adecuada, mostrar un mensaje al usuario o registrarla
+            
             System.out.println("Error al cargar la tabla: " + e.getMessage());
         }
     }
@@ -608,7 +608,7 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 NuevoProveedor.setVisible(false);
             }
         } catch (SQLException e) {
-            // Maneja la excepción de manera adecuada, muestra un mensaje o registra el error
+            
             NuevoProveedor.setVisible(false);
             JOptionPane.showMessageDialog(null, "Error al agregar proveedor: " + e.getMessage());
         }
