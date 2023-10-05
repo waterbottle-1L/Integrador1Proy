@@ -10,6 +10,7 @@ public class ProductoView extends javax.swing.JInternalFrame {
         jTabbedPane1.add("Marca", MarcaTabInstance());
         jTabbedPane1.add("Proveedor", ProveedorTabInstance());
         jTabbedPane1.add("Tipo",TipotabInstace());
+        jTabbedPane1.add("Producto",ProductoInstace());
     }
 
     private MarcaV MarcaTabInstance() {
@@ -24,6 +25,9 @@ public class ProductoView extends javax.swing.JInternalFrame {
         return new TipoV();
     }
 
+    private ProductoV ProductoInstace(){
+        return new ProductoV();
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

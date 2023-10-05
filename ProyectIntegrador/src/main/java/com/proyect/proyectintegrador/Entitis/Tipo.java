@@ -1,9 +1,7 @@
-
 package com.proyect.proyectintegrador.Entitis;
 
-
 public class Tipo {
-    
+
     private Long codtipo;
     private String nombre;
     private Boolean estado;
@@ -31,7 +29,5 @@ public class Tipo {
     public void setEstado(Boolean esta) {
         this.estado = esta;
     }
-    
-    
-    
+
 }
