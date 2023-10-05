@@ -59,7 +59,8 @@ public class CtrProveedor {
         }
 
     }
-
+    
+    // Metodo utilizado para insertar proveedor
     public boolean verificarRucExistente(Connection con, String ruc) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Proveedor WHERE RUC = ?";
         try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
@@ -74,6 +75,7 @@ public class CtrProveedor {
         return false; // Si no se encuentra el RUC
     }
     
+    // Metodo utilizado para modificar proveedor
     public boolean verificarRucSimilar(Connection con, String ruc, long idProveedor) throws SQLException {
     String sql = "SELECT COUNT(*) FROM Proveedor WHERE ruc = ? AND cod_proveedor != ?";
     try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {

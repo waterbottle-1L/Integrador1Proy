@@ -13,7 +13,7 @@ public class CtrlUsuario {
     public boolean inicioSesionUser(usuario objeto) {
         boolean respuesta = false;
         Connection cn = Connect.getConnection();
-        String sql = "select  nombre, password from tb_empleado where nombre = '" + objeto.getNombre() + "' and password = '" + objeto.getPassword() + "'";
+        String sql = "select  nombre, password from empleado where nombre = '" + objeto.getNombre() + "' and password = '" + objeto.getPassword() + "'";
         Statement st;
         try {
             st = cn.createStatement();
