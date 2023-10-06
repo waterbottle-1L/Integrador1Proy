@@ -47,7 +47,7 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 model.addColumn("Dirección");
 
                 for (Proveedor proveedor : proveedores) {
-                    if (proveedor.getEstado() == true) {
+                    if (proveedor.getEstado()) {
                         Object[] datos = new Object[6];
                         datos[0] = proveedor.getCodproveedor();
                         datos[1] = proveedor.getNombre();

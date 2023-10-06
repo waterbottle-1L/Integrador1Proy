@@ -12,6 +12,7 @@ import java.util.List;
 public class CtrProducto {
 
     String SQL_CONSULTA = "{CALL ObtenerProductos()}";
+    String SQL_INSERTAR = "{}";
 
     public List<Producto> cargarProductos() throws SQLException {
         List<Producto> productoList = new ArrayList<>();
@@ -40,5 +41,7 @@ public class CtrProducto {
 
         return productoList;
     }
+    
+    
 
 }

@@ -10,4 +10,16 @@ public class CtrlValidacion {
         return datos.matches("^\\d{9}$");
     }
 
+    public boolean validarNumeros(String datos) {
+        return datos.matches("^[0-9.]+$");
+    }
+    
+    public boolean validarNumerosenteros(String datos) {
+        return datos.matches("^[0-9]+$");
+    }
+
+
+    public boolean validarCadenaSinComaPuntoYComa(String cadena) {
+        return !cadena.matches(".*[;,].*");
+    }
 }
