@@ -12,8 +12,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
 
     public MainView() {
         initComponents();
-        loginDialog.pack();
-        loginDialog.setLocationRelativeTo(this);
         this.setSize(new Dimension(1300, 800));
         this.setLocationRelativeTo(null);
 
@@ -23,14 +21,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        loginDialog = new javax.swing.JDialog(this,false);
-        jPanel1 = new javax.swing.JPanel();
-        UContraseñaPasswordField = new javax.swing.JPasswordField();
-        UsuarioTextField = new javax.swing.JTextField();
-        UsarioLabel = new javax.swing.JLabel();
-        ContraseñaLabel = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         ProveedorButton = new javax.swing.JButton();
@@ -42,88 +32,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-
-        loginDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        loginDialog.setAlwaysOnTop(true);
-        loginDialog.setName("loginDialog"); // NOI18N
-        loginDialog.setResizable(false);
-        loginDialog.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                loginDialogWindowClosing(evt);
-            }
-        });
-        loginDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        UsuarioTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsuarioTextFieldActionPerformed(evt);
-            }
-        });
-
-        UsarioLabel.setText("Usuario");
-
-        ContraseñaLabel.setText("Contraseña");
-
-        jPanel2.setBackground(new java.awt.Color(0, 102, 0));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 19, Short.MAX_VALUE)
-        );
-
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(UsarioLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(UsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(ContraseñaLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(UContraseñaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(31, 31, 31))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UsarioLabel)
-                    .addComponent(UsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ContraseñaLabel)
-                    .addComponent(UContraseñaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addGap(83, 83, 83))
-        );
-
-        loginDialog.getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 270));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -197,14 +105,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginDialogWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_loginDialogWindowClosing
-
-    }//GEN-LAST:event_loginDialogWindowClosing
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.Login();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void ProveedorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProveedorButtonActionPerformed
         ProductoView pro = new ProductoView();
         jDesktopPane1.add(pro);
@@ -242,39 +142,12 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         });
         ProveedorButton.setEnabled(false);
     }//GEN-LAST:event_ProveedorButtonActionPerformed
-
-    private void UsuarioTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UsuarioTextFieldActionPerformed
-        private void Login() {
         
-        if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
-            CtrlUsuario ctrlUser=new CtrlUsuario();
-            usuario user=new usuario();
-            user.setNombre(UsuarioTextField.getText().trim());
-            user.setPassword(UContraseñaPasswordField.getText().trim());
-            if (ctrlUser.inicioSesionUser(user)) {
-                
-                loginDialog.setVisible(false);
-                setVisible(true);
-                JOptionPane.showMessageDialog(null, "Login Correcto...");
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
-        }
-        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel ContraseñaLabel;
     private javax.swing.JButton ProveedorButton;
-    private javax.swing.JPasswordField UContraseñaPasswordField;
-    private javax.swing.JLabel UsarioLabel;
-    private javax.swing.JTextField UsuarioTextField;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -282,9 +155,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JDialog loginDialog;
     // End of variables declaration//GEN-END:variables
 }
