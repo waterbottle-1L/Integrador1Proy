@@ -27,7 +27,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
-                      <Component id="verificaciondedatos" min="-2" max="-2" attributes="0"/>
+                      <Component id="verificaciondatos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton4" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -44,7 +44,7 @@
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="verificaciondedatos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="verificaciondatos" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -83,7 +83,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="verificaciondedatos">
+    <Component class="javax.swing.JLabel" name="verificaciondatos">
       <Properties>
         <Property name="text" type="java.lang.String" value="Sin Datos"/>
       </Properties>

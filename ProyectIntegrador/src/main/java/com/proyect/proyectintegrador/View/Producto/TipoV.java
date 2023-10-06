@@ -24,13 +24,14 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         ModificarTipo.setLocationRelativeTo(this);
         windoweliminartipo.setEnabled(false);
         windowmodtipo.setEnabled(false);
-        verificaciondatos.setEnabled(false);
         txtcodtipo.setEnabled(false);
         cargarTipo();
         Habilitar();
     }
 
     private void cargarTipo() {
+        boolean datosEncontrados = false;
+
         try (Connection con = Connect.getConnection()) {
             CtrTipo tip = new CtrTipo();
             List<Tipo> tipos = tip.cargarTipo();
@@ -39,22 +40,21 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
                 model.addColumn("codigo");
                 model.addColumn("nombre");
                 for (Tipo tipo : tipos) {
-                    if (tipo.getEstado() == true) {
-                        Object[] datos = new Object[3];
+                    if (tipo.getEstado()) {
+                        Object[] datos = new Object[2];
                         datos[0] = tipo.getCodtipo();
                         datos[1] = tipo.getNombre();
-                        datos[2] = tipo.getEstado();
                         model.addRow(datos);
+                        datosEncontrados = true;
                     }
                 }
-                verificaciondatos.setVisible(false);
                 tbtipo.setModel(model);
-            } else {
-                verificaciondatos.setVisible(true);
             }
         } catch (SQLException e) {
             System.out.println("Error al cargar la tabla: " + e.getMessage());
         }
+
+        verificaciondatos.setVisible(!datosEncontrados);
     }
 
     private void Limpiar() {
@@ -449,7 +449,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             }
 
         } catch (SQLException e) {
-            System.out.print("Error al modiciar el Tipo"+ e);
+            System.out.print("Error al modiciar el Tipo" + e);
         }
     }//GEN-LAST:event_botonmodificartipoActionPerformed
 

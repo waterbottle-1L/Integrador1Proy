@@ -12,11 +12,12 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
 
     public ProductoV() {
         initComponents();
-        verificaciondedatos.setVisible(false);
+
         cargarProducto();
     }
 
     private void cargarProducto() {
+        boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
             CtrProducto ctrproducto = new CtrProducto();
             List<Producto> productos = ctrproducto.cargarProductos();
@@ -32,8 +33,8 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                 model.addColumn("Precio");
 
                 for (Producto producto : productos) {
-                    if (producto.getEstado() == true) {
-                        Object[] datos = new Object[9];
+                    if (producto.getEstado()) {
+                        Object[] datos = new Object[8];
                         datos[0] = producto.getCodProducto();
                         datos[1] = producto.getNombreMarca();
                         datos[2] = producto.getNombreProveedor();
@@ -42,20 +43,19 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                         datos[5] = producto.getDescripcion();
                         datos[6] = producto.getFechaRegistro();
                         datos[7] = producto.getPrecio();
-                        datos[8] = producto.getEstado();
+
                         model.addRow(datos);
+                        datosEncontrados = true;
                     }
                 }
-                verificaciondedatos.setVisible(false);
                 tbproducto.setModel(model);
 
-            } else {
-                verificaciondedatos.setVisible(true);
-                System.out.println("No se encontraron productos.");
             }
         } catch (SQLException e) {
             System.out.println("Error al cargar datos de la tabla productos" + e);
         }
+
+        verificaciondatos.setVisible(!datosEncontrados);
     }
 
     @SuppressWarnings("unchecked")
@@ -67,7 +67,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbproducto = new javax.swing.JTable();
-        verificaciondedatos = new javax.swing.JLabel();
+        verificaciondatos = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
         jButton1.setText("Nuevo");
@@ -89,7 +89,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
         ));
         jScrollPane1.setViewportView(tbproducto);
 
-        verificaciondedatos.setText("Sin Datos");
+        verificaciondatos.setText("Sin Datos");
 
         jButton4.setText("Recargar");
 
@@ -108,7 +108,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton3)
                         .addGap(112, 112, 112)
-                        .addComponent(verificaciondedatos)
+                        .addComponent(verificaciondatos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)))
                 .addContainerGap(31, Short.MAX_VALUE))
@@ -121,7 +121,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(verificaciondedatos)
+                    .addComponent(verificaciondatos)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,6 +137,6 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbproducto;
-    private javax.swing.JLabel verificaciondedatos;
+    private javax.swing.JLabel verificaciondatos;
     // End of variables declaration//GEN-END:variables
 }

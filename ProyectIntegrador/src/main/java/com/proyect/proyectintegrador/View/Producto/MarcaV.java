@@ -33,6 +33,7 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
     }
 
     private void cargarMarca() {
+        boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
             CtrMarca marc = new CtrMarca();
             List<Marca> marcas = marc.cargarMarca();
@@ -42,22 +43,22 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
                 model.addColumn("nombre");
 
                 for (Marca marca : marcas) {
-                    if (marca.getEstado() == true) {
-                        Object[] datos = new Object[3];
+                    if (marca.getEstado()) {
+                        Object[] datos = new Object[2];
                         datos[0] = marca.getCodmarca();
                         datos[1] = marca.getNombre();
-                        datos[2] = marca.getEstado();
                         model.addRow(datos);
+                        datosEncontrados = true;
                     }
                 }
-                verificaciondatos.setVisible(false);
+
                 tbmarca.setModel(model);
-            } else {
-                verificaciondatos.setVisible(true);
             }
         } catch (SQLException e) {
             System.out.println("Error al cargar la tabla: " + e.getMessage());
         }
+
+        verificaciondatos.setVisible(!datosEncontrados);
     }
 
     private void Limpiar() {
@@ -438,14 +439,14 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_txtmodnombremarcKeyReleased
 
     private void botonmodmarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonmodmarcaActionPerformed
-        try{
+        try {
             Connection con = Connect.getConnection();
             Marca marc = new Marca();
             CtrMarca ctrmarc = new CtrMarca();
-            
+
             String texto = txtmodcodmarc.getText();
             long codmarca = Long.parseLong(texto);
-            
+
             marc.setCodmarca(codmarca);
             marc.setNombre(txtmodnombremarc.getText());
             marc.setEstado(Boolean.TRUE);
@@ -453,8 +454,8 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
             Limpiar();
             cargarMarca();
             ModificarMarca.setVisible(false);
-        }catch(SQLException e){
-            System.out.print("error"+e);
+        } catch (SQLException e) {
+            System.out.print("error" + e);
         }
     }//GEN-LAST:event_botonmodmarcaActionPerformed
 
