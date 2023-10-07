@@ -15,6 +15,7 @@ public class CtrProducto {
     String SQL_CONSULTA = "{CALL ObtenerProductos()}";
     String SQL_INSERTAR = "{CALL InsertarProducto(?,?,?,?,?,?,?)}";
     String SQL_ESTADO = "{CALL CambiarEstadoProducto(?,?)}";
+    String SQL_ACTUALIZAR = "{CALL ActualizarProducto(?,?,?,?,?,?,?,?)}";
 
     public List<Producto> cargarProductos() throws SQLException {
         List<Producto> productoList = new ArrayList<>();
@@ -27,7 +28,7 @@ public class CtrProducto {
                 Producto producto = new Producto();
                 producto.setCodProducto(resultSet.getLong("cod_producto"));
                 producto.setNombreMarca(resultSet.getString("nombre_marca"));
-                producto.setNombreProveedor(resultSet.getString("nombre"));
+                producto.setNombreProveedor(resultSet.getString("nombre_proveedor"));
                 producto.setNombreTipo(resultSet.getString("nombre_tipo"));
                 producto.setNombre(resultSet.getString("nombre"));
                 producto.setDescripcion(resultSet.getString("descripcion"));
@@ -92,5 +93,38 @@ public class CtrProducto {
         }
     }
     
+    public boolean verificarnombreSimilar(Connection con, String nombre, long idproducto) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM producto WHERE nombre = ? AND cod_producto != ? AND estado = 1";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, nombre);
+            preparedStatement.setLong(2, idproducto);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Si count > 0, un RUC similar ya existe, excluyendo el RUC específico
+                }
+            }
+        }
+        return false; 
+    }
+    
+    public void modificarProducto(Producto producto)throws SQLException{
+        Connection conexio = Connect.getConnection();
+        CallableStatement callableStatement = null;
+        try{
+            callableStatement = conexio.prepareCall(SQL_ACTUALIZAR);
+            callableStatement.setLong(1, producto.getCodProducto());
+            callableStatement.setLong(2, producto.getCodMarca());
+            callableStatement.setLong(3, producto.getCodProveedor());
+            callableStatement.setLong(4, producto.getCodTipo());
+            callableStatement.setString(5, producto.getNombre());
+            callableStatement.setString(6, producto.getDescripcion());
+            callableStatement.setDouble(7, producto.getPrecio());
+            callableStatement.setBoolean(8, producto.getEstado());
+            callableStatement.executeUpdate();
+        }catch(SQLException e){
+            System.out.print("Error estado" + e);
+        }
+    }
 
 }

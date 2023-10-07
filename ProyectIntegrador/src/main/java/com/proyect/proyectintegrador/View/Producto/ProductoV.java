@@ -19,7 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class ProductoV extends org.jdesktop.swingx.JXPanel {
-
+    
     private boolean canEdit = true;
     private boolean canDelete = true;
     
@@ -27,9 +27,12 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
         initComponents();
         NuevoProducto.pack();
         NuevoProducto.setLocationRelativeTo(this);
+        ModificarProducto.pack();
+        ModificarProducto.setLocationRelativeTo(this);
         botonguardarproducto.setEnabled(false);
         windoweliminarproducto.setEnabled(false);
         windowmodifyproducto.setEnabled(false);
+        txtcodproducto.setEnabled(false);
         Habilitar();
         cargarProducto();
     }
@@ -50,7 +53,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
             }
         });
     }
-
+    
     private void cargarProducto() {
         boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
@@ -66,7 +69,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                 model.addColumn("Descripcion");
                 model.addColumn("Fecha");
                 model.addColumn("Precio");
-
+                
                 for (Producto producto : productos) {
                     if (producto.getEstado()) {
                         Object[] datos = new Object[8];
@@ -78,29 +81,29 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                         datos[5] = producto.getDescripcion();
                         datos[6] = producto.getFechaRegistro();
                         datos[7] = producto.getPrecio();
-
+                        
                         model.addRow(datos);
                         datosEncontrados = true;
                     }
                 }
                 tbproducto.setModel(model);
-
+                
             }
         } catch (SQLException e) {
             System.out.println("Error al cargar datos de la tabla productos" + e);
         }
-
+        
         verificaciondatos.setVisible(!datosEncontrados);
     }
-
+    
     private void Limpiar() {
         DefaultTableModel model = (DefaultTableModel) tbproducto.getModel();
         model.setRowCount(0);
     }
-
+    
     private void validarNuevoProducto() {
         CtrlValidacion val = new CtrlValidacion();
-        String precio = txtprecioproducto.getText();
+        String precio = txtprecioproducto.getText().trim();
 
         // Validar el campo de nombre
         if (txtnombreproducto.getText().isEmpty()) {
@@ -131,7 +134,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
             botonguardarproducto.setEnabled(true);
         }
     }
-
+    
     public void cargarMarca() {
         try (Connection con = Connect.getConnection()) {
             CtrMarca marc = new CtrMarca();
@@ -149,12 +152,12 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
             System.out.print("Error al cargar marca" + e);
         }
     }
-
+    
     public void cargarProveedor() {
         try (Connection con = Connect.getConnection()) {
             CtrProveedor pro = new CtrProveedor();
             List<Proveedor> proveedores = pro.cargarProveedor();
-
+            
             if (proveedores != null && !proveedores.isEmpty()) {
                 jComboBoxnuevoproveedor.removeAllItems();
                 jComboBoxnuevoproveedor.addItem("Seleccione el proveedor:");
@@ -168,7 +171,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
             System.out.print("Error al cargar proveedor" + e);
         }
     }
-
+    
     public void cargarTipo() {
         try (Connection con = Connect.getConnection()) {
             CtrTipo tip = new CtrTipo();
@@ -187,12 +190,100 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
         }
     }
     
-    private void limpiarCajasdeTexto(){
+    public void cargarMarcamod() {
+        try (Connection con = Connect.getConnection()) {
+            CtrMarca marc = new CtrMarca();
+            List<Marca> marcas = marc.cargarMarca();
+            if (marcas != null && !marcas.isEmpty()) {
+                jComboBoxmodmarca.removeAllItems();
+                jComboBoxmodmarca.addItem("Seleccione la marca:");
+                for (Marca marca : marcas) {
+                    if (marca.getEstado()) {
+                        jComboBoxmodmarca.addItem(marca.getNombre());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.print("Error al cargar marca" + e);
+        }
+    }
+    
+    public void cargarProveedormod() {
+        try (Connection con = Connect.getConnection()) {
+            CtrProveedor pro = new CtrProveedor();
+            List<Proveedor> proveedores = pro.cargarProveedor();
+            
+            if (proveedores != null && !proveedores.isEmpty()) {
+                jComboBoxmodproveedor.removeAllItems();
+                jComboBoxmodproveedor.addItem("Seleccione el proveedor:");
+                for (Proveedor proveedor : proveedores) {
+                    if (proveedor.getEstado()) {
+                        jComboBoxmodproveedor.addItem(proveedor.getNombre());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.print("Error al cargar proveedor" + e);
+        }
+    }
+    
+    public void cargarTipomod() {
+        try (Connection con = Connect.getConnection()) {
+            CtrTipo tip = new CtrTipo();
+            List<Tipo> tipos = tip.cargarTipo();
+            if (tipos != null && !tipos.isEmpty()) {
+                jComboBoxmodtipo.removeAllItems();
+                jComboBoxmodtipo.addItem("Seleccione el tipo:");
+                for (Tipo tipo : tipos) {
+                    if (tipo.getEstado()) {
+                        jComboBoxmodtipo.addItem(tipo.getNombre());
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.print("Error al cargar tipo" + e);
+        }
+    }
+    
+    private void validarmodProducto() {
+        CtrlValidacion val = new CtrlValidacion();
+        String precio = txtmodprecio.getText().trim();
+        
+        if (txtmodnombreproducto.getText().isEmpty()) {
+            lblnombremodproducto.setText("Rellene el campo");
+        } else {
+            lblnombremodproducto.setText("");
+        }
+        
+        if (txtareamoddescripcion.getText().isEmpty()) {
+            lblmoddescripcion.setText("Rellene el campo");
+        } else {
+            lblmoddescripcion.setText("");
+        }
+        
+        if (precio.isEmpty()) {
+            lblmodprecio.setText("Rellene el campo");
+        } else if (!val.validarNumeros(precio)) {
+            lblmodprecio.setText("Solo coloque 'Numeros'");
+        } else {
+            lblmodprecio.setText("");
+        }
+        
+        if (txtmodnombreproducto.getText().isEmpty() || txtareamoddescripcion.getText().isEmpty()
+                || precio.isEmpty() || !val.validarNumeros(precio)) {
+            botonmodificarproducto.setEnabled(false);
+        } else {
+            botonmodificarproducto.setEnabled(true);
+        }
+        
+    }
+    
+    private void limpiarCajasdeTexto() {
         txtnombreproducto.setText("");
         txtareardescripcion.setText("");
         txtprecioproducto.setText("");
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -219,6 +310,30 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
         jLabel7 = new javax.swing.JLabel();
         botonguardarproducto = new javax.swing.JButton();
         txtprecioproducto = new javax.swing.JTextField();
+        ModificarProducto = new javax.swing.JDialog();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lblnombremodproducto = new javax.swing.JLabel();
+        lblcodmodproveedor = new javax.swing.JLabel();
+        txtmodnombreproducto = new javax.swing.JTextField();
+        jComboBoxmodproveedor = new javax.swing.JComboBox<>();
+        lblmoddescripcion = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        lblcodmodtipo = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtareamoddescripcion = new javax.swing.JTextArea();
+        jComboBoxmodtipo = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        lblmodprecio = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtmodprecio = new javax.swing.JTextField();
+        lblcodmodmarca = new javax.swing.JLabel();
+        jComboBoxmodmarca = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txtcodproducto = new javax.swing.JTextField();
+        botonmodificarproducto = new javax.swing.JButton();
         windownuevoproducto = new javax.swing.JButton();
         windoweliminarproducto = new javax.swing.JButton();
         windowmodifyproducto = new javax.swing.JButton();
@@ -357,6 +472,145 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
+        jLabel8.setText("Nombre: ");
+
+        jLabel9.setText("Marca:");
+
+        txtmodnombreproducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtmodnombreproductoKeyReleased(evt);
+            }
+        });
+
+        jComboBoxmodproveedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No existe Proveedor" }));
+
+        jLabel10.setText("Proveedor:");
+
+        jLabel11.setText("Descripcion:");
+
+        txtareamoddescripcion.setColumns(20);
+        txtareamoddescripcion.setRows(5);
+        txtareamoddescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtareamoddescripcionKeyReleased(evt);
+            }
+        });
+        jScrollPane3.setViewportView(txtareamoddescripcion);
+
+        jComboBoxmodtipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No existe Tipo" }));
+
+        jLabel12.setText("Tipo:");
+
+        jLabel13.setText("Precio:");
+
+        txtmodprecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtmodprecioKeyReleased(evt);
+            }
+        });
+
+        jComboBoxmodmarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No existe Marca", " " }));
+
+        jLabel14.setText("Modificar Producto");
+
+        jLabel15.setText("Codigo:");
+
+        botonmodificarproducto.setText("Guardar");
+        botonmodificarproducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonmodificarproductoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ModificarProductoLayout = new javax.swing.GroupLayout(ModificarProducto.getContentPane());
+        ModificarProducto.getContentPane().setLayout(ModificarProductoLayout);
+        ModificarProductoLayout.setHorizontalGroup(
+            ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ModificarProductoLayout.createSequentialGroup()
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ModificarProductoLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel14))
+                    .addGroup(ModificarProductoLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botonmodificarproducto)
+                            .addGroup(ModificarProductoLayout.createSequentialGroup()
+                                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBoxmodtipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxmodproveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxmodmarca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblnombremodproducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtmodnombreproducto)
+                                    .addComponent(lblmoddescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane3)
+                                    .addComponent(lblmodprecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblcodmodmarca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblcodmodproveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblcodmodtipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtmodprecio, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                                    .addComponent(txtcodproducto))))))
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
+        ModificarProductoLayout.setVerticalGroup(
+            ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ModificarProductoLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel14)
+                .addGap(25, 25, 25)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(txtcodproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblnombremodproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtmodnombreproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblmoddescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblmodprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtmodprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblcodmodmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxmodmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblcodmodproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxmodproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblcodmodtipo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(ModificarProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxmodtipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(18, 18, 18)
+                .addComponent(botonmodificarproducto)
+                .addGap(11, 11, 11))
+        );
+
         windownuevoproducto.setText("Nuevo");
         windownuevoproducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,6 +626,11 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
         });
 
         windowmodifyproducto.setText("Modificar");
+        windowmodifyproducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                windowmodifyproductoActionPerformed(evt);
+            }
+        });
 
         tbproducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -471,36 +730,36 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
             String idproveedor = jComboBoxnuevoproveedor.getSelectedItem().toString().trim();
             String idtipo = jComboBoxnuevotipo.getSelectedItem().toString().trim();
             String descipcion = txtareardescripcion.getText().trim();
-            Double precio =  Double.parseDouble(txtprecioproducto.getText().trim());
+            double precio = Double.parseDouble(txtprecioproducto.getText().trim());
             boolean errores = false;
             if (ctrproduct.verificarNombreExistente(con, nombre)) {
                 lblnombrenuevoproducto.setText("Producto ya existente");
                 errores = true;
-            }else{
+            } else {
                 lblnombrenuevoproducto.setText("");
             }
-
+            
             if (idmarca.equalsIgnoreCase("Seleccione la marca:")) {
                 lblcodnuevamarca.setText("Seleccione alguna marca");
                 errores = true;
             } else {
-                lblcodnuevamarca.setText(""); 
+                lblcodnuevamarca.setText("");                
             }
-
+            
             if (idproveedor.equalsIgnoreCase("Seleccione el proveedor:")) {
                 lblcodnuevoproveedor.setText("Seleccione un proveedor");
-                errores = true; 
+                errores = true;                
             } else {
                 lblcodnuevoproveedor.setText("");
             }
-
+            
             if (idtipo.equalsIgnoreCase("Seleccione el tipo:")) {
                 lblcodnuevotipo.setText("Seleccione el tipo");
-                errores = true; 
+                errores = true;                
             } else {
-                lblcodnuevotipo.setText(""); 
+                lblcodnuevotipo.setText("");                
             }
-
+            
             if (!errores) {
                 CtrMarca marca = new CtrMarca();
                 CtrProveedor prov = new CtrProveedor();
@@ -528,14 +787,14 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                 // Si se encontraron errores, no se realizará el proceso de guardar
                 System.out.println("No se pudo guardar debido a errores.");
             }
-
+            
         } catch (SQLException e) {
-            System.out.println("Error" +e);
+            System.out.println("Error" + e);
         }
     }//GEN-LAST:event_botonguardarproductoActionPerformed
 
     private void windoweliminarproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windoweliminarproductoActionPerformed
-       int selectedRow = tbproducto.getSelectedRow();
+        int selectedRow = tbproducto.getSelectedRow();
         long idproducto = 0;
         Connection con = Connect.getConnection();
         CtrProducto ctrproduct = new CtrProducto();
@@ -548,13 +807,13 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
             switch (opcion) {
                 case 0:
                     boolean estado = false;
-                    try{
+                    try {
                         produc.setCodProducto(idproducto);
                         produc.setEstado(Boolean.FALSE);
                         ctrproduct.cambiarEstadoProducto(produc);
                         Limpiar();
                         cargarProducto();
-                    }catch(SQLException e){
+                    } catch (SQLException e) {
                         System.out.print("Error al eliminar producto" + e);
                     }
                 case 1:
@@ -563,36 +822,183 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                     break;
             }
             
-        }else{
+        } else {
             System.out.print("Error al seleccionar producto");
         }
     }//GEN-LAST:event_windoweliminarproductoActionPerformed
 
+    private void txtmodnombreproductoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmodnombreproductoKeyReleased
+        validarmodProducto();
+    }//GEN-LAST:event_txtmodnombreproductoKeyReleased
+
+    private void txtareamoddescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtareamoddescripcionKeyReleased
+        validarmodProducto();
+    }//GEN-LAST:event_txtareamoddescripcionKeyReleased
+
+    private void txtmodprecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmodprecioKeyReleased
+        validarmodProducto();
+    }//GEN-LAST:event_txtmodprecioKeyReleased
+
+    private void windowmodifyproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowmodifyproductoActionPerformed
+        lblnombremodproducto.setText("");
+        lblmoddescripcion.setText("");
+        lblmodprecio.setText("");
+        lblcodmodmarca.setText("");
+        lblcodmodproveedor.setText("");
+        lblcodmodtipo.setText("");
+        botonmodificarproducto.setEnabled(true);
+        int selectedRow = tbproducto.getSelectedRow();
+        cargarMarcamod();
+        cargarProveedormod();
+        cargarTipomod();
+        if (selectedRow != -1) {
+            DefaultTableModel model = (DefaultTableModel) tbproducto.getModel();
+            Object data1 = model.getValueAt(selectedRow, 0);
+            Object data2 = model.getValueAt(selectedRow, 1);
+            Object data3 = model.getValueAt(selectedRow, 2);
+            Object data4 = model.getValueAt(selectedRow, 3);
+            Object data5 = model.getValueAt(selectedRow, 4);
+            Object data6 = model.getValueAt(selectedRow, 5);
+            Object data7 = model.getValueAt(selectedRow, 6);
+            Object data8 = model.getValueAt(selectedRow, 7);
+            
+            txtcodproducto.setText(data1.toString());
+            txtmodnombreproducto.setText(data5.toString());
+            txtareamoddescripcion.setText(data6.toString());
+            txtmodprecio.setText(data8.toString());
+            jComboBoxmodmarca.setSelectedItem(data2);
+            jComboBoxmodproveedor.setSelectedItem(data3);
+            jComboBoxmodtipo.setSelectedItem(data4);
+            
+            ModificarProducto.setVisible(true);
+        }else{
+            System.out.print("Error al cargar la fila producto");
+        }
+        
+    }//GEN-LAST:event_windowmodifyproductoActionPerformed
+
+    private void botonmodificarproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonmodificarproductoActionPerformed
+        try{
+            Connection con = Connect.getConnection();
+            CtrProducto ctrproduct = new CtrProducto();
+            String nombre = txtmodnombreproducto.getText().trim();
+            String idmarca = jComboBoxmodmarca.getSelectedItem().toString().trim();
+            String idproveedor = jComboBoxmodproveedor.getSelectedItem().toString().trim();
+            String idtipo = jComboBoxmodtipo.getSelectedItem().toString().trim();
+            String descipcion = txtareamoddescripcion.getText().trim();
+            double precio = Double.parseDouble(txtmodprecio.getText().trim());
+            String texto = txtcodproducto.getText().trim();
+            long codproducto = Long.parseLong(texto);
+            boolean errores = false;
+            
+            if(ctrproduct.verificarnombreSimilar(con, nombre, codproducto)){
+                lblnombremodproducto.setText("Nombre ya se encuentra registrado");
+                errores = true;
+            }else{
+                lblnombremodproducto.setText("");
+            }
+            
+            if(idmarca.equalsIgnoreCase("Seleccione la marca:")){
+                lblcodmodmarca.setText("Sleccione Marca");
+                errores = true;
+            }else{
+                lblcodmodmarca.setText("");
+            }
+            
+            if(idproveedor.equalsIgnoreCase("Seleccione el proveedor:")){
+                lblcodmodproveedor.setText("Seleccion Proveedor");
+                errores = true;
+            }else{
+                lblcodmodproveedor.setText("");
+            }
+            
+            if(idtipo.equalsIgnoreCase("Seleccione el tipo:")){
+                lblcodmodtipo.setText("Selecciones Tipo");
+                errores = true ;
+            }else{
+                lblcodmodtipo.setText("");
+            }
+            
+            if(!errores){
+                CtrMarca marca = new CtrMarca();
+                CtrProveedor prov = new CtrProveedor();
+                CtrTipo tipo = new CtrTipo();
+                Producto produc = new Producto();
+                
+                Long codmarca = marca.obtenerIdMarcaPorNombre(con, idmarca);
+                Long codprov = prov.obtenerIdProveedorPorNombre(con, idproveedor);
+                Long codtipo = tipo.obtenerIdTipoPorNombre(con, idtipo);
+                
+                produc.setCodProducto(codproducto);
+                produc.setCodMarca(codmarca);
+                produc.setCodProveedor(codprov);
+                produc.setCodTipo(codtipo);
+                produc.setNombre(nombre);
+                produc.setDescripcion(descipcion);
+                produc.setPrecio(precio);
+                produc.setEstado(Boolean.TRUE);
+                ctrproduct.modificarProducto(produc);
+                Limpiar();
+                cargarProducto();
+                ModificarProducto.setVisible(false);
+            }else{
+                System.out.println("");
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Error" + e);
+        }
+    }//GEN-LAST:event_botonmodificarproductoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog ModificarProducto;
     private javax.swing.JDialog NuevoProducto;
     private javax.swing.JButton botoncargar;
     private javax.swing.JButton botonguardarproducto;
+    private javax.swing.JButton botonmodificarproducto;
+    private javax.swing.JComboBox<String> jComboBoxmodmarca;
+    private javax.swing.JComboBox<String> jComboBoxmodproveedor;
+    private javax.swing.JComboBox<String> jComboBoxmodtipo;
     private javax.swing.JComboBox<String> jComboBoxnuevamarca;
     private javax.swing.JComboBox<String> jComboBoxnuevoproveedor;
     private javax.swing.JComboBox<String> jComboBoxnuevotipo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblcodmodmarca;
+    private javax.swing.JLabel lblcodmodproveedor;
+    private javax.swing.JLabel lblcodmodtipo;
     private javax.swing.JLabel lblcodnuevamarca;
     private javax.swing.JLabel lblcodnuevoproveedor;
     private javax.swing.JLabel lblcodnuevotipo;
+    private javax.swing.JLabel lblmoddescripcion;
+    private javax.swing.JLabel lblmodprecio;
+    private javax.swing.JLabel lblnombremodproducto;
     private javax.swing.JLabel lblnombrenuevoproducto;
     private javax.swing.JLabel lblnuevadescripcion;
     private javax.swing.JLabel lblnuevoprecio;
     private javax.swing.JTable tbproducto;
+    private javax.swing.JTextArea txtareamoddescripcion;
     private javax.swing.JTextArea txtareardescripcion;
+    private javax.swing.JTextField txtcodproducto;
+    private javax.swing.JTextField txtmodnombreproducto;
+    private javax.swing.JTextField txtmodprecio;
     private javax.swing.JTextField txtnombreproducto;
     private javax.swing.JTextField txtprecioproducto;
     private javax.swing.JLabel verificaciondatos;
