@@ -12,10 +12,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class TipoV extends org.jdesktop.swingx.JXPanel {
-
+    
     private boolean canEdit = true;
     private boolean canDelete = true;
-
+    
     public TipoV() {
         initComponents();
         NuevoTipo.pack();
@@ -28,10 +28,10 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         cargarTipo();
         Habilitar();
     }
-
+    
     private void cargarTipo() {
         boolean datosEncontrados = false;
-
+        
         try (Connection con = Connect.getConnection()) {
             CtrTipo tip = new CtrTipo();
             List<Tipo> tipos = tip.cargarTipo();
@@ -53,19 +53,19 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         } catch (SQLException e) {
             System.out.println("Error al cargar la tabla: " + e.getMessage());
         }
-
+        
         verificaciondatos.setVisible(!datosEncontrados);
     }
-
+    
     private void Limpiar() {
         DefaultTableModel model = (DefaultTableModel) tbtipo.getModel();
         model.setRowCount(0);
     }
-
+    
     private void limpiarcajastexto() {
         txtnombretipo.setText("");
     }
-
+    
     private void Habilitar() {
         ListSelectionModel selectionModel;
         selectionModel = tbtipo.getSelectionModel();
@@ -82,35 +82,35 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             }
         });
     }
-
+    
     private void validarNuevaTipo() {
         if (txtnombretipo.getText().isEmpty()) {
             lblnombtipo.setText("Rellene el campo");
         } else {
             lblnombtipo.setText("");
         }
-
+        
         if (txtnombretipo.getText().isEmpty()) {
             botonguardartipo.setEnabled(false);
         } else {
             botonguardartipo.setEnabled(true);
         }
     }
-
+    
     private void validarModificarTipo() {
         if (txtmodnombtipo.getText().isEmpty()) {
             lblmodnombtipo.setText("Rellene el campo");
         } else {
             lblmodnombtipo.setText("");
         }
-
+        
         if (txtmodnombtipo.getText().isEmpty()) {
             botonmodificartipo.setEnabled(false);
         } else {
             botonmodificartipo.setEnabled(true);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -342,6 +342,8 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_botonrecargarActionPerformed
 
     private void windownuevotipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windownuevotipoActionPerformed
+        lblnombtipo.setText("");
+        botonguardartipo.setEnabled(false);
         NuevoTipo.setVisible(true);
         limpiarcajastexto();
     }//GEN-LAST:event_windownuevotipoActionPerformed
@@ -356,7 +358,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             CtrTipo ctrtip = new CtrTipo();
             Tipo tipo = new Tipo();
             String nombreingresado = txtnombretipo.getText().trim();
-
+            
             if (ctrtip.verificarNombreExistente(con, nombreingresado)) {
                 lblnombtipo.setText("El tipo ya existe");
             } else {
@@ -384,7 +386,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             idtipo = Long.parseLong(idValue);
             int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el tipo de producto?");
             switch (opcion) {
-
+                
                 case 0:
                     boolean estado = false;
                     try {
@@ -401,20 +403,22 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
                 default:
                     break;
             }
-
+            
         } else {
             System.out.print("Error al seleccionar tipo");
         }
     }//GEN-LAST:event_windoweliminartipoActionPerformed
 
     private void windowmodtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowmodtipoActionPerformed
+        lblmodnombtipo.setText("");
+        botonmodificartipo.setEnabled(true);
         int selectedRow = tbtipo.getSelectedRow();
         if (selectedRow != -1) {
-
+            
             DefaultTableModel model = (DefaultTableModel) tbtipo.getModel();
             Object data1 = model.getValueAt(selectedRow, 0);
             Object data2 = model.getValueAt(selectedRow, 1);
-
+            
             txtcodtipo.setText(data1.toString());
             txtmodnombtipo.setText(data2.toString());
             ModificarTipo.setVisible(true);
@@ -432,7 +436,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             Connection con = Connect.getConnection();
             CtrTipo ctrtip = new CtrTipo();
             Tipo tipo = new Tipo();
-
+            
             String texto = txtcodtipo.getText();
             long codtipo = Long.parseLong(texto);
             String nombre = txtmodnombtipo.getText();
@@ -447,7 +451,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
                 cargarTipo();
                 ModificarTipo.setVisible(false);
             }
-
+            
         } catch (SQLException e) {
             System.out.print("Error al modiciar el Tipo" + e);
         }

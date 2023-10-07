@@ -63,7 +63,7 @@ public class CtrTipo {
                 }
             }
         }
-        return false; // Si no se encuentra el RUC
+        return false;
     }
 
     public void cambiarEstadoTipo(Tipo tipo) throws SQLException {
@@ -93,7 +93,7 @@ public class CtrTipo {
                 }
             }
         }
-        return false; // Si no se encuentra un RUC similar
+        return false; 
     }
 
     public void ModificarTipo(Tipo tipo) throws SQLException {
@@ -110,5 +110,21 @@ public class CtrTipo {
             System.out.print("Error estado" + e);
 
         }
+    }
+    
+    public Long obtenerIdTipoPorNombre(Connection con, String nombreTipo) throws SQLException {
+        String consulta = "SELECT cod_tipo_producto FROM tipo WHERE nombre_tipo = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, nombreTipo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Si se encuentra una fila con el nombre de la marca, devuelve su ID
+                    return rs.getLong("cod_tipo_producto");
+                }
+            }
+        }
+        // Si no se encontró ninguna coincidencia, puedes manejarlo como desees
+        // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
+        return null;
     }
 }

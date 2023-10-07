@@ -580,7 +580,11 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGuardarActionPerformed
-
+        lblruc.setText("");
+        lbltelefono.setText("");
+        lblnombre.setText("");
+        lbldireccion.setText("");
+        insertarproveedor.setEnabled(false);
         NuevoProveedor.setVisible(true);
         limpiarCajasDeTexto();
     }//GEN-LAST:event_BotonGuardarActionPerformed
@@ -669,6 +673,11 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_tbproveedorMouseClicked
 
     private void BotonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonModificarActionPerformed
+        jLabel13.setText("");
+        jLabel14.setText("");
+        jLabel15.setText("");
+        jLabel16.setText("");
+        botonguardar.setEnabled(true);
         int selectedRow = tbproveedor.getSelectedRow();
         if (selectedRow != -1) { // Verifica si se ha seleccionado una fila
             DefaultTableModel model = (DefaultTableModel) tbproveedor.getModel();

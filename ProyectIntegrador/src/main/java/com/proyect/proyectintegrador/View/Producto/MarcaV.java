@@ -353,6 +353,8 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void windowNewMarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowNewMarcActionPerformed
+        lblnombre.setText("");
+        botonguardarmarca.setEnabled(false);
         NuevaMarca.setVisible(true);
         limpiarcajastexto();
     }//GEN-LAST:event_windowNewMarcActionPerformed
@@ -367,14 +369,17 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
             Connection con = Connect.getConnection();
             Marca marc = new Marca();
             CtrMarca ctrmarc = new CtrMarca();
-
-            marc.setNombre(txtnombremarca.getText());
-            marc.setEstado(Boolean.TRUE);
-            ctrmarc.agregarMarca(marc);
-            Limpiar();
-            cargarMarca();
-            NuevaMarca.setVisible(false);
-
+            String nombre = txtnombremarca.getText().trim();
+            if (ctrmarc.verificarNombreExistente(con, nombre)) {
+                lblnombre.setText("Existe una marca con el mismo nombre");
+            } else {
+                marc.setNombre(txtnombremarca.getText());
+                marc.setEstado(Boolean.TRUE);
+                ctrmarc.agregarMarca(marc);
+                Limpiar();
+                cargarMarca();
+                NuevaMarca.setVisible(false);
+            }
         } catch (SQLException e) {
             System.out.print("Error marca" + e);
         }
@@ -419,6 +424,8 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_windowDeleteMarcActionPerformed
 
     private void windowModifyMarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowModifyMarcActionPerformed
+        botonmodmarca.setEnabled(true);
+        lblmodmarcanombre.setText("");
         int selectedRow = tbmarca.getSelectedRow();
         if (selectedRow != -1) {
 
@@ -446,14 +453,18 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
 
             String texto = txtmodcodmarc.getText();
             long codmarca = Long.parseLong(texto);
-
-            marc.setCodmarca(codmarca);
-            marc.setNombre(txtmodnombremarc.getText());
-            marc.setEstado(Boolean.TRUE);
-            ctrmarc.ModificarMarca(marc);
-            Limpiar();
-            cargarMarca();
-            ModificarMarca.setVisible(false);
+            String nombre = txtmodnombremarc.getText().trim();
+            if (ctrmarc.verificarnombreSimilar(con, nombre, codmarca)) {
+                lblmodmarcanombre.setText("Marca existente");
+            } else {
+                marc.setCodmarca(codmarca);
+                marc.setNombre(txtmodnombremarc.getText());
+                marc.setEstado(Boolean.TRUE);
+                ctrmarc.ModificarMarca(marc);
+                Limpiar();
+                cargarMarca();
+                ModificarMarca.setVisible(false);
+            }
         } catch (SQLException e) {
             System.out.print("error" + e);
         }

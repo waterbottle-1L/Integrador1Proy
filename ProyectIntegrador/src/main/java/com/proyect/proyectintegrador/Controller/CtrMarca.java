@@ -21,9 +21,7 @@ public class CtrMarca {
     public List<Marca> cargarMarca() throws SQLException {
         List<Marca> marcaList = new ArrayList<>();
 
-        try (Connection connection = Connect.getConnection(); 
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTA);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Connection connection = Connect.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTA); ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Marca marca = new Marca();
@@ -38,6 +36,20 @@ public class CtrMarca {
         }
 
         return marcaList;
+    }
+    
+    public boolean verificarNombreExistente(Connection con, String nombre) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM marca WHERE nombre_marca = ? AND estado = 1";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, nombre);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Si count > 0, el RUC ya existe
+                }
+            }
+        }
+        return false;
     }
 
     public void agregarMarca(Marca marc) throws SQLException {
@@ -67,6 +79,21 @@ public class CtrMarca {
 
         }
     }
+    
+    public boolean verificarnombreSimilar(Connection con, String nombre, long idmarca) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM marca WHERE nombre_marca = ? AND cod_marca != ? AND estado = 1";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, nombre);
+            preparedStatement.setLong(2, idmarca);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Si count > 0, un RUC similar ya existe, excluyendo el RUC específico
+                }
+            }
+        }
+        return false; 
+    }
 
     public void ModificarMarca(Marca marca) throws SQLException {
         Connection conexio = Connect.getConnection();
@@ -82,5 +109,21 @@ public class CtrMarca {
             System.out.print("Error estado" + e);
 
         }
+    }
+
+    public Long obtenerIdMarcaPorNombre(Connection con, String nombreMarca) throws SQLException {
+        String consulta = "SELECT cod_marca FROM marca WHERE nombre_marca = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, nombreMarca);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Si se encuentra una fila con el nombre de la marca, devuelve su ID
+                    return rs.getLong("cod_marca");
+                }
+            }
+        }
+        // Si no se encontró ninguna coincidencia, puedes manejarlo como desees
+        // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
+        return null;
     }
 }
