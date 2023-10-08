@@ -1,6 +1,8 @@
 com\proyect\proyectintegrador\View\Producto\TipoV$4.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$4.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$12.class
+com\proyect\proyectintegrador\View\Login\LoginView$1.class
+com\proyect\proyectintegrador\View\Producto\ProductoV$6.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$2.class
 com\proyect\proyectintegrador\Controller\CtrlUsuario.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$1.class
@@ -15,7 +17,7 @@ com\proyect\proyectintegrador\View\MainView$1.class
 com\proyect\proyectintegrador\View\Producto\TipoV$5.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$3.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$8.class
-com\proyect\proyectintegrador\View\Login\Login$2.class
+com\proyect\proyectintegrador\View\MainView$4.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$1.class
 com\proyect\proyectintegrador\View\Producto\TipoV$3.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$13.class
@@ -23,6 +25,7 @@ com\proyect\proyectintegrador\View\MainView.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$3.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$16.class
 com\proyect\proyectintegrador\Entitis\Producto.class
+com\proyect\proyectintegrador\View\Inventario\InventarioView.class
 com\proyect\proyectintegrador\Controller\CtrMarca.class
 com\proyect\proyectintegrador\Entitis\Tipo.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$14.class
@@ -33,19 +36,22 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$2.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$1.class
 com\proyect\proyectintegrador\Controller\CtrlValidacion.class
 com\proyect\proyectintegrador\Controller\CtrTipo.class
+com\proyect\proyectintegrador\View\MainView$3.class
 com\proyect\proyectintegrador\View\Producto\ProductoV.class
-com\proyect\proyectintegrador\View\Login\Login$1.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$17.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$6.class
+com\proyect\proyectintegrador\View\Login\LoginView$2.class
 com\proyect\proyectintegrador\View\Producto\TipoV.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$5.class
 com\proyect\proyectintegrador\View\Producto\TipoV$2.class
+com\proyect\proyectintegrador\View\Login\LoginView.class
+com\proyect\proyectintegrador\View\Producto\ProductoV$7.class
 com\proyect\proyectintegrador\Controller\CtrProveedor.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$10.class
-com\proyect\proyectintegrador\View\Login\Login.class
 com\proyect\proyectintegrador\Connection\Connect.class
 com\proyect\proyectintegrador\Entitis\Proveedor.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$4.class
+com\proyect\proyectintegrador\View\Inventario\InventarioV.class
 com\proyect\proyectintegrador\View\Producto\ProductoView.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$3.class
 com\proyect\proyectintegrador\View\MainView$2.class
@@ -58,5 +64,6 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$11.class
 com\proyect\proyectintegrador\View\Producto\TipoV$1.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$6.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$8.class
+com\proyect\proyectintegrador\View\MainView$5.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV.class
 com\proyect\proyectintegrador\Controller\CtrProducto.class

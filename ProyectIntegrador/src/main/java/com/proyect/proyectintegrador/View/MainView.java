@@ -1,6 +1,7 @@
 package com.proyect.proyectintegrador.View;
 
 import com.proyect.proyectintegrador.Controller.CtrlUsuario;
+import com.proyect.proyectintegrador.View.Inventario.InventarioView;
 import com.proyect.proyectintegrador.View.Producto.ProductoView;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Dimension;
@@ -24,9 +25,9 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         jToolBar1 = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         ProveedorButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        ClienteButton = new javax.swing.JButton();
+        InventarioButton = new javax.swing.JButton();
+        VenatsButton = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -49,23 +50,33 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         });
         jToolBar1.add(ProveedorButton);
 
-        jButton2.setText("Cliente");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
+        ClienteButton.setText("Cliente");
+        ClienteButton.setFocusable(false);
+        ClienteButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ClienteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ClienteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClienteButtonActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(ClienteButton);
 
-        jButton3.setText("Inventario");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
+        InventarioButton.setText("Inventario");
+        InventarioButton.setFocusable(false);
+        InventarioButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        InventarioButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        InventarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InventarioButtonActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(InventarioButton);
 
-        jButton4.setText("Ventas");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton4);
+        VenatsButton.setText("Ventas");
+        VenatsButton.setFocusable(false);
+        VenatsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        VenatsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(VenatsButton);
         jToolBar1.add(filler2);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -142,15 +153,58 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         });
         ProveedorButton.setEnabled(false);
     }//GEN-LAST:event_ProveedorButtonActionPerformed
+
+    private void ClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClienteButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_ClienteButtonActionPerformed
+
+    private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
+        InventarioView IV=new InventarioView();
+        jDesktopPane1.add(IV);
+        IV.setVisible(true);
+        IV.addInternalFrameListener(new InternalFrameListener() {
+            @Override
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                InventarioButton.setEnabled(true);
+                IV.setVisible(false);
+            }
+
+            @Override
+            public void internalFrameOpened(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameIconified(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameDeiconified(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameActivated(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameDeactivated(InternalFrameEvent e) {
+            }
+        });
+        InventarioButton.setEnabled(false);
+    }//GEN-LAST:event_InventarioButtonActionPerformed
         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ClienteButton;
+    private javax.swing.JButton InventarioButton;
     private javax.swing.JButton ProveedorButton;
+    private javax.swing.JButton VenatsButton;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
