@@ -477,6 +477,8 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
+        ModificarProducto.setResizable(false);
+
         jLabel8.setText("Nombre: ");
 
         jLabel9.setText("Marca:");
@@ -821,6 +823,7 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
                     } catch (SQLException e) {
                         System.out.print("Error al eliminar producto" + e);
                     }
+                    break;
                 case 1:
                     break;
                 default:

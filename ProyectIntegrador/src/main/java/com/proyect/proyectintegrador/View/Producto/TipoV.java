@@ -411,6 +411,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
                     } catch (SQLException e) {
                         System.out.print("Error al eliminar tipo" + e);
                     }
+                    break;
                 case 1:
                     break;
                 default:

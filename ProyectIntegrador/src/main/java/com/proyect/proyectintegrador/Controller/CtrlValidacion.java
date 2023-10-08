@@ -5,6 +5,10 @@ public class CtrlValidacion {
     public boolean validarRuc(String datos) {
         return datos.matches("^\\d{11}$");
     }
+    
+    public boolean validarDni(String datos) {
+        return datos.matches("^\\d{8}$");
+    }
 
     public boolean validarTelefono(String datos) {
         return datos.matches("^\\d{9}$");

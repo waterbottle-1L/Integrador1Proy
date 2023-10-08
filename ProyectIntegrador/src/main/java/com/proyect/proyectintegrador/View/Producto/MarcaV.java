@@ -423,6 +423,7 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
                     } catch (SQLException e) {
                         System.out.print("Error marca" + e);
                     }
+                    break;
                 case 1:
                     break;
                 default:
