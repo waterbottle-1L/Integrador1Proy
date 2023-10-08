@@ -25,6 +25,6 @@ public class Main {
             };*/
             ventana.setVisible(true);
         });
-
+        
     }
 }
