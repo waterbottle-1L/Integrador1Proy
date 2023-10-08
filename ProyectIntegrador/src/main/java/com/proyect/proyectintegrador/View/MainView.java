@@ -1,6 +1,7 @@
 package com.proyect.proyectintegrador.View;
 
 import com.proyect.proyectintegrador.Controller.CtrlUsuario;
+import com.proyect.proyectintegrador.View.Cliente.ClienteView;
 import com.proyect.proyectintegrador.View.Inventario.InventarioView;
 import com.proyect.proyectintegrador.View.Producto.ProductoView;
 import com.proyect.proyectintegrador.modelo.usuario;
@@ -155,8 +156,41 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     }//GEN-LAST:event_ProveedorButtonActionPerformed
 
     private void ClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClienteButtonActionPerformed
-        // TODO add your handling code here:
+        ClienteView client = new ClienteView();
+        jDesktopPane1.add(client);
+        client.setVisible(true);
+        client.addInternalFrameListener(new InternalFrameListener(){
+            @Override
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt){
+                ClienteButton.setEnabled(true);
+                client.setVisible(false);
+            }
+            
+            @Override
+            public void internalFrameOpened(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+            }
+            
+            @Override
+            public void internalFrameIconified(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameDeiconified(InternalFrameEvent e) {
+            }
+            @Override
+            public void internalFrameActivated(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameDeactivated(InternalFrameEvent e) {
+            }
+        });
         
+        ClienteButton.setEnabled(false);
     }//GEN-LAST:event_ClienteButtonActionPerformed
 
     private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
