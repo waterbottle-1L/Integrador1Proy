@@ -29,6 +29,18 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         Habilitar();
     }
     
+    public class nonEditableTableModel extends DefaultTableModel {
+
+        public nonEditableTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+    
     private void cargarTipo() {
         boolean datosEncontrados = false;
         
@@ -36,9 +48,10 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             CtrTipo tip = new CtrTipo();
             List<Tipo> tipos = tip.cargarTipo();
             if (tipos != null && !tipos.isEmpty()) {
-                DefaultTableModel model = new DefaultTableModel();
-                model.addColumn("codigo");
-                model.addColumn("nombre");
+                
+                Object[] columnNames ={"Codigo","Nombre"};
+                nonEditableTableModel model = new nonEditableTableModel(columnNames,0);
+                
                 for (Tipo tipo : tipos) {
                     if (tipo.getEstado()) {
                         Object[] datos = new Object[2];

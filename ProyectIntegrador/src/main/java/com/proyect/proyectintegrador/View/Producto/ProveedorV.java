@@ -33,18 +33,26 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
 
     }
 
+    public class nonEditableTableModel extends DefaultTableModel {
+
+        public nonEditableTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+
     private void cargarProveedor() {
         try (Connection con = Connect.getConnection()) {
             CtrProveedor pro = new CtrProveedor();
             List<Proveedor> proveedores = pro.cargarProveedor();
 
             if (proveedores != null && !proveedores.isEmpty()) {
-                DefaultTableModel model = new DefaultTableModel();
-                model.addColumn("Código");
-                model.addColumn("Nombre");
-                model.addColumn("RUC");
-                model.addColumn("Teléfono");
-                model.addColumn("Dirección");
+                Object[] columnNames = {"Codigo", "Nombre", "Ruc", "Telefono", "Direccion"};
+                nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
 
                 for (Proveedor proveedor : proveedores) {
                     if (proveedor.getEstado()) {
@@ -65,7 +73,7 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 System.out.println("No se encontraron proveedores.");
             }
         } catch (SQLException e) {
-            
+
             System.out.println("Error al cargar la tabla: " + e.getMessage());
         }
     }
@@ -612,7 +620,7 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 NuevoProveedor.setVisible(false);
             }
         } catch (SQLException e) {
-            
+
             NuevoProveedor.setVisible(false);
             JOptionPane.showMessageDialog(null, "Error al agregar proveedor: " + e.getMessage());
         }
@@ -729,27 +737,27 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
             String rucIngresado = txtModRuc.getText().trim();
             String texto = txtModCod.getText();
             long codproveedor = Long.parseLong(texto);
-           
-            if(ctrprov.verificarRucSimilar(con, rucIngresado,codproveedor)){
+
+            if (ctrprov.verificarRucSimilar(con, rucIngresado, codproveedor)) {
                 jLabel14.setText("El ruc ya existe");
-            }else{
-                
+            } else {
+
                 prov.setCodproveedor(codproveedor);
                 prov.setNombre(txtModNombre.getText());
                 prov.setRuc(txtModRuc.getText());
                 prov.setTelefono(txtModTelefono.getText());
                 prov.setDireccion(txtMoDireccion.getText());
                 prov.setEstado(Boolean.TRUE);
-                
+
                 ctrprov.ModificarProveedor(prov);
                 Limpiar();
                 cargarProveedor();
                 ModificarProveedor.setVisible(false);
             }
-            
+
         } catch (SQLException e) {
             NuevoProveedor.setVisible(false);
-            System.out.print("Error estado"+e);
+            System.out.print("Error estado" + e);
         }
     }//GEN-LAST:event_botonguardarActionPerformed
 

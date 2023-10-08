@@ -32,15 +32,26 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
         cargarMarca();
     }
 
+    public class nonEditableTableModel extends DefaultTableModel {
+
+        public nonEditableTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+
     private void cargarMarca() {
         boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
             CtrMarca marc = new CtrMarca();
             List<Marca> marcas = marc.cargarMarca();
             if (marcas != null && !marcas.isEmpty()) {
-                DefaultTableModel model = new DefaultTableModel();
-                model.addColumn("codigo");
-                model.addColumn("nombre");
+                Object[] columnNames = {"codigo", "nombre"};
+                nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
 
                 for (Marca marca : marcas) {
                     if (marca.getEstado()) {
