@@ -11,8 +11,8 @@ public class InventarioView extends javax.swing.JInternalFrame {
         //jTabbedPane1.add("Inventario", InventarioVTabInstance());
     }
     
-    private InventarioV InventarioTabInstance(){
-        return new InventarioV();
+    private InventarioVi InventarioTabInstance(){
+        return new InventarioVi();
     }
             
     
@@ -42,8 +42,6 @@ public class InventarioView extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
         );
-
-        getAccessibleContext().setAccessibleName("Inventario");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
