@@ -374,6 +374,8 @@ public class ClienteV extends org.jdesktop.swingx.JXPanel {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
+        ModificarCliente.setResizable(false);
+
         jLabel12.setText("Telefono:");
 
         txtmodapellido.addKeyListener(new java.awt.event.KeyAdapter() {

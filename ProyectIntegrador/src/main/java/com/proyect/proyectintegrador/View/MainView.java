@@ -4,6 +4,7 @@ import com.proyect.proyectintegrador.Controller.CtrlUsuario;
 import com.proyect.proyectintegrador.View.Cliente.ClienteView;
 import com.proyect.proyectintegrador.View.Inventario.InventarioView;
 import com.proyect.proyectintegrador.View.Producto.ProductoView;
+import com.proyect.proyectintegrador.View.Venta.VentaView;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
@@ -11,14 +12,14 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 public class MainView extends org.jdesktop.swingx.JXFrame {
-
+    
     public MainView() {
         initComponents();
         this.setSize(new Dimension(1300, 800));
         this.setLocationRelativeTo(null);
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,6 +78,11 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         VenatsButton.setFocusable(false);
         VenatsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         VenatsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        VenatsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VenatsButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(VenatsButton);
         jToolBar1.add(filler2);
 
@@ -127,27 +133,27 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 ProveedorButton.setEnabled(true);
                 pro.setVisible(false);
             }
-
+            
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
@@ -159,9 +165,9 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         ClienteView client = new ClienteView();
         jDesktopPane1.add(client);
         client.setVisible(true);
-        client.addInternalFrameListener(new InternalFrameListener(){
+        client.addInternalFrameListener(new InternalFrameListener() {
             @Override
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt){
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
                 ClienteButton.setEnabled(true);
                 client.setVisible(false);
             }
@@ -169,7 +175,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
@@ -177,14 +183,15 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
+
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
@@ -194,7 +201,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     }//GEN-LAST:event_ClienteButtonActionPerformed
 
     private void InventarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InventarioButtonActionPerformed
-        InventarioView IV=new InventarioView();
+        InventarioView IV = new InventarioView();
         jDesktopPane1.add(IV);
         IV.setVisible(true);
         IV.addInternalFrameListener(new InternalFrameListener() {
@@ -203,34 +210,73 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 InventarioButton.setEnabled(true);
                 IV.setVisible(false);
             }
-
+            
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-
+            
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
         });
         InventarioButton.setEnabled(false);
     }//GEN-LAST:event_InventarioButtonActionPerformed
+
+    private void VenatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VenatsButtonActionPerformed
+        VentaView venta = new VentaView();
+        jDesktopPane1.add(venta);
+        venta.setVisible(true);
+        venta.addInternalFrameListener(new InternalFrameListener() {
+            @Override
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                VenatsButton.setEnabled(true);
+                venta.setVisible(false);
+            }
+            
+            @Override
+            public void internalFrameOpened(InternalFrameEvent e) {
+            }
+            
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+            }
+            
+            @Override
+            public void internalFrameIconified(InternalFrameEvent e) {
+            }
+            
+            @Override
+            public void internalFrameDeiconified(InternalFrameEvent e) {
+            }
+            
+            @Override
+            public void internalFrameActivated(InternalFrameEvent e) {
+            }
+            
+            @Override
+            public void internalFrameDeactivated(InternalFrameEvent e) {
+            }
+        });
         
+        VenatsButton.setEnabled(false);
+    }//GEN-LAST:event_VenatsButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ClienteButton;
