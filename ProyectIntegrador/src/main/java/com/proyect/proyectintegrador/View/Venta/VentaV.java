@@ -1,20 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package com.proyect.proyectintegrador.View.Venta;
 
-/**
- *
- * @author snow-
- */
+
+import com.proyect.proyectintegrador.View.Login.LoginView;
+
 public class VentaV extends javax.swing.JPanel {
 
-    /**
-     * Creates new form VentaV
-     */
+    private long empleado;
+    
     public VentaV() {
+
         initComponents();
+
+    }
+
+    public VentaV(long empleado) {
+
+        initComponents();
+        this.empleado = empleado;
+        usarCodempleado(empleado);
+
+    }
+
+    public void usarCodempleado(long codempleado) {
+        // Realiza operaciones con la variable codempleado aquí
+        System.out.println("El valor de codempleado en OtraClase es: " + codempleado);
     }
 
     /**
@@ -26,19 +35,39 @@ public class VentaV extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblprueba = new javax.swing.JLabel();
+        txtprueba = new javax.swing.JTextField();
+
+        lblprueba.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
+                        .addComponent(lblprueba))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(txtprueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(lblprueba)
+                .addGap(74, 74, 74)
+                .addComponent(txtprueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblprueba;
+    private javax.swing.JTextField txtprueba;
     // End of variables declaration//GEN-END:variables
 }

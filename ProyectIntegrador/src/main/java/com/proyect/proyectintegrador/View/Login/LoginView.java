@@ -1,21 +1,28 @@
-
 package com.proyect.proyectintegrador.View.Login;
 
+import com.proyect.proyectintegrador.Connection.Connect;
 import com.proyect.proyectintegrador.Controller.CtrlUsuario;
+import com.proyect.proyectintegrador.Entitis.Empleado;
 import com.proyect.proyectintegrador.View.MainView;
+import com.proyect.proyectintegrador.View.Venta.VentaV;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class LoginView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
+    public long codempleado;
+    
     public LoginView() {
         initComponents();
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
     }
+
     /*@Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("/com/proyect/proyectintegrador/img/logo.png"));
@@ -174,8 +181,44 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.Login();
+
+        codempleado = Login();
+        VentaV cod = new VentaV(codempleado);
+        //this.Login();
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    public long Login() {
+        long codempleado = -1;
+        if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
+            CtrlUsuario ctrlUser = new CtrlUsuario();
+            usuario user = new usuario();
+            user.setNombre(UsuarioTextField.getText().trim());
+            user.setPassword(UContraseñaPasswordField.getText().trim());
+            if (ctrlUser.inicioSesionUser(user)) {
+                try {
+
+                    String nombre = UsuarioTextField.getText().trim();
+                    String pass = UContraseñaPasswordField.getText().trim();
+
+                    codempleado = ctrlUser.obtenerCodEmpleadoPorNombreYPassword(nombre, pass);
+                    JOptionPane.showMessageDialog(null, "Login Correcto...");
+                    setVisible(false);
+                    MainView MV = new MainView();
+                    MV.setVisible(true);
+
+                } catch (SQLException e) {
+                    System.out.println("Error al obtener el codigo de empleado: " + e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
+        }
+        return codempleado;
+
+    }
 
     private void UsuarioTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioTextFieldActionPerformed
         // TODO add your handling code here:
@@ -188,15 +231,15 @@ public class LoginView extends javax.swing.JFrame {
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         // TODO add your handling code here:
-        xMouse= evt.getX();
-        yMouse= evt.getY();
+        xMouse = evt.getX();
+        yMouse = evt.getY();
     }//GEN-LAST:event_jPanel1MousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         // TODO add your handling code here:
-        int x=evt.getXOnScreen();
-        int y=evt.getYOnScreen();
-        this.setLocation(x - xMouse, y- yMouse);
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_jPanel1MouseDragged
 
     private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered
@@ -209,25 +252,6 @@ public class LoginView extends javax.swing.JFrame {
         exitButton.setBackground(Color.black);
     }//GEN-LAST:event_exitButtonMouseExited
 
-    
-    public void Login() {
-        if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
-            CtrlUsuario ctrlUser=new CtrlUsuario();
-            usuario user=new usuario();
-            user.setNombre(UsuarioTextField.getText().trim());
-            user.setPassword(UContraseñaPasswordField.getText().trim());
-            if (ctrlUser.inicioSesionUser(user)) {
-                JOptionPane.showMessageDialog(null, "Login Correcto...");
-                setVisible(false);
-                MainView MV=new MainView();
-                MV.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario o Clave Incorrectos");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese sus credenciales");
-        }
-        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ContraseñaLabel;
