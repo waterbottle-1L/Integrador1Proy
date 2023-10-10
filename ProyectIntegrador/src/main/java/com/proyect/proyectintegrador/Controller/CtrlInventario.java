@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CtrlInventario {
-    String SQL_CONSULTA="SELECT * FROM inventario";
-    String SQL_ACTUALIZAR="";
+    String SQL_CONSULTA="{CALL ObtenerInventario()}";
+    String SQL_ACTUALIZAR="{CALL ActualizarDatosProducto(?, ?, ?, ?, ?, ?, ?)}";
     
     public List<Inventario> cargarInventario() throws SQLException{
         List<Inventario> inventarioLista=new ArrayList<>();
