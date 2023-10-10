@@ -2,7 +2,8 @@
 package com.proyect.proyectintegrador.View.Inventario;
 
 import com.proyect.proyectintegrador.Connection.Connect;
-import com.proyect.proyectintegrador.Controller.CtrProducto;
+import com.proyect.proyectintegrador.Controller.CtrlInventario;
+import com.proyect.proyectintegrador.Entitis.Inventario;
 import com.proyect.proyectintegrador.Entitis.Producto;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,6 +16,8 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
 
     public InventarioVi() {
         initComponents();
+        busyLabel.setVisible(false);
+        cargarInventario();
     }
 
     @SuppressWarnings("unchecked")
@@ -25,7 +28,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         inventarioTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         ActualizarButton = new javax.swing.JButton();
-        jXBusyLabel1 = new org.jdesktop.swingx.JXBusyLabel();
+        busyLabel = new org.jdesktop.swingx.JXBusyLabel();
         verificaciondatos = new javax.swing.JLabel();
         BuscarButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -54,7 +57,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
 
         ActualizarButton.setText("Actualizar");
 
-        jXBusyLabel1.setText("Actualizando");
+        busyLabel.setText("Actualizando");
 
         verificaciondatos.setText("Sin Datos");
 
@@ -84,7 +87,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                         .addGap(18, 18, 18)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jXBusyLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(busyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(ActualizarButton)
                         .addGap(16, 16, 16))
@@ -122,7 +125,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ActualizarButton)
-                    .addComponent(jXBusyLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(busyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,12 +154,12 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cargarProducto() {
+    private void cargarInventario() {
         boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
-            CtrProducto ctrproducto = new CtrProducto();
-            List<Producto> productos = ctrproducto.cargarProductos();
-            if (productos != null && !productos.isEmpty()) {
+            CtrlInventario ctrinventario = new CtrlInventario();
+            List<Inventario> inventario = ctrinventario.cargarInventario();
+            if (inventario != null && !inventario.isEmpty()) {
                 DefaultTableModel model = new DefaultTableModel();
                 model.addColumn("Código");
                 model.addColumn("Marca");
@@ -167,18 +170,15 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                 model.addColumn("Fecha");
                 model.addColumn("Precio");
                 
-                for (Producto producto : productos) {
-                    if (producto.getEstado()) {
+                for (Inventario stock : inventario) {
+                    if (stock.isEstado()) {
                         Object[] datos = new Object[8];
-                        datos[0] = producto.getCodProducto();
-                        datos[1] = producto.getNombreMarca();
-                        datos[2] = producto.getNombreProveedor();
-                        datos[3] = producto.getNombreTipo();
-                        datos[4] = producto.getNombre();
-                        datos[5] = producto.getDescripcion();
-                        datos[6] = producto.getFechaRegistro();
-                        datos[7] = producto.getPrecio();
-                        
+                        datos[0] = stock.getCod_prod();
+                        datos[1] = stock.getFecha_registro();
+                        datos[2] = stock.getStock();
+                        datos[3] = stock.getStock_inicial();
+                        datos[4] = stock.getStock_maximo();
+                        datos[5] = stock.getStock_minimo();
                         model.addRow(datos);
                         datosEncontrados = true;
                     }
@@ -195,6 +195,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton BuscarButton;
+    private org.jdesktop.swingx.JXBusyLabel busyLabel;
     private javax.swing.JTable inventarioTable;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -204,7 +205,6 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private org.jdesktop.swingx.JXBusyLabel jXBusyLabel1;
     private javax.swing.JRadioButton mayorMenorRadioButton;
     private javax.swing.JRadioButton menorMayorRadioButton;
     private javax.swing.JLabel verificaciondatos;

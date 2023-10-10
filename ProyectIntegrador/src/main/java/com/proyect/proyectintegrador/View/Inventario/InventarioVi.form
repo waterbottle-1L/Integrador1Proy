@@ -26,7 +26,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jTextField2" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jXBusyLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="busyLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="ActualizarButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
@@ -78,7 +78,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ActualizarButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jXBusyLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="busyLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -145,7 +145,7 @@
         <Property name="text" type="java.lang.String" value="Actualizar"/>
       </Properties>
     </Component>
-    <Component class="org.jdesktop.swingx.JXBusyLabel" name="jXBusyLabel1">
+    <Component class="org.jdesktop.swingx.JXBusyLabel" name="busyLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Actualizando"/>
       </Properties>
