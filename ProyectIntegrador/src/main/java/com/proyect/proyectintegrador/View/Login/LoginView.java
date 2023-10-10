@@ -1,27 +1,38 @@
 package com.proyect.proyectintegrador.View.Login;
 
-import com.proyect.proyectintegrador.Connection.Connect;
 import com.proyect.proyectintegrador.Controller.CtrlUsuario;
-import com.proyect.proyectintegrador.Entitis.Empleado;
 import com.proyect.proyectintegrador.View.MainView;
-import com.proyect.proyectintegrador.View.Venta.VentaV;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.sql.Connection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class LoginView extends javax.swing.JFrame {
 
     int xMouse, yMouse;
-    public long codempleado;
-    
+    private static LoginView instancia;
+    private static long codempleado;
+
     public LoginView() {
         initComponents();
         this.setLocationRelativeTo(null);
+        botoningresar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Captura el valor deseado y guárdalo en la variable
+                codempleado = Login();
+            }
+
+        });
+
     }
+
+    public static long getCodempleado() {
+        return codempleado;
+    }
+
 
     /*@Override
     public Image getIconImage() {
@@ -42,7 +53,7 @@ public class LoginView extends javax.swing.JFrame {
         UsuarioTextField = new javax.swing.JTextField();
         UsarioLabel = new javax.swing.JLabel();
         ContraseñaLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botoningresar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         exitButton = new javax.swing.JButton();
@@ -61,12 +72,7 @@ public class LoginView extends javax.swing.JFrame {
 
         ContraseñaLabel.setText("Contraseña");
 
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        botoningresar.setText("Ingresar");
 
         javax.swing.GroupLayout credencialesPanelLayout = new javax.swing.GroupLayout(credencialesPanel);
         credencialesPanel.setLayout(credencialesPanelLayout);
@@ -75,6 +81,9 @@ public class LoginView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, credencialesPanelLayout.createSequentialGroup()
                 .addGroup(credencialesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(credencialesPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botoningresar))
+                    .addGroup(credencialesPanelLayout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(credencialesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(UsarioLabel)
@@ -82,10 +91,7 @@ public class LoginView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                         .addGroup(credencialesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(UsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(UContraseñaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(credencialesPanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                            .addComponent(UContraseñaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(40, 40, 40))
         );
         credencialesPanelLayout.setVerticalGroup(
@@ -99,9 +105,9 @@ public class LoginView extends javax.swing.JFrame {
                 .addGroup(credencialesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ContraseñaLabel)
                     .addComponent(UContraseñaPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(botoningresar)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -180,14 +186,6 @@ public class LoginView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        codempleado = Login();
-        VentaV cod = new VentaV(codempleado);
-        //this.Login();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public long Login() {
         long codempleado = -1;
         if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
@@ -258,9 +256,9 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JPasswordField UContraseñaPasswordField;
     private javax.swing.JLabel UsarioLabel;
     private javax.swing.JTextField UsuarioTextField;
+    private javax.swing.JButton botoningresar;
     private javax.swing.JPanel credencialesPanel;
     private javax.swing.JButton exitButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

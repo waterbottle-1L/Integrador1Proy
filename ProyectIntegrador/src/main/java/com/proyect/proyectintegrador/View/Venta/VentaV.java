@@ -1,29 +1,19 @@
 package com.proyect.proyectintegrador.View.Venta;
 
-
 import com.proyect.proyectintegrador.View.Login.LoginView;
 
 public class VentaV extends javax.swing.JPanel {
 
-    private long empleado;
     
+    
+
     public VentaV() {
 
         initComponents();
+        long valor = LoginView.getCodempleado();
+        String cod = String.valueOf(valor);
+        lblprueba.setText(cod);
 
-    }
-
-    public VentaV(long empleado) {
-
-        initComponents();
-        this.empleado = empleado;
-        usarCodempleado(empleado);
-
-    }
-
-    public void usarCodempleado(long codempleado) {
-        // Realiza operaciones con la variable codempleado aquí
-        System.out.println("El valor de codempleado en OtraClase es: " + codempleado);
     }
 
     /**
