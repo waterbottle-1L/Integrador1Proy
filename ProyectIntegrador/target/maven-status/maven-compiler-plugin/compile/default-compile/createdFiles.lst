@@ -3,7 +3,6 @@ com\proyect\proyectintegrador\View\Cliente\ClienteV$7.class
 com\proyect\proyectintegrador\View\Producto\TipoV$4.class
 com\proyect\proyectintegrador\View\Login\LoginView$4.class
 com\proyect\proyectintegrador\View\Inventario\InventarioVi$3.class
-com\proyect\proyectintegrador\Controller\CtrInventario.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$4.class
 com\proyect\proyectintegrador\View\Login\LoginView$1.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$2.class
@@ -21,6 +20,7 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$4.class
 com\proyect\proyectintegrador\Controller\CtrVenta.class
 com\proyect\proyectintegrador\View\MainView$1.class
 com\proyect\proyectintegrador\Entitis\DetalleVenta.class
+com\proyect\proyectintegrador\View\Venta\VentaV$3.class
 com\proyect\proyectintegrador\Controller\CtrEmpleado.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$1.class
 com\proyect\proyectintegrador\Entitis\Inventario.class
@@ -35,6 +35,7 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$16.class
 com\proyect\proyectintegrador\View\Cliente\ClienteView.class
 com\proyect\proyectintegrador\Controller\CtrMarca.class
 com\proyect\proyectintegrador\Entitis\Tipo.class
+com\proyect\proyectintegrador\Controller\CtrMetodoPago.class
 com\proyect\proyectintegrador\Entitis\Cliente.class
 com\proyect\proyectintegrador\View\Login\LoginView$6.class
 com\proyect\proyectintegrador\View\Venta\VentaView.class
@@ -49,6 +50,7 @@ com\proyect\proyectintegrador\View\Inventario\InventarioVi$2.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$10.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$nonEditableTableModel.class
 com\proyect\proyectintegrador\Controller\CtrProveedor.class
+com\proyect\proyectintegrador\View\Venta\VentaV$2.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$10.class
 com\proyect\proyectintegrador\Connection\Connect.class
 com\proyect\proyectintegrador\Entitis\Proveedor.class
@@ -59,11 +61,14 @@ com\proyect\proyectintegrador\Controller\CtrCliente.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$5.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$5.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$11.class
+com\proyect\proyectintegrador\View\Venta\VentaV$1.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$6.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$9.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$16.class
 com\proyect\proyectintegrador\Entitis\Venta.class
+com\proyect\proyectintegrador\View\Venta\VentaV$nonEditableTableModel.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$11.class
+com\proyect\proyectintegrador\View\Venta\VentaV$4.class
 com\proyect\proyectintegrador\Controller\CtrlInventario.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$12.class
 com\proyect\proyectintegrador\View\MainView$8.class
@@ -79,6 +84,7 @@ com\proyect\proyectintegrador\View\Cliente\ClienteV$8.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$3.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$8.class
 com\proyect\proyectintegrador\View\Producto\TipoV$3.class
+com\proyect\proyectintegrador\Controller\CtrComprobante.class
 com\proyect\proyectintegrador\View\Inventario\InventarioVi$1.class
 com\proyect\proyectintegrador\View\MainView.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$3.class
