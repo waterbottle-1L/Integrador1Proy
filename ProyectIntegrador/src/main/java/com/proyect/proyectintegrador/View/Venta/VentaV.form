@@ -22,7 +22,7 @@
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                              <Component id="botonregistrarventa" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="589" max="-2" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -38,9 +38,9 @@
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel4" min="-2" pref="156" max="-2" attributes="0"/>
+                                          <Component id="lblcliente" min="-2" pref="156" max="-2" attributes="0"/>
                                           <Component id="jComboBoxcliente" min="-2" pref="156" max="-2" attributes="0"/>
-                                          <Component id="jLabel5" alignment="0" min="-2" pref="156" max="-2" attributes="0"/>
+                                          <Component id="lblproducto" alignment="0" min="-2" pref="156" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -54,22 +54,10 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="botonbuscarproducto" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txtcantidad" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txtsubtotal" min="-2" pref="169" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="botonbuscarcliente" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jComboBoxcomprobante" min="-2" pref="166" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -77,6 +65,22 @@
                                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                           <Component id="jComboBoxmetodopago" min="-2" pref="185" max="-2" attributes="0"/>
                                       </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="botonbuscarproducto" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblcantidad" max="32767" attributes="0"/>
+                                          <Component id="txtcantidad" pref="115" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txtsubtotal" min="-2" pref="118" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="botonañadir" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -97,7 +101,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="36" max="32767" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -113,7 +117,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel4" min="-2" pref="16" max="-2" attributes="0"/>
+                          <Component id="lblcliente" min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="1" min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel10" alignment="1" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
@@ -130,8 +134,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel5" min="-2" pref="16" max="-2" attributes="0"/>
-                                  <Component id="jLabel11" alignment="0" min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Component id="lblproducto" min="-2" pref="16" max="-2" attributes="0"/>
+                                  <Component id="lblcantidad" alignment="0" min="-2" pref="16" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jLabel6" min="-2" pref="16" max="-2" attributes="0"/>
@@ -145,7 +149,8 @@
                           <Component id="txtcantidad" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtsubtotal" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonañadir" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel11" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="369" max="-2" attributes="0"/>
@@ -153,7 +158,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txttotalapagar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botonregistrarventa" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabel9" min="-2" pref="16" max="-2" attributes="0"/>
@@ -173,7 +178,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tbventa">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
@@ -184,6 +189,9 @@
               </Table>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -202,7 +210,7 @@
         <Property name="text" type="java.lang.String" value="Producto:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="lblcliente">
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxcliente">
       <Properties>
@@ -234,7 +242,7 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel5">
+    <Component class="javax.swing.JLabel" name="lblproducto">
     </Component>
     <Component class="javax.swing.JTextField" name="txtbuscarproducto">
     </Component>
@@ -319,6 +327,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtcantidad">
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtcantidadKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
       <Properties>
@@ -327,15 +338,20 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtsubtotal">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="botona&#xf1;adir">
       <Properties>
         <Property name="text" type="java.lang.String" value="A&#xf1;adir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botona&#xf1;adirActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="botonregistrarventa">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrar Venta"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblcantidad">
     </Component>
   </SubComponents>
 </Form>

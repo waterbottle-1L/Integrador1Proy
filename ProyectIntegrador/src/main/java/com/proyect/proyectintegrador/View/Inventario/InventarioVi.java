@@ -269,24 +269,22 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
             List<Inventario> inventario = ctrinventario.cargarInventario();
             if (inventario != null && !inventario.isEmpty()) {
                 DefaultTableModel model = new DefaultTableModel();
-                model.addColumn("Código");
-                model.addColumn("Marca");
-                model.addColumn("Proveedor");
-                model.addColumn("Tipo");
                 model.addColumn("Nombre");
-                model.addColumn("Descripcion");
+                model.addColumn("Stock");
+                model.addColumn("Stock inicial");
+                model.addColumn("Stock maximo");
+                model.addColumn("Stock minimo");
                 model.addColumn("Fecha");
-                model.addColumn("Precio");
                 
                 for (Inventario stock : inventario) {
                     if (stock.isEstado()) {
-                        Object[] datos = new Object[8];
-                        datos[0] = stock.getCod_prod();
-                        datos[1] = stock.getFecha_registro();
-                        datos[2] = stock.getStock();
-                        datos[3] = stock.getStock_inicial();
-                        datos[4] = stock.getStock_maximo();
-                        datos[5] = stock.getStock_minimo();
+                        Object[] datos = new Object[6];
+                        datos[0] = stock.getNombreproducto();
+                        datos[1] = stock.getStock();
+                        datos[2] = stock.getStock_inicial();
+                        datos[3] = stock.getStock_maximo();
+                        datos[4] = stock.getStock_minimo();
+                        datos[5] = stock.getFecha_registro();
                         model.addRow(datos);
                         datosEncontrados = true;
                     }

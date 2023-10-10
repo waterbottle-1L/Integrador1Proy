@@ -4,6 +4,7 @@ package com.proyect.proyectintegrador.Entitis;
 
 public class DetalleVenta {
     
+    private Long coddetalleventa;
     private Long codproducto;
     private Long codventa;
     private int cantidad;
@@ -11,7 +12,39 @@ public class DetalleVenta {
     private Double subtotal;
     private Double igv;
     private Double detalleventa;
+    private Double totalapagar;
 
+    public Double getTotalapagar() {
+        return totalapagar;
+    }
+
+    public void setTotalapagar(Double totalapagar) {
+        this.totalapagar = totalapagar;
+    }
+    
+    
+    
+    private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
+    
+    public Long getCoddetalleventa() {
+        return coddetalleventa;
+    }
+
+    public void setCoddetalleventa(Long coddetalleventa) {
+        this.coddetalleventa = coddetalleventa;
+    }
+
+    
     public Long getCodproducto() {
         return codproducto;
     }
