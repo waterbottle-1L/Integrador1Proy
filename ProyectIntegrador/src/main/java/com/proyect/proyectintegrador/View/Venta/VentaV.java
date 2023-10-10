@@ -1,6 +1,20 @@
 package com.proyect.proyectintegrador.View.Venta;
 
+import com.proyect.proyectintegrador.Connection.Connect;
+import com.proyect.proyectintegrador.Controller.CtrCliente;
+import com.proyect.proyectintegrador.Controller.CtrComprobante;
+import com.proyect.proyectintegrador.Controller.CtrMetodoPago;
+import com.proyect.proyectintegrador.Controller.CtrProducto;
+import com.proyect.proyectintegrador.Controller.CtrlInventario;
+import com.proyect.proyectintegrador.Entitis.Cliente;
+import com.proyect.proyectintegrador.Entitis.Comprobante;
+import com.proyect.proyectintegrador.Entitis.Inventario;
+import com.proyect.proyectintegrador.Entitis.MetodoPago;
 import com.proyect.proyectintegrador.View.Login.LoginView;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 public class VentaV extends javax.swing.JPanel {
 
@@ -13,10 +27,80 @@ public class VentaV extends javax.swing.JPanel {
         long valor = LoginView.getCodempleado();
         String cod = String.valueOf(valor);
         lblprueba.setText(cod);
+        txtsubtotal.setEnabled(false);
+        txttotalapagar.setEnabled(false);
+        cargarCliente();
+        cargarInventarioProducto();
+        cargarComprobante();
+        cargarMetodoPago();
 
     }
 
+    public void cargarCliente(){
+        try (Connection con = Connect.getConnection()) {
+            CtrCliente client = new CtrCliente();
+            List<Cliente> clientes = client.cargarCliente();
+            if (clientes != null && !clientes.isEmpty()) {
+                jComboBoxcliente.removeAllItems();
+                jComboBoxcliente.addItem("Seleccione el Cliente");
+                for(Cliente cliente : clientes){
+                    if(cliente.getEstado()){
+                    jComboBoxcliente.addItem(cliente.getNombre());
+                    }
+                }
+            }
+        }catch(SQLException e){
+            System.out.print("Error al cargar cliente" + e);
+        }
+    }
     
+    public void cargarInventarioProducto(){
+        try(Connection con = Connect.getConnection()){
+            CtrlInventario ctrin = new CtrlInventario();
+            List <Inventario> inventarios = ctrin.cargarInventario();
+            if (inventarios != null && !inventarios.isEmpty()) {
+                jComboBoxinventarioproducto.removeAllItems();
+                jComboBoxinventarioproducto.addItem("Seleccione el producto");
+                for(Inventario inventario : inventarios){
+                    jComboBoxinventarioproducto.addItem(inventario.getNombreproducto());
+                }
+            }
+        }catch(SQLException e){
+            System.out.print("Error al cargar Producto" + e);
+        }
+    }
+    
+    public void cargarComprobante(){
+        try(Connection con = Connect.getConnection()){
+            CtrComprobante com = new CtrComprobante();
+            List <Comprobante> comprobantes = com.cargarComprobante();
+            if (comprobantes != null && !comprobantes.isEmpty()) {
+                jComboBoxcomprobante.removeAllItems();
+                jComboBoxcomprobante.addItem("Seleccione el comprobante");
+                for(Comprobante comprobante : comprobantes){
+                    jComboBoxcomprobante.addItem(comprobante.getComprobante());
+                }
+            }
+        }catch(SQLException e){
+            System.out.print("Error al cargar Comprobante" + e);
+        }
+    }
+    
+    public void cargarMetodoPago(){
+        try(Connection con = Connect.getConnection()){
+            CtrMetodoPago met = new CtrMetodoPago();
+            List <MetodoPago> metodos = met.cargarMetodoPago();
+            if (metodos != null && !metodos.isEmpty()) {
+                jComboBoxmetodopago.removeAllItems();
+                jComboBoxmetodopago.addItem("Seleccione el comprobante");
+                for(MetodoPago metodo : metodos){
+                    jComboBoxmetodopago.addItem(metodo.getMetodopago());
+                }
+            }
+        }catch(SQLException e){
+            System.out.print("Error al cargar Comprobante" + e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,37 +111,274 @@ public class VentaV extends javax.swing.JPanel {
     private void initComponents() {
 
         lblprueba = new javax.swing.JLabel();
-        txtprueba = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBoxcliente = new javax.swing.JComboBox<>();
+        jComboBoxinventarioproducto = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        txtbuscarproducto = new javax.swing.JTextField();
+        txtbuscardni = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        botonbuscarproducto = new javax.swing.JButton();
+        botonbuscarcliente = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        txttotalapagar = new javax.swing.JTextField();
+        jComboBoxcomprobante = new javax.swing.JComboBox<>();
+        jComboBoxmetodopago = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtcantidad = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtsubtotal = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         lblprueba.setText("jLabel1");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setText("Empleado:");
+
+        jLabel2.setText("Cliente:");
+
+        jLabel3.setText("Producto:");
+
+        jComboBoxcliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBoxinventarioproducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel6.setText("Buscar Producto por Nombre");
+
+        jLabel7.setText("Comprobante");
+
+        botonbuscarproducto.setText("Buscar");
+        botonbuscarproducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonbuscarproductoActionPerformed(evt);
+            }
+        });
+
+        botonbuscarcliente.setText("Buscar");
+        botonbuscarcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonbuscarclienteActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("TOTAL A PAGAR");
+
+        jComboBoxcomprobante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBoxmetodopago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel9.setText("Buscar Cliente por DNI");
+
+        jLabel10.setText("Metodo de Pago");
+
+        jLabel11.setText("Cantidad");
+
+        jLabel12.setText("Sub Total");
+
+        jButton3.setText("Añadir");
+
+        jButton4.setText("Registrar Venta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(txtprueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(549, Short.MAX_VALUE)
-                .addComponent(lblprueba)
-                .addGap(413, 413, 413))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addGap(589, 589, 589)
+                                .addComponent(jLabel8))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jComboBoxinventarioproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBoxcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtbuscarproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtbuscardni, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(botonbuscarproducto)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel12)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtsubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(41, 41, 41)
+                                        .addComponent(jButton3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(botonbuscarcliente)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jComboBoxcomprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(21, 21, 21)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jComboBoxmetodopago, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txttotalapagar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 943, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(38, 38, 38)
+                                    .addComponent(lblprueba))))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(lblprueba)
-                .addGap(80, 80, 80)
-                .addComponent(txtprueba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(398, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblprueba)
+                    .addComponent(jLabel1))
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jComboBoxcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtbuscardni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(botonbuscarcliente)
+                                    .addComponent(jComboBoxcomprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxmetodopago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jComboBoxinventarioproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtbuscarproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonbuscarproducto)
+                            .addComponent(txtcantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(txtsubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txttotalapagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)
+                            .addComponent(jButton4)))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonbuscarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonbuscarclienteActionPerformed
+        try{
+            Connection con = Connect.getConnection();
+            CtrCliente ctrclient = new CtrCliente();
+            String documento = txtbuscardni.getText().trim();
+            if(!ctrclient.verificarDocumentoExistente(con, documento)){
+                JOptionPane.showMessageDialog(null,"El DNI especificado no existe");
+            }else{
+                String doc = ctrclient.obtenerNombreCliente(con, documento);
+                jComboBoxcliente.setSelectedItem(doc);
+            }
+        }catch(SQLException e){
+            System.out.print("Error al cargar Comprobante" + e);
+        }
+    }//GEN-LAST:event_botonbuscarclienteActionPerformed
+
+    private void botonbuscarproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonbuscarproductoActionPerformed
+        try{
+            Connection con = Connect.getConnection();
+            CtrProducto ctrin = new CtrProducto();
+            String nombre = txtbuscarproducto.getText().trim();
+            if(!ctrin.verificarNombreExistente(con, nombre)){
+                JOptionPane.showMessageDialog(null, "El Nombre del producto no existe");
+            }else{
+                jComboBoxinventarioproducto.setSelectedItem(nombre);
+            }
+        }catch(SQLException e){
+            
+        }
+    }//GEN-LAST:event_botonbuscarproductoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonbuscarcliente;
+    private javax.swing.JButton botonbuscarproducto;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBoxcliente;
+    private javax.swing.JComboBox<String> jComboBoxcomprobante;
+    private javax.swing.JComboBox<String> jComboBoxinventarioproducto;
+    private javax.swing.JComboBox<String> jComboBoxmetodopago;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblprueba;
-    private javax.swing.JTextField txtprueba;
+    private javax.swing.JTextField txtbuscardni;
+    private javax.swing.JTextField txtbuscarproducto;
+    private javax.swing.JTextField txtcantidad;
+    private javax.swing.JTextField txtsubtotal;
+    private javax.swing.JTextField txttotalapagar;
     // End of variables declaration//GEN-END:variables
 }

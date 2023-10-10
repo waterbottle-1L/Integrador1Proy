@@ -117,4 +117,20 @@ public class CtrCliente {
             System.out.print("Error modificar" + e);
         }
     }
+    
+    public String obtenerNombreCliente(Connection con, String documento) throws SQLException {
+        String consulta = "SELECT nombre FROM cliente WHERE documento = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, documento);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Si se encuentra una fila con el nombre de la marca, devuelve su ID
+                    return rs.getString("nombre");
+                }
+            }
+        }
+        // Si no se encontró ninguna coincidencia, puedes manejarlo como desees
+        // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
+        return null;
+    }
 }

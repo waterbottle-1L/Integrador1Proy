@@ -126,5 +126,22 @@ public class CtrProducto {
             System.out.print("Error estado" + e);
         }
     }
+    
+    
+    //Metodo para que me retorne el nombre segun el codigo
+    public Long obtenerIdTipoPorNombre(Connection con, String codproducto) throws SQLException {
+        String consulta = "SELECT nombre FROM producto WHERE cod_producto = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, codproducto);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    
+                    return rs.getLong("cod_tipo_producto");
+                }
+            }
+        }
+        
+        return null;
+    }
 
 }

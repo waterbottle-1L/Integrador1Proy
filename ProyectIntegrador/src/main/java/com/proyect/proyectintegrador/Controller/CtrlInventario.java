@@ -5,6 +5,7 @@ import com.proyect.proyectintegrador.Connection.Connect;
 import com.proyect.proyectintegrador.Entitis.Inventario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class CtrlInventario {
             
             while (rs.next()) {
                 Inventario inventario=new Inventario();
-                inventario.setCod_prod(rs.getLong("cod_producto"));
+                inventario.setNombreproducto(rs.getString("nombre_producto"));
                 inventario.setStock(rs.getInt("stock"));
                 inventario.setStock_inicial(rs.getInt("stock_inicial"));
                 inventario.setStock_maximo(rs.getInt("stock_maximo"));

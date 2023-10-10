@@ -12,6 +12,18 @@ public class Inventario {
     private int stock_minimo;
     private Date fecha_registro;
     private boolean estado;
+    
+    private String nombreproducto;
+
+    public String getNombreproducto() {
+        return nombreproducto;
+    }
+
+    public void setNombreproducto(String nombreproducto) {
+        this.nombreproducto = nombreproducto;
+    }
+    
+    
 
     public int getStock() {
         return stock;
