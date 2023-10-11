@@ -54,7 +54,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbgestionempleado = new javax.swing.JTable();
         botonagregarempleado = new javax.swing.JButton();
-        botoneliminarempleado = new javax.swing.JButton();
         verificaciondatos = new javax.swing.JLabel();
         NuevoEmpleado = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
@@ -148,8 +147,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             }
         });
 
-        botoneliminarempleado.setText("Eliminar");
-
         verificaciondatos.setText("Sin Datos");
 
         javax.swing.GroupLayout GestionEmpleadoLayout = new javax.swing.GroupLayout(GestionEmpleado.getContentPane());
@@ -162,9 +159,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(GestionEmpleadoLayout.createSequentialGroup()
                         .addComponent(botonagregarempleado)
-                        .addGap(18, 18, 18)
-                        .addComponent(botoneliminarempleado)
-                        .addGap(124, 124, 124)
+                        .addGap(215, 215, 215)
                         .addComponent(verificaciondatos, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
@@ -174,7 +169,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(GestionEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonagregarempleado)
-                    .addComponent(botoneliminarempleado)
                     .addComponent(verificaciondatos))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,6 +204,8 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             }
         });
 
+        txtfechanacimiento.setDateFormatString("yyyy-MM-dd");
+
         txttelefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txttelefonoKeyReleased(evt);
@@ -223,6 +219,11 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         });
 
         botonisertarempleado.setText("Guardar");
+        botonisertarempleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonisertarempleadoActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Nombre:");
 
@@ -239,6 +240,12 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         jLabel18.setText("Email:");
 
         jLabel19.setText("Password:");
+
+        txtpassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtpasswordKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout NuevoEmpleadoLayout = new javax.swing.GroupLayout(NuevoEmpleado.getContentPane());
         NuevoEmpleado.getContentPane().setLayout(NuevoEmpleadoLayout);
@@ -682,6 +689,47 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         validarNuevoEmpleado();
     }//GEN-LAST:event_txtemailKeyReleased
 
+    private void botonisertarempleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonisertarempleadoActionPerformed
+        try{ 
+        Date fechan = txtfechanacimiento.getDate();
+         long fecha = fechan.getTime();
+         java.sql.Date fechasql = new java.sql.Date(fecha);
+         
+         if(fechan == null){
+             lblfechnacimiento.setText("Rellene el campo");
+         }else{
+             CtrEmpleado ctremple = new CtrEmpleado();
+             Empleado empleado = new Empleado();
+             String nombre = txtnombre.getText().trim();
+             String apellido = txtapellido.getText().trim();
+             String direccion = txtdireccion.getText().trim();
+             String documento = txtdni.getText().trim();
+             String telefono = txttelefono.getText().trim();
+             String email = txtemail.getText().trim();
+             String pass = txtpassword.getText().trim();
+             empleado.setNombre(nombre);
+             empleado.setApellido(apellido);
+             empleado.setDireccion(direccion);
+             empleado.setDocumento(documento);
+             empleado.setFechanacimiento(fechasql);
+             empleado.setTelefono(telefono);
+             empleado.setEmail(email);
+             empleado.setPassword(pass);
+             empleado.setEstado(Boolean.TRUE);
+             ctremple.agregarEmpleado(empleado);
+             Limpiar();
+             cargarTablaEmpleado();
+             NuevoEmpleado.setVisible(false);
+         }
+        }catch(SQLException e){
+            System.out.println("Error en empleado"+e);
+        }
+    }//GEN-LAST:event_botonisertarempleadoActionPerformed
+
+    private void txtpasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasswordKeyReleased
+        validarNuevoEmpleado();
+    }//GEN-LAST:event_txtpasswordKeyReleased
+
     public class nonEditableTableModel extends DefaultTableModel {
 
         public nonEditableTableModel(Object[] columnNames, int rowCount) {
@@ -807,7 +855,6 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.JButton VenatsButton;
     private javax.swing.JMenu aparencedbuton;
     private javax.swing.JButton botonagregarempleado;
-    private javax.swing.JButton botoneliminarempleado;
     private javax.swing.JButton botonempleado;
     private javax.swing.JButton botonisertarempleado;
     private javax.swing.ButtonGroup buttonGroup1;
