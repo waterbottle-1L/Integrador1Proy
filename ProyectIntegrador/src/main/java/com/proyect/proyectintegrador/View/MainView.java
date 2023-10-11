@@ -1,5 +1,6 @@
 package com.proyect.proyectintegrador.View;
 
+import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.proyect.proyectintegrador.Controller.CtrlUsuario;
 import com.proyect.proyectintegrador.View.Cliente.ClienteView;
 import com.proyect.proyectintegrador.View.Inventario.InventarioView;
@@ -7,7 +8,9 @@ import com.proyect.proyectintegrador.View.Producto.ProductoView;
 import com.proyect.proyectintegrador.View.Venta.VentaView;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
@@ -24,6 +27,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jToolBar1 = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         ProveedorButton = new javax.swing.JButton();
@@ -33,7 +37,9 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        aparencedbuton = new javax.swing.JMenu();
+        Dark = new javax.swing.JRadioButtonMenuItem();
+        Light = new javax.swing.JRadioButtonMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,8 +103,28 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             .addGap(0, 347, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        aparencedbuton.setText("Apariencia");
+
+        buttonGroup1.add(Dark);
+        Dark.setSelected(true);
+        Dark.setText("Oscuro");
+        Dark.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                DarkItemStateChanged(evt);
+            }
+        });
+        Dark.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DarkActionPerformed(evt);
+            }
+        });
+        aparencedbuton.add(Dark);
+
+        buttonGroup1.add(Light);
+        Light.setText("Claro");
+        aparencedbuton.add(Light);
+
+        jMenuBar1.add(aparencedbuton);
 
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
@@ -277,16 +303,50 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         VenatsButton.setEnabled(false);
     }//GEN-LAST:event_VenatsButtonActionPerformed
 
+    private void DarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DarkActionPerformed
+
+    private void DarkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DarkItemStateChanged
+      if (evt.getStateChange() == ItemEvent.SELECTED) {
+            FlatAnimatedLafChange.showSnapshot();
+            //appearanceButton.setIcon(iconos.iconoDarkMode);
+            try {
+                UIManager.setLookAndFeel("com.formdev.flatlaf.FlatDarkLaf");
+            } catch (Exception ex) {
+                // MessageHandler.exceptionMessage(ex);
+                System.out.println("Fail changing feel color to dark");
+            }
+
+            com.formdev.flatlaf.FlatLaf.updateUI();
+            FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        } else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            FlatAnimatedLafChange.showSnapshot();
+            //appearanceButton.setIcon(iconos.iconoLightMode);
+            try {
+                UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");
+            } catch (Exception ex) {
+                // MessageHandler.exceptionMessage(ex);
+                System.out.println("Fail changing feel color to light");
+            }
+            com.formdev.flatlaf.FlatLaf.updateUI();
+            FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        }
+    }//GEN-LAST:event_DarkItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ClienteButton;
+    private javax.swing.JRadioButtonMenuItem Dark;
     private javax.swing.JButton InventarioButton;
+    private javax.swing.JRadioButtonMenuItem Light;
     private javax.swing.JButton ProveedorButton;
     private javax.swing.JButton VenatsButton;
+    private javax.swing.JMenu aparencedbuton;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar jToolBar1;
