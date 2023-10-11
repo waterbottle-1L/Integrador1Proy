@@ -2,6 +2,7 @@ package com.proyect.proyectintegrador.View;
 
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.proyect.proyectintegrador.Controller.CtrlUsuario;
+
 import com.proyect.proyectintegrador.View.Cliente.ClienteView;
 import com.proyect.proyectintegrador.View.Inventario.InventarioView;
 import com.proyect.proyectintegrador.View.Producto.ProductoView;
@@ -15,22 +16,29 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 public class MainView extends org.jdesktop.swingx.JXFrame {
-    
+
     public MainView() {
         initComponents();
         this.setSize(new Dimension(1300, 800));
         this.setLocationRelativeTo(null);
-        
+        jDialog1.pack();
+        jDialog2.pack();
+        jDialog1.setLocationRelativeTo(this);
+        jDialog2.setLocationRelativeTo(this);
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jDialog1 = new javax.swing.JDialog();
+        jButton1 = new javax.swing.JButton();
+        jDialog2 = new javax.swing.JDialog();
         jToolBar1 = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jButton1 = new javax.swing.JButton();
+        botonempleado = new javax.swing.JButton();
         ProveedorButton = new javax.swing.JButton();
         ClienteButton = new javax.swing.JButton();
         InventarioButton = new javax.swing.JButton();
@@ -43,16 +51,60 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         Light = new javax.swing.JRadioButtonMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
+        jDialog1.setModal(true);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addContainerGap(277, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(48, 48, 48))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addContainerGap(213, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(64, 64, 64))
+        );
+
+        jDialog2.setModal(true);
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jToolBar1.setRollover(true);
         jToolBar1.add(filler1);
 
-        jButton1.setText("Empleados");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        botonempleado.setText("Empleados");
+        botonempleado.setFocusable(false);
+        botonempleado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonempleado.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        botonempleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonempleadoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(botonempleado);
 
         ProveedorButton.setText("Producto");
         ProveedorButton.setFocusable(false);
@@ -107,7 +159,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         aparencedbuton.setText("Apariencia");
@@ -142,7 +194,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
@@ -166,27 +218,27 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 ProveedorButton.setEnabled(true);
                 pro.setVisible(false);
             }
-            
+
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
@@ -204,19 +256,19 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 ClienteButton.setEnabled(true);
                 client.setVisible(false);
             }
-            
+
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
@@ -224,12 +276,12 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
         });
-        
+
         ClienteButton.setEnabled(false);
     }//GEN-LAST:event_ClienteButtonActionPerformed
 
@@ -243,27 +295,27 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 InventarioButton.setEnabled(true);
                 IV.setVisible(false);
             }
-            
+
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
@@ -281,32 +333,32 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 VenatsButton.setEnabled(true);
                 venta.setVisible(false);
             }
-            
+
             @Override
             public void internalFrameOpened(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameClosed(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameIconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeiconified(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameActivated(InternalFrameEvent e) {
             }
-            
+
             @Override
             public void internalFrameDeactivated(InternalFrameEvent e) {
             }
         });
-        
+
         VenatsButton.setEnabled(false);
     }//GEN-LAST:event_VenatsButtonActionPerformed
 
@@ -315,7 +367,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     }//GEN-LAST:event_DarkActionPerformed
 
     private void DarkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DarkItemStateChanged
-      if (evt.getStateChange() == ItemEvent.SELECTED) {
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
             FlatAnimatedLafChange.showSnapshot();
             //appearanceButton.setIcon(iconos.iconoDarkMode);
             try {
@@ -340,6 +392,15 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             FlatAnimatedLafChange.hideSnapshotWithAnimation();
         }
     }//GEN-LAST:event_DarkItemStateChanged
+   
+    private void botonempleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonempleadoActionPerformed
+        jDialog1.setVisible(true);
+    }//GEN-LAST:event_botonempleadoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jDialog1.setVisible(false);
+        jDialog2.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -350,11 +411,14 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.JButton ProveedorButton;
     private javax.swing.JButton VenatsButton;
     private javax.swing.JMenu aparencedbuton;
+    private javax.swing.JButton botonempleado;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar jToolBar1;
