@@ -8,6 +8,7 @@ C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\View\MainView.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrProveedor.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Entitis\Inventario.java
+C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrlSinStock.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Entitis\Empleado.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrVenta.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\View\Producto\ProductoV.java
@@ -32,9 +33,11 @@ C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\View\Producto\TipoV.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrMetodoPago.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\View\Cliente\ClienteView.java
+C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Entitis\ProductoSinStock.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Main\Main.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrCliente.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrlValidacion.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Entitis\MetodoPago.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Connection\Connect.java
 C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\Controller\CtrProducto.java
+C:\Users\Rodrigo\Documents\GitHub\AEA\Integrador1Proy\ProyectIntegrador\src\main\java\com\proyect\proyectintegrador\View\Inventario\ProductoSinStockV.java

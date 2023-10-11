@@ -8,13 +8,17 @@ public class InventarioView extends javax.swing.JInternalFrame {
         initComponents();
         this.setSize(800, 600);
         jTabbedPane1.add("Inventario", InventarioTabInstance());
+        jTabbedPane1.add("Asignar Stock", SinStockInstance());
         //jTabbedPane1.add("Inventario", InventarioVTabInstance());
     }
     
     private InventarioVi InventarioTabInstance(){
         return new InventarioVi();
     }
-            
+    
+    private ProductoSinStockV SinStockInstance(){
+        return new ProductoSinStockV();
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

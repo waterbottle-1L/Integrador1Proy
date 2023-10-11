@@ -5,6 +5,7 @@ com\proyect\proyectintegrador\View\Login\LoginView$4.class
 com\proyect\proyectintegrador\View\Inventario\InventarioVi$3.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$4.class
 com\proyect\proyectintegrador\View\Login\LoginView$1.class
+com\proyect\proyectintegrador\Entitis\ProductoSinStock.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$2.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$10.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$15.class
@@ -40,6 +41,7 @@ com\proyect\proyectintegrador\Entitis\Cliente.class
 com\proyect\proyectintegrador\View\Login\LoginView$6.class
 com\proyect\proyectintegrador\View\Venta\VentaView.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$12.class
+com\proyect\proyectintegrador\View\Inventario\ProductoSinStockV.class
 com\proyect\proyectintegrador\View\MainView$3.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$2.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$17.class
@@ -95,9 +97,9 @@ com\proyect\proyectintegrador\View\Cliente\ClienteV$11.class
 com\proyect\proyectintegrador\View\Login\LoginView$3.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$14.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$2.class
+com\proyect\proyectintegrador\View\Inventario\ProductoSinStockV$1.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$nonEditableTableModel.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$9.class
-com\proyect\proyectintegrador\View\Inventario\InventarioVi$5.class
 com\proyect\proyectintegrador\View\Producto\TipoV$6.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$2.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$1.class
@@ -106,6 +108,7 @@ com\proyect\proyectintegrador\View\Cliente\ClienteV$14.class
 com\proyect\proyectintegrador\Controller\CtrTipo.class
 com\proyect\proyectintegrador\View\Producto\ProductoV.class
 com\proyect\proyectintegrador\View\Login\LoginView$2.class
+com\proyect\proyectintegrador\Controller\CtrlSinStock.class
 com\proyect\proyectintegrador\View\MainView$6.class
 com\proyect\proyectintegrador\View\Producto\TipoV$2.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$5.class
@@ -121,6 +124,7 @@ com\proyect\proyectintegrador\View\Producto\TipoV$7.class
 com\proyect\proyectintegrador\modelo\usuario.class
 com\proyect\proyectintegrador\View\Producto\MarcaV.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$8.class
+com\proyect\proyectintegrador\Controller\CtrlSinStock$1.class
 com\proyect\proyectintegrador\View\Producto\TipoV$1.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$8.class
 com\proyect\proyectintegrador\Entitis\Empleado.class
