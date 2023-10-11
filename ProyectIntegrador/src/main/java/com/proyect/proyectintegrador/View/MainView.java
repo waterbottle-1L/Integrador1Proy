@@ -30,6 +30,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jToolBar1 = new javax.swing.JToolBar();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jButton1 = new javax.swing.JButton();
         ProveedorButton = new javax.swing.JButton();
         ClienteButton = new javax.swing.JButton();
         InventarioButton = new javax.swing.JButton();
@@ -46,6 +47,12 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
 
         jToolBar1.setRollover(true);
         jToolBar1.add(filler1);
+
+        jButton1.setText("Empleados");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
 
         ProveedorButton.setText("Producto");
         ProveedorButton.setFocusable(false);
@@ -346,6 +353,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

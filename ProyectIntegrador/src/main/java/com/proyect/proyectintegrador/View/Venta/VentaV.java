@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class VentaV extends javax.swing.JPanel {
 
     LocalDate fechaActual = LocalDate.now();
-    String fecha =  String.valueOf(fechaActual);
+    String fecha = String.valueOf(fechaActual);
     private boolean canEdit = true;
     private boolean canDelete = true;
 
@@ -660,6 +660,20 @@ public class VentaV extends javax.swing.JPanel {
 
             }
 
+            if (txttotalapagar.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Seleccione algun producto");
+                errores = true;
+            } else {
+
+            }
+
+            if (txtsubtotal.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Seleccione algun Producto");
+                errores = true;
+            } else {
+
+            }
+
             if (!errores) {
                 if (listaproductos.size() > 0) {
                     CtrCliente client = new CtrCliente();
@@ -671,7 +685,7 @@ public class VentaV extends javax.swing.JPanel {
                     Long codempleado = Long.parseLong(empleado);
                     Long codmetodopago = metodo.obtenercodMetodoPago(con, metodopago);
                     Double valorpagar = Double.parseDouble(valorpa);
-                    
+
                     Venta venta = new Venta();
                     //long cod= 2;
                     venta.setCodcliente(codclient);
@@ -681,10 +695,10 @@ public class VentaV extends javax.swing.JPanel {
                     venta.setValorpago(valorpagar);
                     venta.setEstado(Boolean.TRUE);
                     detalle.agregaVenta(venta);
-                    
+
                     Long codventa = detalle.obtenerCodVenta(con);
                     DetalleVenta detalles = new DetalleVenta();
-                    for(DetalleVenta detalleventa : listaproductos){
+                    for (DetalleVenta detalleventa : listaproductos) {
                         detalles.setCodproducto(detalleventa.getCodproducto());
                         detalles.setCodventa(codventa);
                         detalles.setCantidad(detalleventa.getCantidad());
@@ -695,18 +709,21 @@ public class VentaV extends javax.swing.JPanel {
                         detalles.setEstado1(Boolean.TRUE);
                         detalle.agregaDetalleVenta(detalles);
                     }
-                    
+
                     JOptionPane.showMessageDialog(null, "Venta registrada");
-                   
-                    
-                }else{
+                    txttotalapagar.setText("");
+                    txtsubtotal.setText("");
+                    listaproductos.clear();
+                    cargarlistaTabla();
+
+                } else {
                     JOptionPane.showMessageDialog(null, "Seleccione producto");
                 }
             } else {
 
             }
         } catch (SQLException e) {
-           System.out.println("Error venta"+e);
+            System.out.println("Error venta" + e);
         }
 
     }//GEN-LAST:event_botonregistrarventaActionPerformed
