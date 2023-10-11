@@ -21,7 +21,9 @@ public class CtrMarca {
     public List<Marca> cargarMarca() throws SQLException {
         List<Marca> marcaList = new ArrayList<>();
 
-        try (Connection connection = Connect.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTA); ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Connection connection = Connect.getConnection(); 
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_CONSULTA); 
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Marca marca = new Marca();
