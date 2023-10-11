@@ -80,6 +80,7 @@ com\proyect\proyectintegrador\View\Cliente\ClienteV$3.class
 com\proyect\proyectintegrador\View\Producto\TipoV$8.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$15.class
 com\proyect\proyectintegrador\View\Producto\TipoV$5.class
+com\proyect\proyectintegrador\View\Inventario\InventarioVi$4.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$8.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$3.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$8.class
@@ -96,6 +97,7 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$14.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$2.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$nonEditableTableModel.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$9.class
+com\proyect\proyectintegrador\View\Inventario\InventarioVi$5.class
 com\proyect\proyectintegrador\View\Producto\TipoV$6.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$2.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$1.class

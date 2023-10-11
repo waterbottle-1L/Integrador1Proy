@@ -7,6 +7,7 @@ import com.proyect.proyectintegrador.Entitis.Inventario;
 import com.proyect.proyectintegrador.Entitis.Producto;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +21,9 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         initComponents();
         busyLabel.setVisible(false);
         modificarStockDialog.pack();
+        nuevoStockDialog.pack();
         modificarStockDialog.setLocationRelativeTo(this);
+        nuevoStockDialog.setLocationRelativeTo(this);
         cargarInventario();
     }
 
@@ -41,6 +44,17 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         dateChooser = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
         stockMaximoSpinner = new javax.swing.JSpinner();
+        nuevoStockDialog = new javax.swing.JDialog();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jSpinner2 = new javax.swing.JSpinner();
+        jSpinner3 = new javax.swing.JSpinner();
+        jSpinner4 = new javax.swing.JSpinner();
+        guardarNuevoStockButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         inventarioTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -107,15 +121,16 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                                             .addComponent(stockSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(stockInicialSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(stockMinimoSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE))
                             .addGroup(modificarStockDialogLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(modificarStockDialogLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel8)))
-                .addGap(53, 53, 53))
+                        .addComponent(jLabel8)
+                        .addGap(14, 14, 14)))
+                .addGap(39, 39, 39))
         );
         modificarStockDialogLayout.setVerticalGroup(
             modificarStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,6 +160,83 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                 .addGap(44, 44, 44)
                 .addComponent(guardarCambiosStockButton)
                 .addContainerGap(62, Short.MAX_VALUE))
+        );
+
+        jLabel9.setText("Nuevo Stock");
+
+        jLabel11.setText("Stock");
+
+        jLabel12.setText("Stock inicial");
+
+        jLabel13.setText("Stock maximo");
+
+        jLabel14.setText("Stock minimo");
+
+        guardarNuevoStockButton.setText("Guardar");
+        guardarNuevoStockButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarNuevoStockButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout nuevoStockDialogLayout = new javax.swing.GroupLayout(nuevoStockDialog.getContentPane());
+        nuevoStockDialog.getContentPane().setLayout(nuevoStockDialogLayout);
+        nuevoStockDialogLayout.setHorizontalGroup(
+            nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(jLabel9))
+                    .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                                    .addComponent(jLabel14)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                                    .addComponent(jLabel13)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                                .addGap(160, 160, 160)
+                                .addComponent(guardarNuevoStockButton)))))
+                .addGap(61, 61, 61))
+        );
+        nuevoStockDialogLayout.setVerticalGroup(
+            nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(nuevoStockDialogLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel9)
+                .addGap(28, 28, 28)
+                .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(nuevoStockDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
+                .addComponent(guardarNuevoStockButton)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         inventarioTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -187,6 +279,11 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         });
 
         nuevoStockButton.setText("Nuevo");
+        nuevoStockButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoStockButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -271,16 +368,19 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         if (selectedRow != -1) {
 
             DefaultTableModel model = (DefaultTableModel) inventarioTable.getModel();
+            Object data0 = model.getValueAt(selectedRow, 0);
             Object data1 = model.getValueAt(selectedRow, 1);
             Object data2 = model.getValueAt(selectedRow, 2);
             Object data3 = model.getValueAt(selectedRow, 3);
             Object data4 = model.getValueAt(selectedRow, 4);
-
+            Object data5 = model.getValueAt(selectedRow, 5);
             //stockSpinner.setText(data1.toString());
+            
             stockSpinner.setValue(data1);
             stockInicialSpinner.setValue(data2);
             stockMaximoSpinner.setValue(data3);
             stockMinimoSpinner.setValue(data4);
+            dateChooser.setDate((Date) data5);
             //txtmodnombremarc.setText(data2.toString());
             modificarStockDialog.setVisible(true);
         } else {
@@ -315,6 +415,15 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
             System.out.println("Error" + e);
         }*/
     }//GEN-LAST:event_guardarCambiosStockButtonActionPerformed
+
+    private void guardarNuevoStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarNuevoStockButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_guardarNuevoStockButtonActionPerformed
+
+    private void nuevoStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoStockButtonActionPerformed
+        // TODO add your handling code here:
+        nuevoStockDialog.setVisible(true);
+    }//GEN-LAST:event_nuevoStockButtonActionPerformed
     private void buscarEnTabla() {
         DefaultTableModel modelo = (DefaultTableModel) inventarioTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
@@ -371,9 +480,14 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
     private com.toedter.calendar.JDateChooser dateChooser;
     private javax.swing.JButton editarStockButton;
     private javax.swing.JButton guardarCambiosStockButton;
+    private javax.swing.JButton guardarNuevoStockButton;
     private javax.swing.JTable inventarioTable;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -381,10 +495,16 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSpinner3;
+    private javax.swing.JSpinner jSpinner4;
     private javax.swing.JDialog modificarStockDialog;
     private javax.swing.JButton nuevoStockButton;
+    private javax.swing.JDialog nuevoStockDialog;
     private javax.swing.JSpinner stockInicialSpinner;
     private javax.swing.JSpinner stockMaximoSpinner;
     private javax.swing.JSpinner stockMinimoSpinner;
