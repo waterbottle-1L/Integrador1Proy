@@ -6,7 +6,7 @@ public class InventarioView extends javax.swing.JInternalFrame {
 
     public InventarioView() {
         initComponents();
-        this.setSize(800, 600);
+        this.setSize(720, 450);
         jTabbedPane1.add("Inventario", InventarioTabInstance());
         jTabbedPane1.add("Asignar Stock", SinStockInstance());
         //jTabbedPane1.add("Inventario", InventarioVTabInstance());

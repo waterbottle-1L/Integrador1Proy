@@ -1,15 +1,68 @@
 
 package com.proyect.proyectintegrador.View.Inventario;
 
+import com.proyect.proyectintegrador.Connection.Connect;
+import com.proyect.proyectintegrador.Controller.CtrProducto;
+import com.proyect.proyectintegrador.Controller.CtrlInventario;
+import com.proyect.proyectintegrador.Entitis.Inventario;
+import com.proyect.proyectintegrador.Entitis.Producto;
 import com.proyect.proyectintegrador.Entitis.ProductoSinStock;
+import com.proyect.proyectintegrador.View.Producto.ProductoV;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class ProductoSinStockV extends javax.swing.JPanel {
 
     public ProductoSinStockV() {
         initComponents();
+        cargarProducto();
     }
+    public class nonEditableTableModel extends DefaultTableModel {
+
+        public nonEditableTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+    
+    private void cargarProducto() {
+        boolean datosEncontrados = false;
+        try (Connection con = Connect.getConnection()) {
+            CtrProducto ctrproducto = new CtrProducto();
+            List<Producto> productos = ctrproducto.cargarProductos();
+            if (productos != null && !productos.isEmpty()) {
+                Object[] columnNames = { "Codigo","Nombre"};
+                nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
+
+                for (Producto producto : productos) {
+                    if (producto.getEstado()) {
+                        Object[] datos = new Object[2];
+                        datos[0] = producto.getCodProducto();
+                        datos[1] = producto.getNombre();
+                        
+
+                        model.addRow(datos);
+                        datosEncontrados = true;
+                    }
+                }
+                tbsinstock.setModel(model);
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cargar datos de la tabla productos" + e);
+        }
+
+        verificaciondatos.setVisible(!datosEncontrados);
+    }
+
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,7 +79,8 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         guardarNuevoStockButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbsinstock = new javax.swing.JTable();
+        verificaciondatos = new javax.swing.JLabel();
 
         jLabel9.setText("Nuevo Stock");
 
@@ -48,7 +102,7 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel10.setText("Productos sin stock");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbsinstock.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -56,7 +110,9 @@ public class ProductoSinStockV extends javax.swing.JPanel {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbsinstock);
+
+        verificaciondatos.setText("Sindatos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,11 +145,17 @@ public class ProductoSinStockV extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(252, 252, 252)
+                .addComponent(verificaciondatos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
+                .addComponent(verificaciondatos)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -146,6 +208,7 @@ public class ProductoSinStockV extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JSpinner jSpinner3;
     private javax.swing.JSpinner jSpinner4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbsinstock;
+    private javax.swing.JLabel verificaciondatos;
     // End of variables declaration//GEN-END:variables
 }
