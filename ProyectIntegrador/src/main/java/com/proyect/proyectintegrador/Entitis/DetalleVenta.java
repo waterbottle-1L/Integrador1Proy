@@ -13,7 +13,17 @@ public class DetalleVenta {
     private Double igv;
     private Double detalleventa;
     private Double totalapagar;
+    private Boolean estado1;
 
+    public Boolean  getEstado1() {
+        return estado1;
+    }
+
+    public void setEstado1(Boolean  estado1) {
+        this.estado1 = estado1;
+    }
+    
+    
     public Double getTotalapagar() {
         return totalapagar;
     }
@@ -21,8 +31,6 @@ public class DetalleVenta {
     public void setTotalapagar(Double totalapagar) {
         this.totalapagar = totalapagar;
     }
-    
-    
     
     private String nombre;
 

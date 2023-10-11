@@ -33,4 +33,20 @@ public class CtrMetodoPago {
         return metodopagoList;
     }
     
+    public Long obtenercodMetodoPago(Connection con, String nombre) throws SQLException {
+        String consulta = "SELECT cod_metodo_pago FROM metodo_pago WHERE metodopago = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // Si se encuentra una fila con el nombre de la marca, devuelve su ID
+                    return rs.getLong("cod_metodo_pago");
+                }
+            }
+        }
+        // Si no se encontró ninguna coincidencia, puedes manejarlo como desees
+        // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
+        return null;
+    }
+    
 }

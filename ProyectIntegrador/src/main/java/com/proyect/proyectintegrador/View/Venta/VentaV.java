@@ -3,6 +3,7 @@ package com.proyect.proyectintegrador.View.Venta;
 import com.proyect.proyectintegrador.Connection.Connect;
 import com.proyect.proyectintegrador.Controller.CtrCliente;
 import com.proyect.proyectintegrador.Controller.CtrComprobante;
+import com.proyect.proyectintegrador.Controller.CtrDetalleVenta;
 import com.proyect.proyectintegrador.Controller.CtrMetodoPago;
 import com.proyect.proyectintegrador.Controller.CtrProducto;
 import com.proyect.proyectintegrador.Controller.CtrlInventario;
@@ -12,69 +13,116 @@ import com.proyect.proyectintegrador.Entitis.Comprobante;
 import com.proyect.proyectintegrador.Entitis.DetalleVenta;
 import com.proyect.proyectintegrador.Entitis.Inventario;
 import com.proyect.proyectintegrador.Entitis.MetodoPago;
+import com.proyect.proyectintegrador.Entitis.Venta;
 import com.proyect.proyectintegrador.View.Login.LoginView;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class VentaV extends javax.swing.JPanel {
-    
+
+    LocalDate fechaActual = LocalDate.now();
+    String fecha =  String.valueOf(fechaActual);
+    private boolean canEdit = true;
+    private boolean canDelete = true;
+
     ArrayList<DetalleVenta> listaproductos = new ArrayList<>();
     private DefaultTableModel modeloDatosProductos;
+    private DetalleVenta producto;
+
+    private long idCliente = 0;//id del cliente sleccionado
+
+    private long idProducto = 0;
+    private String nombre = "";
+    private int cantidadProductoBBDD = 0;
+    private double precioUnitario = 0.0;
+    private int porcentajeIgv = 0;
+
+    private int cantidad = 0;//cantidad de productos a comprar
+    private double subtotal = 0.0;//cantidad por precio
+    private double descuento = 0.0;
+    private double igv = 0.0;
+    private double totalPagar = 0.0;
+
+    //variables para calculos globales
+    private double subtotalGeneral = 0.0;
+    private double igvGeneral = 0.0;
+    private double totalPagarGeneral = 0.0;
+
+    private long auxIdDetalle = 1;
 
     public VentaV() {
-        
+
         initComponents();
         long valor = LoginView.getCodempleado();
         String cod = String.valueOf(valor);
-        lblprueba.setText(cod);
+        lblempleado.setText(cod);
         txtsubtotal.setEnabled(false);
         txttotalapagar.setEnabled(false);
         botonañadir.setEnabled(false);
+        botoneliminar.setEnabled(false);
+        lblcant.setText(fecha);
         cargarCliente();
         cargarInventarioProducto();
         cargarComprobante();
         cargarMetodoPago();
-        cargarColumnas();
-        
+        Habilitar();
+        //cargarColumnas();
+
     }
-    
+
     public class nonEditableTableModel extends DefaultTableModel {
-        
+
         public nonEditableTableModel(Object[] columnNames, int rowCount) {
             super(columnNames, rowCount);
         }
-        
+
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
         }
     }
-    
-    private void cargarColumnas() {
-        Object[] columnNames = {"N", "Nombre", "Cantidad", "P. Unitario", "Sub Total", "IGV", "Total a Pagar", "Accion"};
-        nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
-        tbventa.setModel(model);
+
+    private void Habilitar() {
+        ListSelectionModel selectionModel;
+        selectionModel = tbventa.getSelectionModel();
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (!canDelete || !canEdit) {
+                return;
+            }
+            if (selectionModel.getSelectedItemsCount() == 1) {
+                botoneliminar.setEnabled(true);
+            } else {
+                botoneliminar.setEnabled(false);
+            }
+        });
     }
-    
-    private void listaTablaProductos() {
-        this.modeloDatosProductos.setRowCount(listaproductos.size());
-        for (int i = 0; i < listaproductos.size(); i++) {
-            this.modeloDatosProductos.setValueAt(i + 1, i, 0);
-            this.modeloDatosProductos.setValueAt(listaproductos.get(i).getNombre(), i, 1);
-            this.modeloDatosProductos.setValueAt(listaproductos.get(i).getCantidad(), i, 2);
-            this.modeloDatosProductos.setValueAt(listaproductos.get(i).getPreciounitario(), i, 3);
-            this.modeloDatosProductos.setValueAt(listaproductos.get(i).getSubtotal(), i, 4);
-            this.modeloDatosProductos.setValueAt(listaproductos.get(i).getIgv(), i, 5);
-            this.modeloDatosProductos.setValueAt(listaproductos.get(i).getTotalapagar(), i, 6);
-            this.modeloDatosProductos.setValueAt("Eliminar", i, 7);//aqui luego poner un boton de eliminar
+
+    private void datos() {
+        try {
+            Connection con = Connect.getConnection();
+            CtrProducto ctrpro = new CtrProducto();
+            CtrlInventario ctrinven = new CtrlInventario();
+            String cant = txtcantidad.getText().trim();
+
+            nombre = jComboBoxinventarioproducto.getSelectedItem().toString().trim();
+            idProducto = ctrpro.obtenerIdproductoNombre(con, nombre);
+            precioUnitario = ctrpro.obtenerprecioproducto(con, nombre);
+            cantidadProductoBBDD = ctrinven.obtenerStock(con, idProducto);
+            cantidad = Integer.parseInt(cant);
+            igv = (precioUnitario * cantidad) * 0.18;
+
+        } catch (SQLException e) {
+            System.out.println("Error al ibtener los datos" + e);
         }
-        tbventa.setModel(modeloDatosProductos);
     }
-    
+
     public void cargarCliente() {
         try (Connection con = Connect.getConnection()) {
             CtrCliente client = new CtrCliente();
@@ -84,7 +132,7 @@ public class VentaV extends javax.swing.JPanel {
                 jComboBoxcliente.addItem("Seleccione el Cliente");
                 for (Cliente cliente : clientes) {
                     if (cliente.getEstado()) {
-                        jComboBoxcliente.addItem(cliente.getNombre() + "|" + cliente.getDocumento());
+                        jComboBoxcliente.addItem(cliente.getNombre() + " " + cliente.getDocumento());
                     }
                 }
             }
@@ -92,7 +140,7 @@ public class VentaV extends javax.swing.JPanel {
             System.out.print("Error al cargar cliente" + e);
         }
     }
-    
+
     public void cargarInventarioProducto() {
         try (Connection con = Connect.getConnection()) {
             CtrlInventario ctrin = new CtrlInventario();
@@ -108,7 +156,7 @@ public class VentaV extends javax.swing.JPanel {
             System.out.print("Error al cargar Producto" + e);
         }
     }
-    
+
     public void cargarComprobante() {
         try (Connection con = Connect.getConnection()) {
             CtrComprobante com = new CtrComprobante();
@@ -124,7 +172,7 @@ public class VentaV extends javax.swing.JPanel {
             System.out.print("Error al cargar Comprobante" + e);
         }
     }
-    
+
     public void cargarMetodoPago() {
         try (Connection con = Connect.getConnection()) {
             CtrMetodoPago met = new CtrMetodoPago();
@@ -140,7 +188,7 @@ public class VentaV extends javax.swing.JPanel {
             System.out.print("Error al cargar Comprobante" + e);
         }
     }
-    
+
     private void validacionVentas() {
         CtrlValidacion val = new CtrlValidacion();
         String cantidad = txtcantidad.getText().trim();
@@ -148,16 +196,16 @@ public class VentaV extends javax.swing.JPanel {
             lblcantidad.setText("Cololoque la cantidad");
         } else if (!val.validarNumerosenteros(cantidad)) {
             lblcantidad.setText("Solo Numero enteros");
-        }else{
+        } else {
             lblcantidad.setText("");
         }
-        
-        if (cantidad.isEmpty() || !val.validarNumerosenteros(cantidad) ) {
+
+        if (cantidad.isEmpty() || !val.validarNumerosenteros(cantidad)) {
             botonañadir.setEnabled(false);
         } else {
             botonañadir.setEnabled(true);
         }
-        
+
     }
 
     /**
@@ -169,7 +217,7 @@ public class VentaV extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblprueba = new javax.swing.JLabel();
+        lblempleado = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbventa = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -198,18 +246,20 @@ public class VentaV extends javax.swing.JPanel {
         botonañadir = new javax.swing.JButton();
         botonregistrarventa = new javax.swing.JButton();
         lblcantidad = new javax.swing.JLabel();
+        lblcant = new javax.swing.JLabel();
+        botoneliminar = new javax.swing.JButton();
 
-        lblprueba.setText("jLabel1");
+        lblempleado.setText("jLabel1");
 
         tbventa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Escoja Producto"
             }
         ));
         jScrollPane1.setViewportView(tbventa);
@@ -270,6 +320,20 @@ public class VentaV extends javax.swing.JPanel {
         });
 
         botonregistrarventa.setText("Registrar Venta");
+        botonregistrarventa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonregistrarventaActionPerformed(evt);
+            }
+        });
+
+        lblcant.setText("jLabel4");
+
+        botoneliminar.setText("Eliminar");
+        botoneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoneliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -282,7 +346,9 @@ public class VentaV extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botonregistrarventa)
-                                .addGap(589, 589, 589)
+                                .addGap(496, 496, 496)
+                                .addComponent(botoneliminar)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel8))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -307,16 +373,6 @@ public class VentaV extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(botonbuscarcliente)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(jComboBoxcomprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(21, 21, 21)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel10)
-                                            .addComponent(jComboBoxmetodopago, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(botonbuscarproducto)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel11)
@@ -329,7 +385,18 @@ public class VentaV extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(txtsubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(botonañadir))))))
+                                        .addComponent(botonañadir))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(botonbuscarcliente)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jComboBoxcomprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(21, 21, 21)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jComboBoxmetodopago, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lblcant, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -339,15 +406,17 @@ public class VentaV extends javax.swing.JPanel {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addGap(38, 38, 38)
-                                    .addComponent(lblprueba))))))
+                                    .addComponent(lblempleado))))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(9, 9, 9)
+                .addComponent(lblcant)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblprueba)
+                    .addComponent(lblempleado)
                     .addComponent(jLabel1))
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,7 +457,8 @@ public class VentaV extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txttotalapagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
-                            .addComponent(botonregistrarventa)))
+                            .addComponent(botonregistrarventa)
+                            .addComponent(botoneliminar)))
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
@@ -421,7 +491,7 @@ public class VentaV extends javax.swing.JPanel {
                 jComboBoxinventarioproducto.setSelectedItem(nombre);
             }
         } catch (SQLException e) {
-            
+
         }
     }//GEN-LAST:event_botonbuscarproductoActionPerformed
 
@@ -430,14 +500,260 @@ public class VentaV extends javax.swing.JPanel {
     }//GEN-LAST:event_txtcantidadKeyReleased
 
     private void botonañadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonañadirActionPerformed
+        //int cantidadBD = 0;
+        boolean errores = false;
+        String cant = txtcantidad.getText().trim();
+        int canti = Integer.parseInt(cant);
+        String nomb = jComboBoxinventarioproducto.getSelectedItem().toString().trim();
+        if (nomb.equalsIgnoreCase("Seleccione el Producto")) {
+            lblproducto.setText("Seleccione producto");
+            errores = true;
+        } else {
+            lblproducto.setText("");
+        }
+
+        if (canti != 0) {
+            if (!errores) {
+
+                try {
+                    Connection con = Connect.getConnection();
+                    CtrProducto ctrpro = new CtrProducto();
+                    CtrlInventario ctrinven = new CtrlInventario();
+                    CtrDetalleVenta resta = new CtrDetalleVenta();
+                    nombre = jComboBoxinventarioproducto.getSelectedItem().toString().trim();
+                    idProducto = ctrpro.obtenerIdproductoNombre(con, nombre);
+                    precioUnitario = ctrpro.obtenerprecioproducto(con, nombre);
+                    cantidadProductoBBDD = ctrinven.obtenerStock(con, idProducto);
+                    cantidad = Integer.parseInt(cant);
+                    igv = (precioUnitario * cantidad) * 0.18;
+
+                    //cantidadBD -=cantidad;
+                } catch (SQLException e) {
+                    System.out.println("Error al ibtener los datos" + e);
+                }
+
+                if (cantidad <= cantidadProductoBBDD) {
+                    try {
+                        CtrDetalleVenta resta = new CtrDetalleVenta();
+                        Inventario res = new Inventario();
+                        subtotal = precioUnitario * cantidad;
+                        totalPagar = subtotal + igv + descuento;
+
+                        subtotal = (double) Math.round(subtotal * 100) / 100;
+                        igv = (double) Math.round(igv * 100) / 100;
+                        totalPagar = (double) Math.round(totalPagar * 100) / 100;
+
+                        producto = new DetalleVenta();
+                        producto.setCoddetalleventa(auxIdDetalle);
+                        producto.setNombre(nombre);
+                        producto.setCodproducto(idProducto);
+                        producto.setCantidad(cantidad);
+                        producto.setPreciounitario(precioUnitario);
+                        producto.setSubtotal(subtotal);
+                        producto.setIgv(igv);
+                        producto.setTotalapagar(totalPagar);
+                        producto.setEstado1(Boolean.TRUE);
+                        listaproductos.add(producto);
+                        cargarlistaTabla();
+                        res.setCod_prod(idProducto);
+                        res.setStock(cantidad);
+                        resta.restarTipo(res);
+                        this.CalcularTotalPagar();
+                        auxIdDetalle++;
+                    } catch (SQLException e) {
+                        System.out.println("Errorrrr" + e);
+                    }
+                    //this.listaTablaProductos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Noexiste suficiente Stock");
+                }
+            } else {
+                System.out.println("Error");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Coloque una cantidad diferente de 0");
+        }
 
     }//GEN-LAST:event_botonañadirActionPerformed
+    int idArrayList = 0;
+    private void botoneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoneliminarActionPerformed
+        try {
+            Connection con = Connect.getConnection();
+            CtrProducto ctrpro = new CtrProducto();
+            CtrDetalleVenta suma = new CtrDetalleVenta();
+            int selectedRow = tbventa.getSelectedRow();
+            long codproducto = 0;
+            int sumstock = 0;
 
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) tbventa.getModel();
+                String nombre = model.getValueAt(selectedRow, 1).toString();
+                String stock = model.getValueAt(selectedRow, 2).toString();
+
+                codproducto = ctrpro.obtenerIdproductoNombre(con, nombre);
+                sumstock = Integer.parseInt(stock);
+
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el producto?");
+                switch (opcion) {
+                    case 0:
+                        Inventario sum = new Inventario();
+                        sum.setCod_prod(codproducto);
+                        sum.setStock(sumstock);
+                        suma.sumarTipo(sum);
+
+                        // Elimina el elemento de la lista por su nombre (asegúrate de que listaproductos sea una lista de objetos Producto)
+                        for (int i = 0; i < listaproductos.size(); i++) {
+                            if (listaproductos.get(i).getNombre().equals(nombre)) {
+                                listaproductos.remove(i);
+                                break; // Sal del bucle una vez que se encuentre y elimine el elemento
+                            }
+                        }
+
+                        CalcularTotalPagar();
+                        cargarlistaTabla();
+                        break;
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                System.out.println("Error al seleccionar");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error " + e);
+        }
+    }//GEN-LAST:event_botoneliminarActionPerformed
+
+    private void botonregistrarventaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonregistrarventaActionPerformed
+        try {
+            Connection con = Connect.getConnection();
+
+            String cliente = jComboBoxcliente.getSelectedItem().toString();
+
+            String comprobante = jComboBoxcomprobante.getSelectedItem().toString();
+            String empleado = lblempleado.getText().trim();
+            String metodopago = jComboBoxmetodopago.getSelectedItem().toString().trim();
+            String valorpa = txttotalapagar.getText().trim();
+
+            boolean errores = false;
+
+            if (cliente.equalsIgnoreCase("Seleccione el Cliente")) {
+                lblcliente.setText("Seleccione un Cliente");
+                errores = true;
+            } else {
+                lblcliente.setText("");
+            }
+
+            if (comprobante.equalsIgnoreCase("Seleccione el Comprobante")) {
+                JOptionPane.showMessageDialog(null, "Seleccione Comptobante");
+                errores = true;
+            } else {
+
+            }
+
+            if (metodopago.equalsIgnoreCase("Seleccione el Metodo")) {
+                JOptionPane.showMessageDialog(null, "Seleccione algun metodo");
+                errores = true;
+            } else {
+
+            }
+
+            if (!errores) {
+                if (listaproductos.size() > 0) {
+                    CtrCliente client = new CtrCliente();
+                    CtrComprobante compro = new CtrComprobante();
+                    CtrMetodoPago metodo = new CtrMetodoPago();
+                    CtrDetalleVenta detalle = new CtrDetalleVenta();
+                    Long codclient = client.obtenercodCliente(con, cliente);
+                    Long codcomprobante = compro.obtenercodComprobante(con, comprobante);
+                    Long codempleado = Long.parseLong(empleado);
+                    Long codmetodopago = metodo.obtenercodMetodoPago(con, metodopago);
+                    Double valorpagar = Double.parseDouble(valorpa);
+                    
+                    Venta venta = new Venta();
+                    //long cod= 2;
+                    venta.setCodcliente(codclient);
+                    venta.setCodcomprobbante(codcomprobante);
+                    venta.setEmpleado(codempleado);
+                    venta.setMetodopago(codmetodopago);
+                    venta.setValorpago(valorpagar);
+                    venta.setEstado(Boolean.TRUE);
+                    detalle.agregaVenta(venta);
+                    
+                    Long codventa = detalle.obtenerCodVenta(con);
+                    DetalleVenta detalles = new DetalleVenta();
+                    for(DetalleVenta detalleventa : listaproductos){
+                        detalles.setCodproducto(detalleventa.getCodproducto());
+                        detalles.setCodventa(codventa);
+                        detalles.setCantidad(detalleventa.getCantidad());
+                        detalles.setPreciounitario(detalleventa.getPreciounitario());
+                        detalles.setSubtotal(detalleventa.getSubtotal());
+                        detalles.setIgv(detalleventa.getIgv());
+                        detalles.setTotalapagar(detalleventa.getTotalapagar());
+                        detalles.setEstado1(Boolean.TRUE);
+                        detalle.agregaDetalleVenta(detalles);
+                    }
+                    
+                    JOptionPane.showMessageDialog(null, "Venta registrada");
+                   
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "Seleccione producto");
+                }
+            } else {
+
+            }
+        } catch (SQLException e) {
+           System.out.println("Error venta"+e);
+        }
+
+    }//GEN-LAST:event_botonregistrarventaActionPerformed
+
+    private void CalcularTotalPagar() {
+        subtotalGeneral = 0;
+        igvGeneral = 0;
+        totalPagarGeneral = 0;
+
+        for (DetalleVenta elemento : listaproductos) {
+            subtotalGeneral += elemento.getSubtotal();
+            igvGeneral += elemento.getIgv();
+            totalPagarGeneral += elemento.getTotalapagar();
+        }
+        //redondear decimales
+        subtotalGeneral = (double) Math.round(subtotalGeneral * 100) / 100;
+        igvGeneral = (double) Math.round(igvGeneral * 100) / 100;
+        totalPagarGeneral = (double) Math.round(totalPagarGeneral * 100) / 100;
+
+        //enviar datos a la vista
+        txtsubtotal.setText(String.valueOf(subtotalGeneral));
+        txttotalapagar.setText(String.valueOf(totalPagarGeneral));
+    }
+
+    private void cargarlistaTabla() {
+        Object[] columnNames = {"N", "Nombre", "Cantidad", "P. Unitario", "Sub Total", "IGV", "Total a Pagar"};
+        nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
+        tbventa.setModel(model);
+        for (DetalleVenta deventa : listaproductos) {
+            Object[] datos = new Object[8];
+            datos[0] = deventa.getCoddetalleventa();
+            datos[1] = deventa.getNombre();
+            datos[2] = deventa.getCantidad();
+            datos[3] = deventa.getPreciounitario();
+            datos[4] = deventa.getSubtotal();
+            datos[5] = deventa.getIgv();
+            datos[6] = deventa.getTotalapagar();
+            datos[7] = deventa.getEstado1();
+            model.addRow(datos);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonañadir;
     private javax.swing.JButton botonbuscarcliente;
     private javax.swing.JButton botonbuscarproducto;
+    private javax.swing.JButton botoneliminar;
     private javax.swing.JButton botonregistrarventa;
     private javax.swing.JComboBox<String> jComboBoxcliente;
     private javax.swing.JComboBox<String> jComboBoxcomprobante;
@@ -454,10 +770,11 @@ public class VentaV extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblcant;
     private javax.swing.JLabel lblcantidad;
     private javax.swing.JLabel lblcliente;
+    private javax.swing.JLabel lblempleado;
     private javax.swing.JLabel lblproducto;
-    private javax.swing.JLabel lblprueba;
     public static javax.swing.JTable tbventa;
     private javax.swing.JTextField txtbuscardni;
     private javax.swing.JTextField txtbuscarproducto;

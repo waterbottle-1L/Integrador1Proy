@@ -40,10 +40,10 @@ public class CtrlInventario {
     
     
     int codigos = 0;
-    public int obtenerStock(Connection con, String codigo) throws SQLException {
+    public int obtenerStock(Connection con, Long codigo) throws SQLException {
         String consulta = "SELECT stock FROM inventario WHERE cod_producto = ? AND estado = 1";
         try (PreparedStatement ps = con.prepareStatement(consulta)) {
-            ps.setString(1, codigo);
+            ps.setLong(1, codigo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("stock");
