@@ -393,37 +393,45 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_txtnombremarcaKeyReleased
 
     private void windowDeleteMarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowDeleteMarcActionPerformed
-        long idmarca = 0;
-        int selectedRow = tbmarca.getSelectedRow();
-        Marca marc = new Marca();
-        CtrMarca ctrmarc = new CtrMarca();
+        try {
+            long idmarca = 0;
+            int selectedRow = tbmarca.getSelectedRow();
+            Marca marc = new Marca();
+            CtrMarca ctrmarc = new CtrMarca();
+            Connection con = Connect.getConnection();
 
-        if (selectedRow != -1) {
-            DefaultTableModel model = (DefaultTableModel) tbmarca.getModel();
-            String idValue = model.getValueAt(selectedRow, 0).toString();
-            idmarca = Long.parseLong(idValue);
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la Marca?");
-            switch (opcion) {
-                case 0:
-                    boolean estado = false;
-                    try {
-                        marc.setCodmarca(idmarca);
-                        marc.setEstado(estado);
-                        ctrmarc.cambiarEstadoMarca(marc);
-                        Limpiar();
-                        cargarMarca();
-                    } catch (SQLException e) {
-                        System.out.print("Error marca" + e);
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) tbmarca.getModel();
+                String idValue = model.getValueAt(selectedRow, 0).toString();
+                idmarca = Long.parseLong(idValue);
+                if (ctrmarc.verificarCodigoexisteProducto(con, idmarca)) {
+                     JOptionPane.showMessageDialog(null, "No se puede Eliminar");
+                } else {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la Marca?");
+                    switch (opcion) {
+                        case 0:
+                            boolean estado = false;
+                            try {
+                                marc.setCodmarca(idmarca);
+                                marc.setEstado(estado);
+                                ctrmarc.cambiarEstadoMarca(marc);
+                                Limpiar();
+                                cargarMarca();
+                            } catch (SQLException e) {
+                                System.out.print("Error marca" + e);
+                            }
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            break;
                     }
-                    break;
-                case 1:
-                    break;
-                default:
-                    break;
+                }
+            } else {
+                System.out.print("Error al eliminar la Marca");
             }
+        } catch (SQLException e) {
 
-        } else {
-            System.out.print("Error al eliminar la Marca");
         }
     }//GEN-LAST:event_windowDeleteMarcActionPerformed
 

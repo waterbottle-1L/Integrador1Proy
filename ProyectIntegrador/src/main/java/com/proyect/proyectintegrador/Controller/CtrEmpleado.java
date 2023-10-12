@@ -16,6 +16,34 @@ public class CtrEmpleado {
     String SQL_CONSULTA = "{CALL ObtenerEmpleado()}";
     String SQL_INSERTAR = "{CALL InsertarEmpleado(?,?,?,?,?,?,?,?,?)}";
     
+    public Long obtenerCodEmpleado(Connection con, String nombreempleado) throws SQLException {
+        String consulta = "SELECT cod_empleado FROM empleado WHERE nombre = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, nombreempleado);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                   
+                    return rs.getLong("cod_empleado");
+                }
+            }
+        }
+        return null;
+    }
+    long codrol = 3;
+    public Long obtenerCodRol(Connection con, Long nombreTipo) throws SQLException {
+        String consulta = "SELECT rol_id FROM usuario_rol WHERE empleado_id = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setLong(1, nombreTipo);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    
+                    return rs.getLong("rol_id");
+                }
+            }
+        }
+        return codrol ;
+    }
+    
     public List<Empleado> cargarEmpleado() throws SQLException {
        List<Empleado> empleadoList = new ArrayList<>(); 
        try (Connection connection = Connect.getConnection(); 

@@ -87,13 +87,12 @@ public class CtrDetalleVenta {
         try (PreparedStatement ps = con.prepareStatement(consulta)) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    // Si se encuentra una fila en la consulta, devuelve el valor de cod_venta
+                    
                     return rs.getLong("cod_venta");
                 }
             }
         }
-        // Si no se encontró ninguna fila, puedes manejarlo como desees
-        // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
+        
         return null;
     }
 
