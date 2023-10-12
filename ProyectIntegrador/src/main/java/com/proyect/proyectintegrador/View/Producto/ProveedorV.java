@@ -629,31 +629,40 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_txtdireccionKeyReleased
 
     private void BotonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarActionPerformed
-        long idproveedor = 0;
-        int selectedRow = tbproveedor.getSelectedRow();
-        Proveedor prov = new Proveedor();
-        CtrProveedor ctrprov = new CtrProveedor();
-        if (selectedRow != -1) {
-            DefaultTableModel model = (DefaultTableModel) tbproveedor.getModel();
-            String idValue = model.getValueAt(selectedRow, 0).toString();
-            idproveedor = Long.parseLong(idValue);
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar Proveedor?");
-            switch (opcion) {
-                case 0:
-                    boolean estado = false;
-                    prov.setCodproveedor(idproveedor);
-                    prov.setEstado(estado);
-                    ctrprov.Cambiarestadoproveedor(prov);
-                    Limpiar();
-                    cargarProveedor();
-                    break;
-                case 1:
-                    break;
-                default:
-                    break;
+        try {
+            Connection con = Connect.getConnection();
+            long idproveedor = 0;
+            int selectedRow = tbproveedor.getSelectedRow();
+            Proveedor prov = new Proveedor();
+            CtrProveedor ctrprov = new CtrProveedor();
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) tbproveedor.getModel();
+                String idValue = model.getValueAt(selectedRow, 0).toString();
+                idproveedor = Long.parseLong(idValue);
+                if (ctrprov.verificarCodigoexisteProducto(con, idproveedor)) {
+                    JOptionPane.showMessageDialog(null, "No se puede Eliminar");
+                } else {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar Proveedor?");
+                    switch (opcion) {
+                        case 0:
+                            boolean estado = false;
+                            prov.setCodproveedor(idproveedor);
+                            prov.setEstado(estado);
+                            ctrprov.Cambiarestadoproveedor(prov);
+                            Limpiar();
+                            cargarProveedor();
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar: No se ha seleccionado un proveedor.");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al eliminar: No se ha seleccionado un proveedor.");
+        } catch (SQLException e) {
+            System.out.println("Error" + e);
         }
     }//GEN-LAST:event_BotonEliminarActionPerformed
 

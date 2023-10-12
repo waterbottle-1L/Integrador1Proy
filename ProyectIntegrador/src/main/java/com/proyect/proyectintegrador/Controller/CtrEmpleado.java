@@ -36,7 +36,7 @@ public class CtrEmpleado {
             ps.setLong(1, nombreTipo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    // Si se encuentra una fila con el nombre de la marca, devuelve su ID
+                    
                     return rs.getLong("rol_id");
                 }
             }

@@ -12,10 +12,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 public class TipoV extends org.jdesktop.swingx.JXPanel {
-    
+
     private boolean canEdit = true;
     private boolean canDelete = true;
-    
+
     public TipoV() {
         initComponents();
         NuevoTipo.pack();
@@ -28,7 +28,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         cargarTipo();
         Habilitar();
     }
-    
+
     public class nonEditableTableModel extends DefaultTableModel {
 
         public nonEditableTableModel(Object[] columnNames, int rowCount) {
@@ -40,18 +40,18 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             return false;
         }
     }
-    
+
     private void cargarTipo() {
         boolean datosEncontrados = false;
-        
+
         try (Connection con = Connect.getConnection()) {
             CtrTipo tip = new CtrTipo();
             List<Tipo> tipos = tip.cargarTipo();
             if (tipos != null && !tipos.isEmpty()) {
-                
-                Object[] columnNames ={"Codigo","Nombre"};
-                nonEditableTableModel model = new nonEditableTableModel(columnNames,0);
-                
+
+                Object[] columnNames = {"Codigo", "Nombre"};
+                nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
+
                 for (Tipo tipo : tipos) {
                     if (tipo.getEstado()) {
                         Object[] datos = new Object[2];
@@ -66,19 +66,19 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         } catch (SQLException e) {
             System.out.println("Error al cargar la tabla: " + e.getMessage());
         }
-        
+
         verificaciondatos.setVisible(!datosEncontrados);
     }
-    
+
     private void Limpiar() {
         DefaultTableModel model = (DefaultTableModel) tbtipo.getModel();
         model.setRowCount(0);
     }
-    
+
     private void limpiarcajastexto() {
         txtnombretipo.setText("");
     }
-    
+
     private void Habilitar() {
         ListSelectionModel selectionModel;
         selectionModel = tbtipo.getSelectionModel();
@@ -95,35 +95,35 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             }
         });
     }
-    
+
     private void validarNuevaTipo() {
         if (txtnombretipo.getText().isEmpty()) {
             lblnombtipo.setText("Rellene el campo");
         } else {
             lblnombtipo.setText("");
         }
-        
+
         if (txtnombretipo.getText().isEmpty()) {
             botonguardartipo.setEnabled(false);
         } else {
             botonguardartipo.setEnabled(true);
         }
     }
-    
+
     private void validarModificarTipo() {
         if (txtmodnombtipo.getText().isEmpty()) {
             lblmodnombtipo.setText("Rellene el campo");
         } else {
             lblmodnombtipo.setText("");
         }
-        
+
         if (txtmodnombtipo.getText().isEmpty()) {
             botonmodificartipo.setEnabled(false);
         } else {
             botonmodificartipo.setEnabled(true);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -371,7 +371,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             CtrTipo ctrtip = new CtrTipo();
             Tipo tipo = new Tipo();
             String nombreingresado = txtnombretipo.getText().trim();
-            
+
             if (ctrtip.verificarNombreExistente(con, nombreingresado)) {
                 lblnombtipo.setText("El tipo ya existe");
             } else {
@@ -388,38 +388,45 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_botonguardartipoActionPerformed
 
     private void windoweliminartipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windoweliminartipoActionPerformed
-        int selectedRow = tbtipo.getSelectedRow();
-        long idtipo = 0;
-        Connection con = Connect.getConnection();
-        CtrTipo ctrtip = new CtrTipo();
-        Tipo tipo = new Tipo();
-        if (selectedRow != -1) {
-            DefaultTableModel model = (DefaultTableModel) tbtipo.getModel();
-            String idValue = model.getValueAt(selectedRow, 0).toString();
-            idtipo = Long.parseLong(idValue);
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el tipo de producto?");
-            switch (opcion) {
-                
-                case 0:
-                    boolean estado = false;
-                    try {
-                        tipo.setCodtipo(idtipo);
-                        tipo.setEstado(estado);
-                        ctrtip.cambiarEstadoTipo(tipo);
-                        Limpiar();
-                        cargarTipo();
-                    } catch (SQLException e) {
-                        System.out.print("Error al eliminar tipo" + e);
+        try {
+            int selectedRow = tbtipo.getSelectedRow();
+            long idtipo = 0;
+            Connection con = Connect.getConnection();
+            CtrTipo ctrtip = new CtrTipo();
+            Tipo tipo = new Tipo();
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) tbtipo.getModel();
+                String idValue = model.getValueAt(selectedRow, 0).toString();
+                idtipo = Long.parseLong(idValue);
+                if (ctrtip.verificarCodigoexisteProducto(con, idtipo)) {
+                    JOptionPane.showMessageDialog(null, "No se puede Eliminar");
+                } else {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el tipo de producto?");
+                    switch (opcion) {
+
+                        case 0:
+                            boolean estado = false;
+                            try {
+                                tipo.setCodtipo(idtipo);
+                                tipo.setEstado(estado);
+                                ctrtip.cambiarEstadoTipo(tipo);
+                                Limpiar();
+                                cargarTipo();
+                            } catch (SQLException e) {
+                                System.out.print("Error al eliminar tipo" + e);
+                            }
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            break;
                     }
-                    break;
-                case 1:
-                    break;
-                default:
-                    break;
+                }
+            } else {
+                System.out.print("Error al seleccionar tipo");
             }
-            
-        } else {
-            System.out.print("Error al seleccionar tipo");
+        } catch (SQLException e) {
+            System.out.print("Error AL eliminar");
         }
     }//GEN-LAST:event_windoweliminartipoActionPerformed
 
@@ -428,11 +435,11 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
         botonmodificartipo.setEnabled(true);
         int selectedRow = tbtipo.getSelectedRow();
         if (selectedRow != -1) {
-            
+
             DefaultTableModel model = (DefaultTableModel) tbtipo.getModel();
             Object data1 = model.getValueAt(selectedRow, 0);
             Object data2 = model.getValueAt(selectedRow, 1);
-            
+
             txtcodtipo.setText(data1.toString());
             txtmodnombtipo.setText(data2.toString());
             ModificarTipo.setVisible(true);
@@ -450,7 +457,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
             Connection con = Connect.getConnection();
             CtrTipo ctrtip = new CtrTipo();
             Tipo tipo = new Tipo();
-            
+
             String texto = txtcodtipo.getText();
             long codtipo = Long.parseLong(texto);
             String nombre = txtmodnombtipo.getText();
@@ -465,7 +472,7 @@ public class TipoV extends org.jdesktop.swingx.JXPanel {
                 cargarTipo();
                 ModificarTipo.setVisible(false);
             }
-            
+
         } catch (SQLException e) {
             System.out.print("Error al modiciar el Tipo" + e);
         }

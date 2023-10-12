@@ -174,5 +174,19 @@ public class CtrProducto {
         
         return prec;
     }
+    
+    public boolean verificarCodigoexisteInventario(Connection con, Long codproducto) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM inventario WHERE cod_producto = ? AND estado = 1";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setLong(1, codproducto);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; 
+                }
+            }
+        }
+        return false;
+    }
 
 }

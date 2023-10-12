@@ -127,4 +127,18 @@ public class CtrTipo {
         // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
         return null;
     }
+    
+    public boolean verificarCodigoexisteProducto(Connection con, Long codtipo) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM producto WHERE cod_tipo_producto = ? AND estado = 1";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setLong(1, codtipo);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Si count > 0, el RUC ya existe
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -47,7 +47,7 @@ public class CtrMarca {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
-                    return count > 0; // Si count > 0, el RUC ya existe
+                    return count > 0; 
                 }
             }
         }
@@ -90,7 +90,7 @@ public class CtrMarca {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
-                    return count > 0; // Si count > 0, un RUC similar ya existe, excluyendo el RUC específico
+                    return count > 0; 
                 }
             }
         }
@@ -119,24 +119,22 @@ public class CtrMarca {
             ps.setString(1, nombreMarca);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    // Si se encuentra una fila con el nombre de la marca, devuelve su ID
+                    
                     return rs.getLong("cod_marca");
                 }
             }
         }
-        // Si no se encontró ninguna coincidencia, puedes manejarlo como desees
-        // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
         return null;
     }
     
     public boolean verificarCodigoexisteProducto(Connection con, Long codmarca) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM producto WHERE cod_marca = ? AND estado = 1;";
+        String sql = "SELECT COUNT(*) FROM producto WHERE cod_marca = ? AND estado = 1";
         try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
             preparedStatement.setLong(1, codmarca);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt(1);
-                    return count > 0; // Si count > 0, el RUC ya existe
+                    return count > 0;
                 }
             }
         }

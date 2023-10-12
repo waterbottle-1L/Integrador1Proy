@@ -801,37 +801,44 @@ public class ProductoV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_botonguardarproductoActionPerformed
 
     private void windoweliminarproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windoweliminarproductoActionPerformed
-        int selectedRow = tbproducto.getSelectedRow();
-        long idproducto = 0;
-        Connection con = Connect.getConnection();
-        CtrProducto ctrproduct = new CtrProducto();
-        Producto produc = new Producto();
-        if (selectedRow != -1) {
-            DefaultTableModel model = (DefaultTableModel) tbproducto.getModel();
-            String idValue = model.getValueAt(selectedRow, 0).toString();
-            idproducto = Long.parseLong(idValue);
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el producto?");
-            switch (opcion) {
-                case 0:
-                    boolean estado = false;
-                    try {
-                        produc.setCodProducto(idproducto);
-                        produc.setEstado(Boolean.FALSE);
-                        ctrproduct.cambiarEstadoProducto(produc);
-                        Limpiar();
-                        cargarProducto();
-                    } catch (SQLException e) {
-                        System.out.print("Error al eliminar producto" + e);
+        try {
+            int selectedRow = tbproducto.getSelectedRow();
+            long idproducto = 0;
+            Connection con = Connect.getConnection();
+            CtrProducto ctrproduct = new CtrProducto();
+            Producto produc = new Producto();
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) tbproducto.getModel();
+                String idValue = model.getValueAt(selectedRow, 0).toString();
+                idproducto = Long.parseLong(idValue);
+                if (ctrproduct.verificarCodigoexisteInventario(con, idproducto)) {
+                     JOptionPane.showMessageDialog(null, "No se puede eliminar");
+                } else {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el producto?");
+                    switch (opcion) {
+                        case 0:
+                            boolean estado = false;
+                            try {
+                                produc.setCodProducto(idproducto);
+                                produc.setEstado(Boolean.FALSE);
+                                ctrproduct.cambiarEstadoProducto(produc);
+                                Limpiar();
+                                cargarProducto();
+                            } catch (SQLException e) {
+                                System.out.print("Error al eliminar producto" + e);
+                            }
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            break;
                     }
-                    break;
-                case 1:
-                    break;
-                default:
-                    break;
+                }
+            } else {
+                System.out.print("Error al seleccionar producto");
             }
-
-        } else {
-            System.out.print("Error al seleccionar producto");
+        } catch (SQLException e) {
+            System.out.print("Error al Eliminar");
         }
     }//GEN-LAST:event_windoweliminarproductoActionPerformed
 
