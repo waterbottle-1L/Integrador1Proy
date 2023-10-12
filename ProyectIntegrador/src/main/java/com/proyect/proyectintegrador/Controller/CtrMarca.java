@@ -128,4 +128,18 @@ public class CtrMarca {
         // Por ejemplo, lanzar una excepción o devolver un valor predeterminado
         return null;
     }
+    
+    public boolean verificarCodigoexisteProducto(Connection con, Long codmarca) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM producto WHERE cod_marca = ? AND estado = 1;";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setLong(1, codmarca);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; // Si count > 0, el RUC ya existe
+                }
+            }
+        }
+        return false;
+    }
 }
