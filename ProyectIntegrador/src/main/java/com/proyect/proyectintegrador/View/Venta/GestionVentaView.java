@@ -9,10 +9,15 @@ public class GestionVentaView extends javax.swing.JInternalFrame {
         initComponents();
         this.setSize(800, 600);
         jTabbedPane1.add("Ventas",GestionVentaInstace());
+        jTabbedPane1.add("DetalleVenta",DetalleVentaInstance());
     }
 
     private GestionVentaV GestionVentaInstace(){
         return new GestionVentaV ();
+    }
+    
+    private DetalleVentaV DetalleVentaInstance(){
+        return new DetalleVentaV();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

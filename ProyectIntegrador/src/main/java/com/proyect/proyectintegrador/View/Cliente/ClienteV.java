@@ -651,36 +651,44 @@ public class ClienteV extends org.jdesktop.swingx.JXPanel {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void windoweliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windoweliminarclienteActionPerformed
-        int selectedRow = tbcliente.getSelectedRow();
-        long idcliente = 0;
-        Connection con = Connect.getConnection();
-        CtrCliente ctrclient = new CtrCliente();
-        Cliente client = new Cliente();
-        if (selectedRow != -1) {
-            DefaultTableModel model = (DefaultTableModel) tbcliente.getModel();
-            String idValue = model.getValueAt(selectedRow, 0).toString();
-            idcliente = Long.parseLong(idValue);
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el Cliente?");
-            switch (opcion) {
-                case 0:
-                    boolean estado = false;
-                    try {
-                        client.setCodcliente(idcliente);
-                        client.setEstado(estado);
-                        ctrclient.cambiarEstadoCliente(client);
-                        Limpiar();
-                        cargarCliente();
+        try {
+            int selectedRow = tbcliente.getSelectedRow();
+            long idcliente = 0;
+            Connection con = Connect.getConnection();
+            CtrCliente ctrclient = new CtrCliente();
+            Cliente client = new Cliente();
+            if (selectedRow != -1) {
+                DefaultTableModel model = (DefaultTableModel) tbcliente.getModel();
+                String idValue = model.getValueAt(selectedRow, 0).toString();
+                idcliente = Long.parseLong(idValue);
+                if (ctrclient.verificarCodigoexisteVenta(con, idcliente)) {
+                    JOptionPane.showMessageDialog(null, "No se puede Eliminar");
+                } else {
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el Cliente?");
+                    switch (opcion) {
+                        case 0:
+                            boolean estado = false;
+                            try {
+                                client.setCodcliente(idcliente);
+                                client.setEstado(estado);
+                                ctrclient.cambiarEstadoCliente(client);
+                                Limpiar();
+                                cargarCliente();
 
-                    } catch (SQLException e) {
-                        System.out.print("Error al eliminar el Cliente" + e);
+                            } catch (SQLException e) {
+                                System.out.print("Error al eliminar el Cliente" + e);
+                            }
+                        case 1:
+                            break;
+                        default:
+                            break;
                     }
-                case 1:
-                    break;
-                default:
-                    break;
+                }
+            } else {
+                System.out.print("Error al seleccionar Cliente");
             }
-        } else {
-            System.out.print("Error al seleccionar Cliente");
+        } catch (SQLException e) {
+            System.out.print("Error"+e);
         }
     }//GEN-LAST:event_windoweliminarclienteActionPerformed
 
@@ -739,14 +747,14 @@ public class ClienteV extends org.jdesktop.swingx.JXPanel {
             Connection con = Connect.getConnection();
             CtrCliente ctrclient = new CtrCliente();
             Cliente client = new Cliente();
-            
+
             String texto = txtcodigocliente.getText().trim();
             long codcliente = Long.parseLong(texto);
             String documento = txtmoddocumento.getText().trim();
-            
-            if(ctrclient.verificarDocumentoSimilar(con, documento, codcliente)){
+
+            if (ctrclient.verificarDocumentoSimilar(con, documento, codcliente)) {
                 lblmoddocumento.setText("El Cliente ya existe");
-            }else{
+            } else {
                 client.setCodcliente(codcliente);
                 client.setNombre(txtmodnombre.getText().trim());
                 client.setApellido(txtmodapellido.getText().trim());

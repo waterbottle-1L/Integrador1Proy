@@ -147,4 +147,18 @@ public class CtrCliente {
      
         return null;
     }
+    
+    public boolean verificarCodigoexisteVenta(Connection con, Long codcliente) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Venta WHERE cod_cliente = ? AND estado = 1";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setLong(1, codcliente);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0; 
+                }
+            }
+        }
+        return false;
+    }
 }

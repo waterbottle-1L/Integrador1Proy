@@ -15,6 +15,8 @@ import com.proyect.proyectintegrador.View.Venta.VentaView;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -131,8 +133,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                     .addGroup(LoginDialojLayout.createSequentialGroup()
                         .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(LoginDialojLayout.createSequentialGroup()
-                                .addComponent(verificacionloginempleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButton1))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LoginDialojLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -146,7 +147,10 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                         .addGap(27, 27, 27))
                     .addGroup(LoginDialojLayout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(LoginDialojLayout.createSequentialGroup()
+                        .addComponent(verificacionloginempleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         LoginDialojLayout.setVerticalGroup(
             LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,11 +165,11 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                 .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtcotraempleadologin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(verificacionloginempleado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(verificacionloginempleado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         GestionEmpleado.setModal(true);
@@ -733,6 +737,8 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
                         LoginDialoj.setVisible(false);
                         JOptionPane.showMessageDialog(null, "No cuenta con las credenciales suficientes");
                     }
+                }else{
+                    verificacionloginempleado.setText("Usuario o contraseña Incorrectas");
                 }
             } else {
                 verificacionloginempleado.setText("Rellene los campos");
@@ -962,6 +968,23 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
 
         } else {
             botonisertarempleado.setEnabled(true);
+        }
+    }
+    
+    public String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(password.getBytes());
+            StringBuilder hexPassword = new StringBuilder();
+
+            for (byte hashByte : hashBytes) {
+                hexPassword.append(String.format("%02x", hashByte));
+            }
+
+            return hexPassword.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

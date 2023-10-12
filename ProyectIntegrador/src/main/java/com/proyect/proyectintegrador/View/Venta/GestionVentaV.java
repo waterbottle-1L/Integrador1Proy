@@ -7,15 +7,39 @@ import com.proyect.proyectintegrador.Entitis.Venta;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 
 public class GestionVentaV extends org.jdesktop.swingx.JXPanel{
 
+    private boolean canEdit = true;
+    private boolean canDelete = true;
     
     public GestionVentaV() {
         initComponents();
         cargarVenta();
+        botoneliminar.setEnabled(false);
+        Habilitar();
+    }
+    
+    private void Habilitar() {
+        ListSelectionModel selectionModel;
+        selectionModel = tbventa.getSelectionModel();
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (!canDelete || !canEdit) {
+                return;
+            }
+            if (selectionModel.getSelectedItemsCount() == 1) {
+                
+                botoneliminar.setEnabled(true);
+            } else {
+                
+                botoneliminar.setEnabled(false);
+            }
+        });
     }
     
     public class nonEditableTableModel extends DefaultTableModel {
@@ -66,7 +90,7 @@ public class GestionVentaV extends org.jdesktop.swingx.JXPanel{
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbventa = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        botoneliminar = new javax.swing.JButton();
         verificaciondatos = new javax.swing.JLabel();
 
         tbventa.setModel(new javax.swing.table.DefaultTableModel(
@@ -82,7 +106,12 @@ public class GestionVentaV extends org.jdesktop.swingx.JXPanel{
         ));
         jScrollPane1.setViewportView(tbventa);
 
-        jButton1.setText("Eliminar");
+        botoneliminar.setText("Eliminar");
+        botoneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botoneliminarActionPerformed(evt);
+            }
+        });
 
         verificaciondatos.setText("Sin Datos");
 
@@ -94,7 +123,7 @@ public class GestionVentaV extends org.jdesktop.swingx.JXPanel{
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(botoneliminar)
                         .addGap(266, 266, 266)
                         .addComponent(verificaciondatos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -108,16 +137,20 @@ public class GestionVentaV extends org.jdesktop.swingx.JXPanel{
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(verificaciondatos)
-                    .addComponent(jButton1))
+                    .addComponent(botoneliminar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(77, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botoneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botoneliminarActionPerformed
+        JOptionPane.showMessageDialog(null, "No se puede Eliminar");
+    }//GEN-LAST:event_botoneliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botoneliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbventa;
     private javax.swing.JLabel verificaciondatos;

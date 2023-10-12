@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CtrDetalleVenta {
 
@@ -16,6 +18,31 @@ public class CtrDetalleVenta {
     String SQL_SUMAR = "{CALL SumarStock(?,?)}";
     String SQL_INSERTAR = "{CALL InsertarVenta(?,?,?,?,?,?)}";
     String SQL_INSERTARDETALLE = "{CALL InsertarDetalleVenta(?,?,?,?,?,?,?,?)}";
+    String SQL_CONSULTA = "{CALL ObtenerDetallVenta()}";
+    
+    public List<DetalleVenta> tablaDetalleVenta() throws SQLException{
+        List<DetalleVenta> detalleList = new ArrayList<>();
+        
+        try(Connection connection = Connect.getConnection(); 
+             CallableStatement callableStatement = connection.prepareCall(SQL_CONSULTA); 
+             ResultSet resultSet = callableStatement.executeQuery()){
+            while (resultSet.next()) {
+                DetalleVenta detalle = new DetalleVenta();
+                detalle.setCoddetalleventa(resultSet.getLong("cod_detalle_venta"));
+                detalle.setNombre(resultSet.getString("nombre_producto"));
+                detalle.setCantidad(resultSet.getInt("cantidad"));
+                detalle.setPreciounitario(resultSet.getDouble("precionunitario"));
+                detalle.setSubtotal(resultSet.getDouble("subtotal"));
+                detalle.setIgv(resultSet.getDouble("igv"));
+                detalle.setTotalapagar(resultSet.getDouble("tatalpagar"));
+                detalle.setEstado1(resultSet.getBoolean("estado"));
+                detalleList.add(detalle);
+            }
+        }catch(SQLException e){
+            throw e;
+        }
+        return detalleList;
+    }
     
     public void agregaDetalleVenta(DetalleVenta detalle) throws SQLException {
         Connection conexio = Connect.getConnection();
