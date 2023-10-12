@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class CtrlInventario {
     String SQL_CONSULTA="{CALL obtenerInventario()}"; //{CALL ObtenerInventario()}
     String SQL_ACTUALIZAR="{CALL ActualizarInventario(?, ?, ?, ?, ?, ?)}";
-    String SQL_PRODUCTOSINSTOCK="{CALL ObtenerProductosSinInventario()}"; //{CALL ObtenerProductosSinInventario()}
+    String SQL_PRODUCTOSINSTOCK="{CALL CargarProductoNoEnInventario()}"; //{CALL ObtenerProductosSinInventario()}
     String SQL_INSERT="{CALL InsertarInventario(?,?,?,?,?,?)}";
     String SQL_ESTADO = "{CALL CambiarEstadoProducto(?,?)}";//Este falta corregir 
     public List<Inventario> cargarInventario() throws SQLException{
