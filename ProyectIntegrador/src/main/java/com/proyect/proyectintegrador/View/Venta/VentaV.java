@@ -25,7 +25,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
-public class VentaV extends javax.swing.JPanel {
+public class VentaV extends org.jdesktop.swingx.JXPanel {
 
     LocalDate fechaActual = LocalDate.now();
     String fecha = String.valueOf(fechaActual);

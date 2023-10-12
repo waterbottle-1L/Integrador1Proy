@@ -10,6 +10,7 @@ import com.proyect.proyectintegrador.Entitis.Empleado;
 import com.proyect.proyectintegrador.View.Cliente.ClienteView;
 import com.proyect.proyectintegrador.View.Inventario.InventarioView;
 import com.proyect.proyectintegrador.View.Producto.ProductoView;
+import com.proyect.proyectintegrador.View.Venta.GestionVentaView;
 import com.proyect.proyectintegrador.View.Venta.VentaView;
 import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Dimension;
@@ -95,6 +96,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         ClienteButton = new javax.swing.JButton();
         InventarioButton = new javax.swing.JButton();
         VenatsButton = new javax.swing.JButton();
+        GestionVentas = new javax.swing.JButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -449,6 +451,17 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             }
         });
         jToolBar1.add(VenatsButton);
+
+        GestionVentas.setText("Gestionar Ventas");
+        GestionVentas.setFocusable(false);
+        GestionVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        GestionVentas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        GestionVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GestionVentasActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(GestionVentas);
         jToolBar1.add(filler2);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -801,6 +814,44 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         validarNuevoEmpleado();
     }//GEN-LAST:event_txtpasswordKeyReleased
 
+    private void GestionVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GestionVentasActionPerformed
+        GestionVentaView gestion = new GestionVentaView();
+        jDesktopPane1.add(gestion);
+        gestion.setVisible(true);
+        gestion.addInternalFrameListener(new InternalFrameListener() {
+            @Override
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                GestionVentas.setEnabled(true);
+                gestion.setVisible(false);
+            }
+
+            @Override
+            public void internalFrameOpened(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameIconified(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameDeiconified(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameActivated(InternalFrameEvent e) {
+            }
+
+            @Override
+            public void internalFrameDeactivated(InternalFrameEvent e) {
+            }
+        });
+        GestionVentas.setEnabled(false);
+    }//GEN-LAST:event_GestionVentasActionPerformed
+
     public class nonEditableTableModel extends DefaultTableModel {
 
         public nonEditableTableModel(Object[] columnNames, int rowCount) {
@@ -918,6 +969,7 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.JButton ClienteButton;
     private javax.swing.JRadioButtonMenuItem Dark;
     private javax.swing.JDialog GestionEmpleado;
+    private javax.swing.JButton GestionVentas;
     private javax.swing.JButton InventarioButton;
     private javax.swing.JRadioButtonMenuItem Light;
     private javax.swing.JDialog LoginDialoj;

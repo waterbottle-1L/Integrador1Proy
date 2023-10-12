@@ -13,7 +13,46 @@ public class Venta {
     private Date fecha;
     private Double valorpago;
     private Boolean estado;
+    
+    private String nombrecliente;
+    private String nombrecomprobante;
+    private String nombreempleado;
+    private String metodo;
 
+    public String getNombrecliente() {
+        return nombrecliente;
+    }
+
+    public void setNombrecliente(String nombrecliente) {
+        this.nombrecliente = nombrecliente;
+    }
+
+    public String getNombrecomprobante() {
+        return nombrecomprobante;
+    }
+
+    public void setNombrecomprobante(String nombrecomprobante) {
+        this.nombrecomprobante = nombrecomprobante;
+    }
+
+    public String getNombreempleado() {
+        return nombreempleado;
+    }
+
+    public void setNombreempleado(String nombreempleado) {
+        this.nombreempleado = nombreempleado;
+    }
+
+    public String getMetodo() {
+        return metodo;
+    }
+
+    public void setMetodo(String metodo) {
+        this.metodo = metodo;
+    }
+
+    
+    
     public Long getCodventa() {
         return codventa;
     }
