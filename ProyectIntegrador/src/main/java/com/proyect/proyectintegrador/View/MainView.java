@@ -50,6 +50,12 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         LoginDialoj = new javax.swing.JDialog();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtloginempleado = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        verificacionloginempleado = new javax.swing.JLabel();
+        txtcotraempleadologin = new javax.swing.JPasswordField();
         GestionEmpleado = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbgestionempleado = new javax.swing.JTable();
@@ -100,28 +106,64 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
         LoginDialoj.setModal(true);
         LoginDialoj.setResizable(false);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Contraseña:");
+
+        jLabel4.setText("Login Registrar Empleado");
+
         javax.swing.GroupLayout LoginDialojLayout = new javax.swing.GroupLayout(LoginDialoj.getContentPane());
         LoginDialoj.getContentPane().setLayout(LoginDialojLayout);
         LoginDialojLayout.setHorizontalGroup(
             LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginDialojLayout.createSequentialGroup()
-                .addContainerGap(277, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(48, 48, 48))
+            .addGroup(LoginDialojLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LoginDialojLayout.createSequentialGroup()
+                        .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(LoginDialojLayout.createSequentialGroup()
+                                .addComponent(verificacionloginempleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LoginDialojLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtloginempleado)
+                                    .addComponent(txtcotraempleadologin, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))))
+                        .addGap(27, 27, 27))
+                    .addGroup(LoginDialojLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         LoginDialojLayout.setVerticalGroup(
             LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginDialojLayout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(64, 64, 64))
+                .addGap(17, 17, 17)
+                .addComponent(jLabel4)
+                .addGap(32, 32, 32)
+                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtloginempleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtcotraempleadologin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(LoginDialojLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(verificacionloginempleado, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         GestionEmpleado.setModal(true);
@@ -656,8 +698,37 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     }//GEN-LAST:event_botonempleadoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LoginDialoj.setVisible(false);
-        GestionEmpleado.setVisible(true);
+        try {
+            Connection con = Connect.getConnection();
+            String nombrelogin = txtloginempleado.getText().trim();
+            String contra = txtcotraempleadologin.getText().trim();
+            if (!nombrelogin.isEmpty() && !contra.isEmpty()) {
+                CtrlUsuario ctrlUser = new CtrlUsuario();
+                usuario user = new usuario();
+                //String contra = hashPassword(UContraseñaPasswordField.getText().trim());
+                user.setNombre(nombrelogin);
+                user.setPassword(contra);
+                if (ctrlUser.inicioSesionUser(user)) {
+                    CtrEmpleado ctremple = new CtrEmpleado();
+                    Long codempleado = ctremple.obtenerCodEmpleado(con, nombrelogin);
+                    Long rol = ctremple.obtenerCodRol(con, codempleado);
+
+                    if (rol == 1) {
+                        LoginDialoj.setVisible(false);
+                        GestionEmpleado.setVisible(true);
+                    }else if(rol == null || rol!= 1){
+                        LoginDialoj.setVisible(false);
+                        JOptionPane.showMessageDialog(null, "No cuenta con las credenciales suficientes");
+                    }
+                }
+            } else {
+                verificacionloginempleado.setText("Rellene los campos");
+            }
+
+            
+        } catch (SQLException e) {
+            System.out.println("Error login" + e);
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -690,39 +761,39 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     }//GEN-LAST:event_txtemailKeyReleased
 
     private void botonisertarempleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonisertarempleadoActionPerformed
-        try{ 
-        Date fechan = txtfechanacimiento.getDate();
-         long fecha = fechan.getTime();
-         java.sql.Date fechasql = new java.sql.Date(fecha);
-         
-         if(fechan == null){
-             lblfechnacimiento.setText("Rellene el campo");
-         }else{
-             CtrEmpleado ctremple = new CtrEmpleado();
-             Empleado empleado = new Empleado();
-             String nombre = txtnombre.getText().trim();
-             String apellido = txtapellido.getText().trim();
-             String direccion = txtdireccion.getText().trim();
-             String documento = txtdni.getText().trim();
-             String telefono = txttelefono.getText().trim();
-             String email = txtemail.getText().trim();
-             String pass = txtpassword.getText().trim();
-             empleado.setNombre(nombre);
-             empleado.setApellido(apellido);
-             empleado.setDireccion(direccion);
-             empleado.setDocumento(documento);
-             empleado.setFechanacimiento(fechasql);
-             empleado.setTelefono(telefono);
-             empleado.setEmail(email);
-             empleado.setPassword(pass);
-             empleado.setEstado(Boolean.TRUE);
-             ctremple.agregarEmpleado(empleado);
-             Limpiar();
-             cargarTablaEmpleado();
-             NuevoEmpleado.setVisible(false);
-         }
-        }catch(SQLException e){
-            System.out.println("Error en empleado"+e);
+        try {
+            Date fechan = txtfechanacimiento.getDate();
+            long fecha = fechan.getTime();
+            java.sql.Date fechasql = new java.sql.Date(fecha);
+
+            if (fechan == null) {
+                lblfechnacimiento.setText("Rellene el campo");
+            } else {
+                CtrEmpleado ctremple = new CtrEmpleado();
+                Empleado empleado = new Empleado();
+                String nombre = txtnombre.getText().trim();
+                String apellido = txtapellido.getText().trim();
+                String direccion = txtdireccion.getText().trim();
+                String documento = txtdni.getText().trim();
+                String telefono = txttelefono.getText().trim();
+                String email = txtemail.getText().trim();
+                String pass = txtpassword.getText().trim();
+                empleado.setNombre(nombre);
+                empleado.setApellido(apellido);
+                empleado.setDireccion(direccion);
+                empleado.setDocumento(documento);
+                empleado.setFechanacimiento(fechasql);
+                empleado.setTelefono(telefono);
+                empleado.setEmail(email);
+                empleado.setPassword(pass);
+                empleado.setEstado(Boolean.TRUE);
+                ctremple.agregarEmpleado(empleado);
+                Limpiar();
+                cargarTablaEmpleado();
+                NuevoEmpleado.setVisible(false);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en empleado" + e);
         }
     }//GEN-LAST:event_botonisertarempleadoActionPerformed
 
@@ -871,6 +942,9 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -885,13 +959,16 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
     private javax.swing.JLabel lbltelefono;
     private javax.swing.JTable tbgestionempleado;
     private javax.swing.JTextField txtapellido;
+    private javax.swing.JPasswordField txtcotraempleadologin;
     private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtdni;
     private javax.swing.JTextField txtemail;
     private com.toedter.calendar.JDateChooser txtfechanacimiento;
+    private javax.swing.JTextField txtloginempleado;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JPasswordField txtpassword;
     private javax.swing.JTextField txttelefono;
     private javax.swing.JLabel verificaciondatos;
+    private javax.swing.JLabel verificacionloginempleado;
     // End of variables declaration//GEN-END:variables
 }

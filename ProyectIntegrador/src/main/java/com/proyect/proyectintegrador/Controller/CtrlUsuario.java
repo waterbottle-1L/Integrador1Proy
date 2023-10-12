@@ -14,7 +14,7 @@ public class CtrlUsuario {
     public boolean inicioSesionUser(usuario objeto) {
         boolean respuesta = false;
         Connection cn = Connect.getConnection();
-        String sql = "select  nombre, password from empleado where nombre = '" + objeto.getNombre() + "' and password = '" + objeto.getPassword() + "'";
+        String sql = "select  nombre, password from empleado where nombre = '" + objeto.getNombre() + "' and password = '" + objeto.getPassword() + "' AND estado = 1";
         Statement st;
         try {
             st = cn.createStatement();
