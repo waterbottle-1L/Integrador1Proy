@@ -14,7 +14,17 @@ public class Inventario {
     private boolean estado;
     
     private String nombreproducto;
+    private String productoSinStock;
 
+    public String getProductoSinStock() {
+        return productoSinStock;
+    }
+
+    public void setProductoSinStock(String productoSinStock) {
+        this.productoSinStock = productoSinStock;
+    }
+    
+    
     public String getNombreproducto() {
         return nombreproducto;
     }
@@ -75,7 +85,7 @@ public class Inventario {
         this.fecha_registro = fecha_registro;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

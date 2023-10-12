@@ -32,6 +32,7 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$13.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$4.class
 com\proyect\proyectintegrador\View\Venta\VentaV.class
 com\proyect\proyectintegrador\Entitis\MetodoPago.class
+com\proyect\proyectintegrador\View\Venta\VentaV$6.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$16.class
 com\proyect\proyectintegrador\View\Cliente\ClienteView.class
 com\proyect\proyectintegrador\Controller\CtrMarca.class
@@ -77,12 +78,12 @@ com\proyect\proyectintegrador\View\MainView$8.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$6.class
 com\proyect\proyectintegrador\Controller\CtrDetalleVenta.class
 com\proyect\proyectintegrador\Controller\CtrlUsuario.class
+com\proyect\proyectintegrador\View\Inventario\ProductoSinStockV$nonEditableTableModel.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$9.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$3.class
 com\proyect\proyectintegrador\View\Producto\TipoV$8.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$15.class
 com\proyect\proyectintegrador\View\Producto\TipoV$5.class
-com\proyect\proyectintegrador\View\Inventario\InventarioVi$4.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$8.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$3.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$8.class
@@ -118,13 +119,13 @@ com\proyect\proyectintegrador\View\Producto\ProveedorV$nonEditableTableModel.cla
 com\proyect\proyectintegrador\View\Producto\ProductoV$nonEditableTableModel.class
 com\proyect\proyectintegrador\View\Producto\ProductoView.class
 com\proyect\proyectintegrador\View\Producto\MarcaV$3.class
+com\proyect\proyectintegrador\View\Venta\VentaV$5.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$13.class
 com\proyect\proyectintegrador\View\Cliente\ClienteV$6.class
 com\proyect\proyectintegrador\View\Producto\TipoV$7.class
 com\proyect\proyectintegrador\modelo\usuario.class
 com\proyect\proyectintegrador\View\Producto\MarcaV.class
 com\proyect\proyectintegrador\View\Producto\ProductoV$8.class
-com\proyect\proyectintegrador\Controller\CtrlSinStock$1.class
 com\proyect\proyectintegrador\View\Producto\TipoV$1.class
 com\proyect\proyectintegrador\View\Producto\ProveedorV$8.class
 com\proyect\proyectintegrador\Entitis\Empleado.class

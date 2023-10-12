@@ -31,7 +31,7 @@ public class ProductoSinStockV extends javax.swing.JPanel {
             return false;
         }
     }
-    
+    //Arreglar si se puede
     private void cargarProducto() {
         boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
@@ -81,6 +81,8 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbsinstock = new javax.swing.JTable();
         verificaciondatos = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        codProductoField = new javax.swing.JTextField();
 
         jLabel9.setText("Nuevo Stock");
 
@@ -114,6 +116,8 @@ public class ProductoSinStockV extends javax.swing.JPanel {
 
         verificaciondatos.setText("Sindatos");
 
+        jLabel1.setText("Cod. Producto");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -141,8 +145,12 @@ public class ProductoSinStockV extends javax.swing.JPanel {
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                                .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(40, 40, 40)
+                        .addComponent(codProductoField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
             .addGroup(layout.createSequentialGroup()
@@ -164,7 +172,11 @@ public class ProductoSinStockV extends javax.swing.JPanel {
                         .addComponent(jLabel9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
+                                .addGap(8, 8, 8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(codProductoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel12)
@@ -189,6 +201,15 @@ public class ProductoSinStockV extends javax.swing.JPanel {
     
     private void guardarNuevoStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarNuevoStockButtonActionPerformed
         // TODO add your handling code here:
+        /*lblnombrenuevoproducto.setText("");
+        lblnuevadescripcion.setText("");
+        lblnuevoprecio.setText("");
+        botonguardarproducto.setEnabled(false);
+        cargarMarca();
+        cargarProveedor();
+        cargarTipo();
+        limpiarCajasdeTexto();
+        NuevoProducto.setVisible(true);*/
         
     }//GEN-LAST:event_guardarNuevoStockButtonActionPerformed
     public void cargarproductos(DefaultTableModel modeloTabla){
@@ -196,7 +217,9 @@ public class ProductoSinStockV extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField codProductoField;
     private javax.swing.JButton guardarNuevoStockButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
