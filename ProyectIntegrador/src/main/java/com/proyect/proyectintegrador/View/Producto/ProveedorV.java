@@ -210,7 +210,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
         lblnombre = new javax.swing.JLabel();
         lbltelefono = new javax.swing.JLabel();
         lbldireccion = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         ModificarProveedor = new javax.swing.JDialog();
         jLabel5 = new javax.swing.JLabel();
@@ -220,7 +219,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         botonguardar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         txtModCod = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -288,22 +286,15 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
             }
         });
 
-        jButton3.setText("Cerrar");
-
         jLabel9.setText("AÑADIR PROVEEDOR");
 
         javax.swing.GroupLayout NuevoProveedorLayout = new javax.swing.GroupLayout(NuevoProveedor.getContentPane());
         NuevoProveedor.getContentPane().setLayout(NuevoProveedorLayout);
         NuevoProveedorLayout.setHorizontalGroup(
             NuevoProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NuevoProveedorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(insertarproveedor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addGap(31, 31, 31))
             .addGroup(NuevoProveedorLayout.createSequentialGroup()
                 .addGroup(NuevoProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(insertarproveedor)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NuevoProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(NuevoProveedorLayout.createSequentialGroup()
@@ -361,11 +352,9 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 .addGroup(NuevoProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(NuevoProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(insertarproveedor)
-                    .addComponent(jButton3))
-                .addGap(21, 21, 21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(insertarproveedor)
+                .addGap(27, 27, 27))
         );
 
         ModificarProveedor.setResizable(false);
@@ -388,8 +377,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 botonguardarActionPerformed(evt);
             }
         });
-
-        jButton2.setText("Cerrar");
 
         txtModNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -437,22 +424,18 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ModificarProveedorLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(ModificarProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(ModificarProveedorLayout.createSequentialGroup()
-                                .addComponent(botonguardar)
-                                .addGap(32, 32, 32)
-                                .addComponent(jButton2))
-                            .addGroup(ModificarProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtModCod)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtModNombre)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtModRuc)
-                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtModTelefono)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtMoDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)))))
+                        .addGroup(ModificarProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtModCod)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtModNombre)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtModRuc)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtModTelefono)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMoDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)))
+                    .addComponent(botonguardar))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         ModificarProveedorLayout.setVerticalGroup(
@@ -491,11 +474,9 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
                 .addGroup(ModificarProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtMoDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(ModificarProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonguardar)
-                    .addComponent(jButton2))
-                .addGap(29, 29, 29))
+                .addGap(28, 28, 28)
+                .addComponent(botonguardar)
+                .addGap(36, 36, 36))
         );
 
         BotonGuardar.setText("Nuevo");
@@ -776,8 +757,6 @@ public class ProveedorV extends org.jdesktop.swingx.JXPanel {
     private javax.swing.JButton botonguardar;
     private javax.swing.JButton insertarproveedor;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

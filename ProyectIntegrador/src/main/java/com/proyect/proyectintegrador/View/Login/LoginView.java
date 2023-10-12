@@ -6,6 +6,8 @@ import com.proyect.proyectintegrador.modelo.usuario;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -185,12 +187,29 @@ public class LoginView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(password.getBytes());
+            StringBuilder hexPassword = new StringBuilder();
+
+            for (byte hashByte : hashBytes) {
+                hexPassword.append(String.format("%02x", hashByte));
+            }
+
+            return hexPassword.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public long Login() {
         long codempleado = -1;
         if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
             CtrlUsuario ctrlUser = new CtrlUsuario();
             usuario user = new usuario();
+            //String contra = hashPassword(UContraseñaPasswordField.getText().trim());
             user.setNombre(UsuarioTextField.getText().trim());
             user.setPassword(UContraseñaPasswordField.getText().trim());
             if (ctrlUser.inicioSesionUser(user)) {

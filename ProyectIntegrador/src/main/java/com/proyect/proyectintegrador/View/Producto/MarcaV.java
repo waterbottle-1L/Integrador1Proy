@@ -136,7 +136,6 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
         lblnombre = new javax.swing.JLabel();
         txtnombremarca = new javax.swing.JTextField();
         botonguardarmarca = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         ModificarMarca = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -173,8 +172,6 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
             }
         });
 
-        jButton6.setText("Cerrar");
-
         javax.swing.GroupLayout NuevaMarcaLayout = new javax.swing.GroupLayout(NuevaMarca.getContentPane());
         NuevaMarca.getContentPane().setLayout(NuevaMarcaLayout);
         NuevaMarcaLayout.setHorizontalGroup(
@@ -190,10 +187,7 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
                             .addComponent(lblnombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(NuevaMarcaLayout.createSequentialGroup()
                                 .addGroup(NuevaMarcaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(NuevaMarcaLayout.createSequentialGroup()
-                                        .addComponent(botonguardarmarca)
-                                        .addGap(26, 26, 26)
-                                        .addComponent(jButton6))
+                                    .addComponent(botonguardarmarca)
                                     .addComponent(txtnombremarca, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 17, Short.MAX_VALUE)))))
                 .addContainerGap())
@@ -210,9 +204,7 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
                     .addComponent(jLabel2)
                     .addComponent(txtnombremarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(NuevaMarcaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonguardarmarca)
-                    .addComponent(jButton6))
+                .addComponent(botonguardarmarca)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -489,7 +481,6 @@ public class MarcaV extends org.jdesktop.swingx.JXPanel {
     private javax.swing.JButton botonguardarmarca;
     private javax.swing.JButton botonmodmarca;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
