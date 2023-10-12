@@ -1,9 +1,9 @@
-
 package com.proyect.proyectintegrador.View.Inventario;
 
 import com.proyect.proyectintegrador.Connection.Connect;
 import com.proyect.proyectintegrador.Controller.CtrProducto;
 import com.proyect.proyectintegrador.Controller.CtrlInventario;
+import com.proyect.proyectintegrador.Controller.CtrlValidacion;
 import com.proyect.proyectintegrador.Entitis.Inventario;
 import com.proyect.proyectintegrador.Entitis.Producto;
 import java.sql.Connection;
@@ -11,22 +11,29 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+public class InventarioVi extends org.jdesktop.swingx.JXPanel {
 
-public class InventarioVi extends org.jdesktop.swingx.JXPanel{
-
+    private boolean canEdit = true;
+    private boolean canDelete = true;
 
     public InventarioVi() {
         initComponents();
         busyLabel.setVisible(false);
         modificarStockDialog.pack();
         modificarStockDialog.setLocationRelativeTo(this);
+        editarStockButton.setEnabled(false);
+        sumaTextField.setEnabled(false);
+        Habilitar();
         cargarInventario();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,6 +63,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         sumaTextField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         editarStockButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         modificarStockDialog.setModal(true);
         modificarStockDialog.setResizable(false);
@@ -166,6 +174,11 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         jLabel1.setText("Total Productos:");
 
         ActualizarButton.setText("Actualizar");
+        ActualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarButtonActionPerformed(evt);
+            }
+        });
 
         busyLabel.setText("Actualizando");
 
@@ -184,6 +197,8 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                 editarStockButtonActionPerformed(evt);
             }
         });
+
+        jLabel7.setText("Buscar por Nombre");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -205,10 +220,12 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                         .addGap(16, 16, 16))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(textoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textoBusqueda))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                                 .addComponent(verificaciondatos)
                                 .addGap(304, 304, 304))
                             .addGroup(layout.createSequentialGroup()
@@ -234,7 +251,9 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(verificaciondatos))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(textoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BuscarButton)
@@ -244,8 +263,35 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    
-     
+    private void Habilitar() {
+        ListSelectionModel selectionModel;
+        selectionModel = inventarioTable.getSelectionModel();
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (!canDelete || !canEdit) {
+                return;
+            }
+            if (selectionModel.getSelectedItemsCount() == 1) {
+
+                editarStockButton.setEnabled(true);
+            } else {
+
+                editarStockButton.setEnabled(false);
+            }
+        });
+    }
+
+    public class nonEditableTableModel extends DefaultTableModel {
+
+        public nonEditableTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    }
+
     private void editarStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarStockButtonActionPerformed
         // TODO add your handling code here:
         guardarCambiosStockButton.setEnabled(true);
@@ -261,9 +307,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
             Object stockInicial = model.getValueAt(selectedRow, 3);
             Object stockMaximo = model.getValueAt(selectedRow, 4);
             Object stockMinimo = model.getValueAt(selectedRow, 5);
-            
-            
-            
+
             //stockSpinner.setText(data1.toString());
             lblNombreProd.setText(nombre.toString());
             codprodTxtField.setText(codigo.toString());
@@ -283,11 +327,11 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
     }
     private void guardarCambiosStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarCambiosStockButtonActionPerformed
         // TODO add your handling code here:
-       try {
+        try {
             Connection con = Connect.getConnection();
             CtrlInventario ctrproduct = new CtrlInventario();
-            String texto =codprodTxtField.getText().trim();
-            String nombreProd= lblNombreProd.getText().trim();
+            String texto = codprodTxtField.getText().trim();
+            String nombreProd = lblNombreProd.getText().trim();
             String stock = stockTxtField.getText().trim();
             String stock_inicial = stockInicialTxtField.getText().trim();
             String stock_maximo = stockMaximoTxtField.getText().trim();
@@ -297,8 +341,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
             if (!errores) {
                 Inventario inventario = new Inventario();
 
-               // Long codmarca = producto.obtenerIdMarcaPorNombre(con, idmarca);
-
+                // Long codmarca = producto.obtenerIdMarcaPorNombre(con, idmarca);
                 inventario.setCod_prod(codproducto);
                 inventario.setNombreproducto(nombreProd);
                 inventario.setStock(Integer.parseInt(stock));
@@ -321,8 +364,20 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
 
     private void BuscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarButtonActionPerformed
         // TODO add your handling code here:
-        buscarEnTabla();
+        CtrlValidacion val = new CtrlValidacion();
+        String cadena = textoBusqueda.getText().trim();
+        if (textoBusqueda.getText().isEmpty() || !val.validarLetras(cadena)) {
+            JOptionPane.showMessageDialog(null, "Rellene el campo para puscar Correctamente");
+        } else {
+            buscarEnTabla();
+        }
+
     }//GEN-LAST:event_BuscarButtonActionPerformed
+
+    private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
+        Limpiar();
+        cargarInventario();
+    }//GEN-LAST:event_ActualizarButtonActionPerformed
     private void buscarEnTabla() {
         DefaultTableModel modelo = (DefaultTableModel) inventarioTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
@@ -334,21 +389,17 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
             sorter.setRowFilter(RowFilter.regexFilter(textoBusqueda.getText(), 0, 1));
         }
     }
-    
+
     private void cargarInventario() {
-        
+
         boolean datosEncontrados = false;
         try (Connection con = Connect.getConnection()) {
             CtrlInventario ctrinventario = new CtrlInventario();
             List<Inventario> inventario = ctrinventario.cargarInventario();
             if (inventario != null && !inventario.isEmpty()) {
-                DefaultTableModel model = new DefaultTableModel();
-                model.addColumn("Codigo");
-                model.addColumn("Nombre");
-                model.addColumn("Stock");
-                model.addColumn("Stock inicial");
-                model.addColumn("Stock maximo");
-                model.addColumn("Stock minimo");
+                Object[] columnNames = {"Codigo", "Nombre", "Stock", "Stock Inicial", "Stock Maximo", "Stock Minimo"};
+                nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
+             
                 for (Inventario stock : inventario) {
                     if (stock.getEstado()) {
                         Object[] datos = new Object[6];
@@ -363,7 +414,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
                     }
                 }
                 inventarioTable.setModel(model);
-                
+
             }
         } catch (SQLException e) {
             System.out.println("Error al cargar datos de la tabla productos" + e);
@@ -372,8 +423,8 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
         sumaTextField.setText(String.valueOf(numeroDeColumnas));
         verificaciondatos.setVisible(!datosEncontrados);
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton BuscarButton;
@@ -388,6 +439,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

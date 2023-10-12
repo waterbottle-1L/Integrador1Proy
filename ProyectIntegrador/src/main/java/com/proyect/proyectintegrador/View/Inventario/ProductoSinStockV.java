@@ -1,10 +1,10 @@
-
 package com.proyect.proyectintegrador.View.Inventario;
 
 import com.proyect.proyectintegrador.Connection.Connect;
 import com.proyect.proyectintegrador.Controller.CtrProducto;
 import com.proyect.proyectintegrador.Controller.CtrlInventario;
 import com.proyect.proyectintegrador.Controller.CtrlSinStock;
+import com.proyect.proyectintegrador.Controller.CtrlValidacion;
 import com.proyect.proyectintegrador.Entitis.Inventario;
 import com.proyect.proyectintegrador.Entitis.Producto;
 import com.proyect.proyectintegrador.Entitis.ProductoSinStock;
@@ -22,7 +22,9 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         cargarProducto();
         agregarStock.pack();
         agregarStock.setLocationRelativeTo(this);
+        cargarcombo();
     }
+
     public class nonEditableTableModel extends DefaultTableModel {
 
         public nonEditableTableModel(Object[] columnNames, int rowCount) {
@@ -34,6 +36,7 @@ public class ProductoSinStockV extends javax.swing.JPanel {
             return false;
         }
     }
+
     //Arreglar si se puede
     private void cargarProducto() {
         boolean datosEncontrados = false;
@@ -41,16 +44,16 @@ public class ProductoSinStockV extends javax.swing.JPanel {
             CtrlSinStock ctrnostock = new CtrlSinStock();
             List<ProductoSinStock> inventarios = ctrnostock.cargarInventario();
             if (inventarios != null && !inventarios.isEmpty()) {
-                Object[] columnNames = { "Codigo","Nombre"};
+                Object[] columnNames = {"Codigo", "Nombre"};
                 nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
 
                 for (ProductoSinStock inventario : inventarios) {
-                        Object[] datos = new Object[2];
-                        datos[0] = inventario.getCodprodsinstock();
-                        datos[1] = inventario.getNombreproductoSinStock();
-                        model.addRow(datos);
-                        datosEncontrados = true;
-                    
+                    Object[] datos = new Object[2];
+                    datos[0] = inventario.getCodprodsinstock();
+                    datos[1] = inventario.getNombreproductoSinStock();
+                    model.addRow(datos);
+                    datosEncontrados = true;
+
                 }
                 tbsinstock.setModel(model);
 
@@ -62,7 +65,73 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         verificaciondatos.setVisible(!datosEncontrados);
     }
 
- 
+    private void cargarcombo() {
+        try (Connection con = Connect.getConnection()) {
+            CtrlSinStock ctrnostock = new CtrlSinStock();
+            List<ProductoSinStock> inventarios = ctrnostock.cargarInventario();
+            if (inventarios != null && !inventarios.isEmpty()) {
+                codProductoField.removeAllItems();
+                codProductoField.addItem("Seleccione Producto");
+                for (ProductoSinStock inventario : inventarios) {
+                    codProductoField.addItem(inventario.getNombreproductoSinStock());
+                }
+            }else{
+                codProductoField.addItem("No existen Productos");
+            }
+        } catch (SQLException e) {
+            System.out.print("Error al combo" + e);
+        }
+    }
+
+    private void validarNuevoStock() {
+
+        CtrlValidacion val = new CtrlValidacion();
+        String stock = txtStock.getText().trim();
+        String stockinicial = txtstockinicial.getText().trim();
+        String stockmaximo = txtstockmaximo.getText().trim();
+        String stockminimo = txtstockminimo.getText().trim();
+
+        if (stock.isEmpty()) {
+            lblstock.setText("Rellene el campo");
+        } else if (!val.validarNumerosenteros(stock)) {
+            lblstock.setText("Coloque solo Numeros");
+        } else {
+            lblstock.setText("");
+        }
+
+        if (stockinicial.isEmpty()) {
+            lblstockinicial.setText("Rellene el campo");
+        } else if (!val.validarNumerosenteros(stockinicial)) {
+            lblstockinicial.setText("Coloque solo Numeros");
+        } else {
+            lblstockinicial.setText("");
+        }
+
+        if (stockmaximo.isEmpty()) {
+            lblstockmaximo.setText("Rellene el campo");
+        } else if (!val.validarNumerosenteros(stockmaximo)) {
+            lblstockmaximo.setText("Coloque solo Numeros");
+        } else {
+            lblstockmaximo.setText("");
+        }
+
+        if (stockminimo.isEmpty()) {
+            lblstockminimo.setText("Rellene el campo");
+        } else if (!val.validarNumerosenteros(stockminimo)) {
+            lblstockminimo.setText("Coloque solo Numeros");
+        } else {
+            lblstockminimo.setText("");
+        }
+
+        if (stock.isEmpty() || !val.validarNumerosenteros(stock) || stockinicial.isEmpty()
+                || !val.validarNumerosenteros(stockinicial) || stockmaximo.isEmpty() || !val.validarNumerosenteros(stockmaximo)
+                || stockminimo.isEmpty() || !val.validarNumerosenteros(stockminimo)) {
+            guardarNuevoStockButton.setEnabled(false);
+        } else {
+            guardarNuevoStockButton.setEnabled(true);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,15 +141,19 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
-        jSpinner4 = new javax.swing.JSpinner();
         guardarNuevoStockButton = new javax.swing.JButton();
-        txtproducto = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         codProductoField = new javax.swing.JComboBox<>();
+        txtStock = new javax.swing.JTextField();
+        lblstock = new javax.swing.JLabel();
+        lblstockinicial = new javax.swing.JLabel();
+        txtstockinicial = new javax.swing.JTextField();
+        lblstockmaximo = new javax.swing.JLabel();
+        txtstockmaximo = new javax.swing.JTextField();
+        txtstockminimo = new javax.swing.JTextField();
+        lblstockminimo = new javax.swing.JLabel();
+        lblcombo = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbsinstock = new javax.swing.JTable();
@@ -106,6 +179,30 @@ public class ProductoSinStockV extends javax.swing.JPanel {
 
         jLabel2.setText("Nuevo Stock");
 
+        txtStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStockActionPerformed(evt);
+            }
+        });
+
+        txtstockinicial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtstockinicialKeyReleased(evt);
+            }
+        });
+
+        txtstockmaximo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtstockmaximoKeyReleased(evt);
+            }
+        });
+
+        txtstockminimo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtstockminimoKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout agregarStockLayout = new javax.swing.GroupLayout(agregarStock.getContentPane());
         agregarStock.getContentPane().setLayout(agregarStockLayout);
         agregarStockLayout.setHorizontalGroup(
@@ -119,61 +216,66 @@ public class ProductoSinStockV extends javax.swing.JPanel {
                         .addGap(29, 29, 29)
                         .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel12)
                                 .addComponent(jLabel13)
-                                .addComponent(jLabel14))
-                            .addGroup(agregarStockLayout.createSequentialGroup()
-                                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel12))
-                                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(agregarStockLayout.createSequentialGroup()
-                                        .addGap(67, 67, 67)
-                                        .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(13, 13, 13))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agregarStockLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(codProductoField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agregarStockLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(76, 76, 76))
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel14))
+                        .addGap(25, 25, 25)
+                        .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblstock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtStock)
+                            .addComponent(codProductoField, 0, 116, Short.MAX_VALUE)
+                            .addComponent(txtstockinicial)
+                            .addComponent(lblstockinicial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtstockmaximo)
+                            .addComponent(lblstockmaximo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtstockminimo)
+                            .addComponent(lblstockminimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblcombo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         agregarStockLayout.setVerticalGroup(
             agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agregarStockLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(txtproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(codProductoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
-                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addGap(18, 18, 18)
-                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(26, 26, 26)
+                .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(agregarStockLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14)
+                        .addGap(29, 29, 29))
+                    .addGroup(agregarStockLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblcombo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(codProductoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblstock, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblstockinicial, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtstockinicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblstockmaximo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(agregarStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtstockmaximo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblstockminimo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtstockminimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)))
                 .addComponent(guardarNuevoStockButton)
                 .addGap(15, 15, 15))
         );
@@ -204,111 +306,103 @@ public class ProductoSinStockV extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 10, Short.MAX_VALUE)
-                .addComponent(windowagregarStock)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
             .addGroup(layout.createSequentialGroup()
-                .addGap(190, 190, 190)
-                .addComponent(verificaciondatos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10)
-                .addGap(129, 129, 129))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(windowagregarStock)
+                        .addGap(198, 198, 198)
+                        .addComponent(verificaciondatos)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(0, 21, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(9, 9, 9)
                 .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(windowagregarStock)
+                    .addComponent(verificaciondatos))
                 .addGap(18, 18, 18)
-                .addComponent(verificaciondatos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(windowagregarStock))
-                .addGap(45, 45, 45))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void windowagregarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowagregarStockActionPerformed
-        // TODO add your handling code here:
-        //lblnombrenuevoproducto.setText("");
-        //lblnuevadescripcion.setText("");
-        //lblnuevoprecio.setText("");
+        txtStock.setText("");
+        txtstockinicial.setText("");
+        txtstockmaximo.setText("");
+        txtstockminimo.setText("");
         guardarNuevoStockButton.setEnabled(false);
-        //limpiarCajasdeTexto();
+
         agregarStock.setVisible(true);
-        
+
     }//GEN-LAST:event_windowagregarStockActionPerformed
 
     private void guardarNuevoStockButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarNuevoStockButtonActionPerformed
-        // TODO add your handling code here:
         try {
             Connection con = Connect.getConnection();
-            //CtrlInventario ctrproduct = new CtrlInventario();
-            CtrlSinStock ctrlsinstock=new CtrlSinStock();
-             String idprod = codProductoField.getSelectedItem().toString().trim();
-             Long codproducto = Long.parseLong(idprod);
-            int stock = (int) jSpinner1.getValue();
-            int stockini = (int) jSpinner2.getValue();
-            int stockmax = (int) jSpinner3.getValue();
-            int stockmin = (int)jSpinner4.getValue();
-
+            String stock = txtStock.getText().trim();
+            String stockinicial = txtstockinicial.getText().trim();
+            String stockmaximo = txtstockmaximo.getText().trim();
+            String stockminimo = txtstockminimo.getText().trim();
+            String producto = codProductoField.getSelectedItem().toString().trim();
             boolean errores = false;
-            /*if (ctrproduct.verificarNombreExistente(con, nombre)) {
-                lblnombrenuevoproducto.setText("Producto ya existente");
+
+            if (producto.equalsIgnoreCase("Seleccione Producto") || producto.equalsIgnoreCase("No existen Productos")) {
+                lblcombo.setText("Escoja Producto");
                 errores = true;
             } else {
-                lblnombrenuevoproducto.setText("");
+                lblcombo.setText("");
             }
-
-            if (idmarca.equalsIgnoreCase("Seleccione la marca:")) {
-                lblcodnuevamarca.setText("Seleccione alguna marca");
-                errores = true;
-            } else {
-                lblcodnuevamarca.setText("");
-            }
-
-            if (idproveedor.equalsIgnoreCase("Seleccione el proveedor:")) {
-                lblcodnuevoproveedor.setText("Seleccione un proveedor");
-                errores = true;
-            } else {
-                lblcodnuevoproveedor.setText("");
-            }
-
-            if (idtipo.equalsIgnoreCase("Seleccione el tipo:")) {
-                lblcodnuevotipo.setText("Seleccione el tipo");
-                errores = true;
-            } else {
-                lblcodnuevotipo.setText("");
-            }*/
-
             if (!errores) {
-                Inventario invent = new Inventario();
-                invent.setCod_prod(codproducto);
-                invent.setStock(stock);
-                invent.setStock_inicial(stockini);
-                invent.setStock_maximo(stockmax);
-                invent.setStock_minimo(stockmin);
-                ctrlsinstock.agregarStock(invent);
-                cargarProducto();
+                CtrlInventario ctrinven = new CtrlInventario();
+                Long codproducto = ctrinven.obtenerIdproductoNombre(con, producto);
+                int idstock = Integer.parseInt(stock);
+                int idstockinicial = Integer.parseInt(stockinicial);
+                int idstockmaximo = Integer.parseInt(stockmaximo);
+                int idstockminimo = Integer.parseInt(stockminimo);
+                Inventario inventario = new Inventario();
+                
+
+                inventario.setCod_prod(codproducto);
+                inventario.setStock(idstock);
+                inventario.setStock_inicial(idstockinicial);
+                inventario.setStock_maximo(idstockmaximo);
+                inventario.setStock_minimo(idstockminimo);
+                inventario.setEstado(Boolean.TRUE);
+                ctrinven.agregarInventario(inventario);
                 agregarStock.setVisible(false);
-
-            } else {
-                // Si se encontraron errores, no se realizará el proceso de guardar
-                System.out.println("No se pudo guardar debido a errores.");
             }
-
-        }catch (SQLException e){
-            System.out.println("Error" + e);
+        } catch (SQLException e) {
+            System.out.println("Error al agregar inventario"+e);
         }
 
     }//GEN-LAST:event_guardarNuevoStockButtonActionPerformed
-       
+
+    private void txtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockActionPerformed
+        validarNuevoStock();
+    }//GEN-LAST:event_txtStockActionPerformed
+
+    private void txtstockinicialKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstockinicialKeyReleased
+        validarNuevoStock();
+    }//GEN-LAST:event_txtstockinicialKeyReleased
+
+    private void txtstockmaximoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstockmaximoKeyReleased
+        validarNuevoStock();
+    }//GEN-LAST:event_txtstockmaximoKeyReleased
+
+    private void txtstockminimoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstockminimoKeyReleased
+        validarNuevoStock();
+    }//GEN-LAST:event_txtstockminimoKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog agregarStock;
@@ -322,12 +416,16 @@ public class ProductoSinStockV extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
+    private javax.swing.JLabel lblcombo;
+    private javax.swing.JLabel lblstock;
+    private javax.swing.JLabel lblstockinicial;
+    private javax.swing.JLabel lblstockmaximo;
+    private javax.swing.JLabel lblstockminimo;
     private javax.swing.JTable tbsinstock;
-    private javax.swing.JLabel txtproducto;
+    private javax.swing.JTextField txtStock;
+    private javax.swing.JTextField txtstockinicial;
+    private javax.swing.JTextField txtstockmaximo;
+    private javax.swing.JTextField txtstockminimo;
     private javax.swing.JLabel verificaciondatos;
     private javax.swing.JButton windowagregarStock;
     // End of variables declaration//GEN-END:variables

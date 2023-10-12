@@ -107,4 +107,19 @@ public class CtrlInventario {
             System.out.print("Error estado" + e);
         }
     }
+    
+    public Long obtenerIdproductoNombre(Connection con, String nombre) throws SQLException {
+        String consulta = "SELECT cod_producto FROM producto WHERE nombre = ? AND estado = 1";
+        try (PreparedStatement ps = con.prepareStatement(consulta)) {
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    
+                    return rs.getLong("cod_producto");
+                }
+            }
+        }
+        
+        return null;
+    }
 }

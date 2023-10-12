@@ -185,10 +185,13 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="textoBusqueda" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabel7" max="32767" attributes="0"/>
+                          <Component id="textoBusqueda" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace pref="185" max="32767" attributes="0"/>
+                              <EmptySpace pref="182" max="32767" attributes="0"/>
                               <Component id="verificaciondatos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="304" max="-2" attributes="0"/>
                           </Group>
@@ -223,7 +226,9 @@
                       <Component id="verificaciondatos" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="textoBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="BuscarButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -267,6 +272,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Actualizar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ActualizarButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="org.jdesktop.swingx.JXBusyLabel" name="busyLabel">
       <Properties>
@@ -299,6 +307,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editarStockButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar por Nombre"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
