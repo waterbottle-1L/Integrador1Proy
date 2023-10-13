@@ -722,9 +722,9 @@ public class MainView extends org.jdesktop.swingx.JXFrame {
             if (!nombrelogin.isEmpty() && !contra.isEmpty()) {
                 CtrlUsuario ctrlUser = new CtrlUsuario();
                 usuario user = new usuario();
-                //String contra = hashPassword(UContraseñaPasswordField.getText().trim());
+                String contras = hashPassword(contra);
                 user.setNombre(nombrelogin);
-                user.setPassword(contra);
+                user.setPassword(contras);
                 if (ctrlUser.inicioSesionUser(user)) {
                     CtrEmpleado ctremple = new CtrEmpleado();
                     Long codempleado = ctremple.obtenerCodEmpleado(con, nombrelogin);

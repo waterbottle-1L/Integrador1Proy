@@ -473,7 +473,7 @@ public class VentaV extends org.jdesktop.swingx.JXPanel {
                 JOptionPane.showMessageDialog(null, "El DNI especificado no existe");
             } else {
                 String doc = ctrclient.obtenerNombreCliente(con, documento);
-                jComboBoxcliente.setSelectedItem(doc);
+                jComboBoxcliente.setSelectedItem(doc+" "+documento);
             }
         } catch (SQLException e) {
             System.out.print("Error al cargar Comprobante" + e);

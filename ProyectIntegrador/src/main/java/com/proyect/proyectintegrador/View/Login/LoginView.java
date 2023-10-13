@@ -209,14 +209,14 @@ public class LoginView extends javax.swing.JFrame {
         if (!UsuarioTextField.getText().isEmpty() && !UContraseñaPasswordField.getText().isEmpty()) {
             CtrlUsuario ctrlUser = new CtrlUsuario();
             usuario user = new usuario();
-            //String contra = hashPassword(UContraseñaPasswordField.getText().trim());
+            String contra = hashPassword(UContraseñaPasswordField.getText().trim());
             user.setNombre(UsuarioTextField.getText().trim());
-            user.setPassword(UContraseñaPasswordField.getText().trim());
+            user.setPassword(contra);
             if (ctrlUser.inicioSesionUser(user)) {
                 try {
 
                     String nombre = UsuarioTextField.getText().trim();
-                    String pass = UContraseñaPasswordField.getText().trim();
+                    String pass = contra;
 
                     codempleado = ctrlUser.obtenerCodEmpleadoPorNombreYPassword(nombre, pass);
                     JOptionPane.showMessageDialog(null, "Login Correcto...");

@@ -32,18 +32,19 @@ public class DetalleVentaV extends org.jdesktop.swingx.JXPanel {
             CtrDetalleVenta ctrdeta = new CtrDetalleVenta();
             List<DetalleVenta> detalles = ctrdeta.tablaDetalleVenta();
             if (detalles != null && !detalles.isEmpty()) {
-                Object[] columnNames = {"Codigo", "Producto", "Cantidad", "Precio Unitario", "Sub Total", "IGV", "Total a Pagar"};
+                Object[] columnNames = {"Codigo", "Producto", "Codigo Venta","Cantidad", "Precio Unitario", "Sub Total", "IGV", "Total a Pagar"};
                 nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
                 for(DetalleVenta detalle : detalles){
                     if(detalle.getEstado1()){
-                        Object[] datos = new Object[7];
+                        Object[] datos = new Object[8];
                         datos[0] = detalle.getCoddetalleventa();
                         datos[1] = detalle.getNombre();
-                        datos[2] = detalle.getCantidad();
-                        datos[3] = detalle.getPreciounitario();
-                        datos[4] = detalle.getSubtotal();
-                        datos[5] = detalle.getIgv();
-                        datos[6] = detalle.getTotalapagar();
+                        datos[2] = detalle.getCodventa();
+                        datos[3] = detalle.getCantidad();
+                        datos[4] = detalle.getPreciounitario();
+                        datos[5] = detalle.getSubtotal();
+                        datos[6] = detalle.getIgv();
+                        datos[7] = detalle.getTotalapagar();
                         model.addRow(datos);
                     }
                 }

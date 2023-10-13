@@ -30,6 +30,7 @@ public class CtrDetalleVenta {
                 DetalleVenta detalle = new DetalleVenta();
                 detalle.setCoddetalleventa(resultSet.getLong("cod_detalle_venta"));
                 detalle.setNombre(resultSet.getString("nombre_producto"));
+                detalle.setCodventa(resultSet.getLong("cod_venta"));
                 detalle.setCantidad(resultSet.getInt("cantidad"));
                 detalle.setPreciounitario(resultSet.getDouble("precionunitario"));
                 detalle.setSubtotal(resultSet.getDouble("subtotal"));

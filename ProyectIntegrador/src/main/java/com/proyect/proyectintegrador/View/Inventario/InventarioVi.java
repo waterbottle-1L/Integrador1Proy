@@ -399,7 +399,7 @@ public class InventarioVi extends org.jdesktop.swingx.JXPanel {
             if (inventario != null && !inventario.isEmpty()) {
                 Object[] columnNames = {"Codigo", "Nombre", "Stock", "Stock Inicial", "Stock Maximo", "Stock Minimo"};
                 nonEditableTableModel model = new nonEditableTableModel(columnNames, 0);
-             
+
                 for (Inventario stock : inventario) {
                     if (stock.getEstado()) {
                         Object[] datos = new Object[6];
